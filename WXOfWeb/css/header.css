@@ -1,0 +1,39 @@
+.fixed-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	min-height: 50px;
+	border: 1px solid darkgray;
+	border-left-width: 0;
+	border-right-width: 0;
+	z-index: 99;
+}
+
+.fixed-header a {
+	text-decoration: none;
+}
+
+.fixed-header a:hover {
+	cursor: pointer;
+}
+
+.navbar-title {
+	font-weight: bold;
+	font-family: "times new roman";
+	line-height: 50px;
+	display: inline-block;
+}
+
+.navbar-ul {
+	list-style: none;
+	margin: 0;
+}
+
+.navbar-ul li {
+	width: auto;
+	padding-left: 3%;
+	list-style: none;
+	line-height: 50px;
+	display: inline-block;
+}
