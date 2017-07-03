@@ -15,10 +15,6 @@
 	text-decoration: none;
 }
 
-.fixed-header a:hover {
-	cursor: pointer;
-}
-
 .menu-wrapper {
 	margin: 0 auto;
 	display: block;
@@ -43,5 +39,17 @@
 	list-style: none;
 	line-height: 50px;
 	display: inline-block;
-	border-bottom: 3px solid #AC2925;
+	
+}
+
+.navbar-ul li:hover {
+	cursor: pointer;
+}
+
+.tab-choosed {
+	border-bottom: 3px solid #FF4500;
+}
+
+.tab-choosed a {
+	color: #FF4500;
 }
