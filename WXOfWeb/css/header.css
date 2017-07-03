@@ -1,21 +1,27 @@
 .fixed-header {
 	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
+	top: 2px;
+	left: 2%;
+	right: 3%;
 	min-height: 50px;
-	border: 1px solid darkgray;
-	border-left-width: 0;
-	border-right-width: 0;
+	background: #FFFFFF;
+	border-radius: 3px;
+	box-shadow: 2px 2px 1px #CCCCCC;
 	z-index: 99;
 }
 
 .fixed-header a {
+	height: 50px;
 	text-decoration: none;
 }
 
 .fixed-header a:hover {
 	cursor: pointer;
+}
+
+.menu-wrapper {
+	margin: 0 auto;
+	display: block;
 }
 
 .navbar-title {
@@ -26,14 +32,16 @@
 }
 
 .navbar-ul {
-	list-style: none;
-	margin: 0;
+	margin: 0 auto;
+	padding: 0 0 0 5px;
 }
 
 .navbar-ul li {
 	width: auto;
-	padding-left: 3%;
+	margin-right: 3%;
+	margin-bottom: 3px;
 	list-style: none;
 	line-height: 50px;
 	display: inline-block;
+	border-bottom: 3px solid #AC2925;
 }
