@@ -7,3 +7,14 @@
 	background: #FFFFFF;
 	z-index: 99;
 }
+
+.bottom-tab {
+	margin: 0 auto;
+}
+
+.bottom-tab-button {
+	width: inherit;
+	line-height: auto;
+	margin: 0 auto;
+	text-align: center;
+}
