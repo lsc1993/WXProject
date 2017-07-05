@@ -6,43 +6,23 @@
 		<title></title>
 		<link rel="stylesheet" href="../css/bootstrap.css" />
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
-		<link rel="stylesheet" href="../css/index.css" />
-		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" href="../css/product-header.css" />
 		<link rel="stylesheet" href="../css/footer.css" />
 	</head>
 	<body>
 		<header class="fixed-header">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-2 col-sm-2 col-xs-2">
-						<span class="navbar-title">Project</span>
-					</div>
-					<div class="col-md-10 col-sm-10 col-xs-10">
+					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="menu-wrapper">
-							<ul class="navbar-ul">
-								<li id="tab-1" class="tab-choosed" onclick="tabClick(1)"><a>Home</a></li>
-								<li id="tab-2" onclick="tabClick(2)"><a>About</a></li>
-								<li id="tab-3" onclick="tabClick(3)"><a>Product</a></li>
-								<li id="tab-4" onclick="tabClick(4)"><a>Me</a></li>
-							</ul>
+							<a><i class="icon-angle-left"></i></a>
+							<p>产品</p>
 						</div>	
 					</div>
 				</div>
 			</div>
 		</header>
 		<div class="space"></div>
-		<div id="product-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<ul class="project-ul">
-							<li v-for="product in products" v-bind:key="product"><a href="product.html?pid=20172001"><img src="../img/20172001.jpg"></a></li>
-						</ul>
-					</div>
-					
-				</div>
-			</div>
-		</div>
 		<footer class="fixed-footer">
 			<div class="bottom-tab">
 				<div class="container">
@@ -69,10 +49,35 @@
 				</div>
 			</div>
 		</footer>
+		<script type="text/x-template" id="dialog-modal">
+			<transition name="dialog">
+				<div class="dialog-modal-mask">
+					<div class="dialog-modal-wrapper">
+						<div class="dialog-modal-content">
+							<div class="dialog-header">
+								<slot name="dialog-header">
+									提示
+								</slot>
+							</div>
+							<div class="dialog-content">
+								<slot name="dialog-content">
+									你好！@
+								</slot>
+							</div>
+							<div class="dialog-footer">
+								<slot name="dialog-footer">
+									<button>取消</button>
+									<button>确认</button>
+								</slot>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
-		<script type="text/javascript" src="../js/header.js" ></script>
-		<script type="text/javascript" src="../js/index.js" ></script>
+		<script type="text/javascript" src="../js/product.js" ></script>
 	</body>
 </html>

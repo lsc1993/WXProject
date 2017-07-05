@@ -1,0 +1,29 @@
+.fixed-header {
+	position: fixed;
+	top: 2px;
+	left: 2%;
+	right: 3%;
+	min-height: 50px;
+	background: #FFFFFF;
+	border-radius: 3px;
+	box-shadow: 2px 2px 1px #CCCCCC;
+	z-index: 99;
+}
+
+.fixed-header a {
+	line-height: 50px;
+	text-decoration: none;
+	float: left;
+}
+
+.fixed-header a i {
+	transform: scale(2);
+	-webkit-transform: scale(2);
+}
+
+.fixed-header p {
+	line-height: 50px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 40;
+}
