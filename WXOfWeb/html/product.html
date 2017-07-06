@@ -7,9 +7,11 @@
 		<link rel="stylesheet" href="../css/bootstrap.css" />
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
 		<link rel="stylesheet" href="../css/product-header.css" />
-		<link rel="stylesheet" href="../css/footer.css" />
+		<link rel="stylesheet" href="../css/product-footer.css" />
+		<link rel="stylesheet" href="../css/dialog.css" />
 	</head>
 	<body>
+		<!--页面title-->
 		<header class="fixed-header">
 			<div class="container">
 				<div class="row">
@@ -22,8 +24,32 @@
 				</div>
 			</div>
 		</header>
+		<!--header end-->
+		<!--space撑空间-->
 		<div class="space"></div>
+		<!--页面内容-->
+		<div id="dialog-div">
+			<button @click="showDialog('hello lsc')">dialog</button>
+			<dialog-component id="dialog-modal-me" v-if="showModal" @close="showModal = false" :message="message">
+			</dialog-component>
+		</div>
+		<!--content end-->
+		<!--页面底部选项-->
 		<footer class="fixed-footer">
+			<div class="fixed-footer-wrapper">
+				<div class="footer-tab-btn1">
+					<i class="icon-shopping-cart"></i>
+					<p>购物车</p>
+				</div>
+				<div class="footer-tab-btn3">
+					<p>立即购买</p>
+				</div>
+				<div class="footer-tab-btn2">
+					<p>加入购物车</p>
+				</div>
+			</div>
+		</footer>
+		<!--<footer class="fixed-footer">
 			<div class="bottom-tab">
 				<div class="container">
 					<div class="row">
@@ -48,12 +74,14 @@
 					</div>
 				</div>
 			</div>
-		</footer>
+		</footer>-->
+		<!--footer end-->
+		<!--对话框模板-->
 		<script type="text/x-template" id="dialog-modal">
 			<transition name="dialog">
 				<div class="dialog-modal-mask">
 					<div class="dialog-modal-wrapper">
-						<div class="dialog-modal-content">
+						<div class="dialog-modal-container">
 							<div class="dialog-header">
 								<slot name="dialog-header">
 									提示
@@ -61,13 +89,13 @@
 							</div>
 							<div class="dialog-content">
 								<slot name="dialog-content">
-									你好！@
+									{{message}}
 								</slot>
 							</div>
 							<div class="dialog-footer">
 								<slot name="dialog-footer">
-									<button>取消</button>
-									<button>确认</button>
+									<p class="dialog-button-left">取消</p>
+									<p class="dialog-button-right" @click="$emit('close')">确认</p>
 								</slot>
 							</div>
 						</div>
@@ -79,5 +107,6 @@
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/product.js" ></script>
+		<script type="text/javascript" src="../js/dialog.js" ></script>
 	</body>
 </html>

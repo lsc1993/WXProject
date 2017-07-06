@@ -1,12 +1,19 @@
-// register modal component
-Vue.component('modal', {
-  template: '#modal-template'
+// 注册对话框组件
+Vue.component('dialog-component', {
+	props:['message'],
+  template: '#dialog-modal'
 })
 
-// start app
 new Vue({
-  el: '#app',
+  el: '#dialog-div',
   data: {
-    showModal: false
-  }
+    showModal: false,
+    message : "hello ls"
+  },
+	methods:{
+		showDialog: function(text){
+			this.message = text;
+			this.showModal = true;
+		}
+	}
 })
