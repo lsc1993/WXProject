@@ -6,6 +6,7 @@
 		<title></title>
 		<link rel="stylesheet" href="../css/bootstrap.css" />
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/product.css" />
 		<link rel="stylesheet" href="../css/product-header.css" />
 		<link rel="stylesheet" href="../css/product-footer.css" />
 		<link rel="stylesheet" href="../css/dialog.css" />
@@ -28,11 +29,43 @@
 		<!--space撑空间-->
 		<div class="space"></div>
 		<!--页面内容-->
-		<div id="dialog-div">
+		<div class="product-container">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="product-img-turn">
+							<img src="../img/20172001.jpg" />
+						</div>
+						<div class="product-price-label">
+							<p class="price-text-small">￥</p>
+							<p class="price-text-large">199.0</p>
+						</div>
+						<div class="product-name-label">
+							<p>运动哈哈运动哈哈运动哈哈运动哈哈运动哈哈运动哈哈运动哈</p>
+						</div>
+						<div class="product-sales-volume">
+							<div class="product-transport-fare">
+								<p>运费：</p><p>免运费</p>
+							</div>
+							<div class="product-sales-fare">
+								<p>销量：</p><p>668</p>
+							</div>
+						</div>
+						<div class="product-standard">
+							<div>
+								<p>选择：规格</p>
+								<i class="icon-angle-right"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<div id="dialog-div">
 			<button @click="showDialog('hello lsc')">dialog</button>
 			<dialog-component id="dialog-modal-me" v-if="showModal" @close="showModal = false" :message="message">
 			</dialog-component>
-		</div>
+		</div>-->
 		<!--content end-->
 		<!--页面底部选项-->
 		<footer class="fixed-footer">

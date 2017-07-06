@@ -1,0 +1,80 @@
+.product-img-turn img {
+	width: 100%;
+	height: 45%;
+}
+
+.product-price-label {
+	width: 100%;
+	height:55px;
+	background-color: #D9534F;
+}
+
+.product-price-label p {
+	width: auto;
+	line-height: 55px;
+	margin-left: 3%;
+	color: #FFFFFF;
+	display: inline-block;
+}
+
+.price-text-small {
+	font-size: 20px;
+}
+
+.price-text-large {
+	font-size: 26px;
+}
+
+.product-name-label {
+	width: 100%;
+	height: 55px;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.product-name-label p {
+	width: auto;
+	height: 55px;
+	font-size: 18px;
+	margin-left: 3%;
+}
+
+.product-sales-volume {
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.product-sales-volume p {
+	width: auto;
+	line-height: 40px;
+	display: inline-block;
+	color: #C0C0C0;
+}
+
+.product-transport-fare {
+	display: inline-block;
+	margin-left: 3%;
+}
+
+.product-sales-fare {
+	display: inline-block;
+	margin-left: 30%;
+}
+
+.product-standard {
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.product-standard p {
+	line-height: 40px;
+	margin-left: 3%;
+	display: inline-block;
+}
+
+.product-standard i {
+	line-height: 40px;
+	float: right;
+}
