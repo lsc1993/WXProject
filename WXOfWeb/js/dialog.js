@@ -1,13 +1,13 @@
 // 注册对话框组件
 Vue.component('dialog-component', {
 	props:['message'],
-  template: '#dialog-modal'
+    template: '#dialog-modal'
 })
 
 new Vue({
   el: '#dialog-div',
   data: {
-    showModal: false,
+  	showModal: false,
     message : "hello ls"
   },
 	methods:{

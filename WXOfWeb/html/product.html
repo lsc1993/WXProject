@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../css/product-header.css" />
 		<link rel="stylesheet" href="../css/product-footer.css" />
 		<link rel="stylesheet" href="../css/dialog.css" />
+		<link rel="stylesheet" href="../css/popup-window.css" />
 	</head>
 	<body>
 		<!--页面title-->
@@ -30,9 +31,9 @@
 		<div class="space"></div>
 		<!--页面内容-->
 		<div class="product-container">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="container-all-width">
+				<div class="">
+					<div class="">
 						<div class="product-img-turn">
 							<img src="../img/20172001.jpg" />
 						</div>
@@ -61,11 +62,15 @@
 				</div>
 			</div>
 		</div>
-		<!--<div id="dialog-div">
-			<button @click="showDialog('hello lsc')">dialog</button>
+		<div id="dialog-div">
+			<!--<button @click="showDialog('hello lsc')">dialog</button>
 			<dialog-component id="dialog-modal-me" v-if="showModal" @close="showModal = false" :message="message">
-			</dialog-component>
-		</div>-->
+			</dialog-component>-->
+		</div>
+		<div id="popup-window-div">
+			<popup-window v-if="isShow" @close="dismiss()" :productitem="productMessage"></popup-window>
+			<button @click="showPopupWindow()">ssss</button>
+		</div>
 		<!--content end-->
 		<!--页面底部选项-->
 		<footer class="fixed-footer">
@@ -82,39 +87,13 @@
 				</div>
 			</div>
 		</footer>
-		<!--<footer class="fixed-footer">
-			<div class="bottom-tab">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-4 col-sm-4 col-xs-4">
-							<div class="bottom-tab-button">
-								<i class="icon-apple"></i>
-								<p>ddd</p>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-4 col-xs-4">
-							<div class="bottom-tab-button">
-								<i class="icon-desktop"></i>
-								<p>ddd</p>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-4 col-xs-4">
-							<div class="bottom-tab-button">
-								<i class="icon-envelope"></i>
-								<p>ddd</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>-->
 		<!--footer end-->
 		<!--对话框模板-->
 		<script type="text/x-template" id="dialog-modal">
 			<transition name="dialog">
 				<div class="dialog-modal-mask">
 					<div class="dialog-modal-wrapper">
-						<div class="dialog-modal-container">
+						<div class="dialog-modal-container"> 
 							<div class="dialog-header">
 								<slot name="dialog-header">
 									提示
@@ -136,10 +115,62 @@
 				</div>
 			</transition>
 		</script>
+		<script type="text/x-template" id="popup-window-modal">
+			<transition name="popup-window-transition">
+				<div class="popup-window-modal-mask">
+					<div class="popup-window-modal-wrapper">
+						<div class="popup-window-modal-container">
+							<div class="product-detail container">
+								<slot name="product-detail">
+									<div class="row">
+										<div class="product-img-pop col-md-2 col-sm-2 col-xs-3">
+											<img src="../img/20172001.jpg" />
+										</div>
+										<div class="product-price-name col-md-9 col-sm-9 col-xs-8">
+											<p>{{productitem[0].name}}</p>
+											<p>{{productitem[0].price}}</p>
+										</div>
+										<div class="product-pop-remove col-md-1 col-sm-1 col-xs-1">
+											<button @click="$emit('close')"><i class="icon-remove"></i></button>
+											
+										</div>
+									</div>
+								</slot>
+							</div>
+							<div class="product-standard-pop">
+								<p>standard:</p>
+								<div class="product-standard-ul">
+									<ul>
+										<li>1ewrwerwerwerwe</li>
+										<li>1ewrwerwerwerwe</li>
+										<li>1ewrwerwerwerwe</li>
+									</ul>
+								</div>
+							</div>
+							<div class="product-sale-count">
+								<p>count:</p>
+								<div class="product-count-caculator">
+									<p>-</p><p>1</p><p>+</p>
+								</div>
+							</div>
+							<div class="product-operator">
+								<div class="product-add-shopcart product-operator-half-width">
+									<p>shopcart</p>
+								</div>
+								<div class="product-buy-now product-operator-half-width">
+									<p>buy now</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/product.js" ></script>
 		<script type="text/javascript" src="../js/dialog.js" ></script>
+		<script type="text/javascript" src="../js/popup-window.js" ></script>
 	</body>
 </html>
