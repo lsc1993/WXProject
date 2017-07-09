@@ -1,3 +1,7 @@
+.product-container {
+	margin-bottom: 50px;
+}
+
 .container-all-width {
 	width: 100%;
 	padding: 0;
@@ -83,4 +87,74 @@
 	line-height: 40px;
 	margin-right: 3%;
 	float: right;
+}
+
+.product-detail-container {
+	width: 100%;
+	height: auto;
+}
+
+.product-detail-appraise-title {
+	width: 100%;
+	height: 45px;
+	margin-bottom: 10px;
+}
+
+.product-detail-appraise-title p {
+	width: 49%;
+	line-height: 45px;
+	text-align: center;
+	display: inline-block;
+	border-bottom: 2px solid #D9534F;
+}
+
+.product-detail-container ul {
+	list-style: none;
+	padding: 0;
+}
+
+.product-detail-container img {
+	width: 100%;
+}
+
+.product-appraise-user {
+	width: auto;
+	height: auto;
+	padding: 3%;
+	margin: 0 2% 0 2%;
+}
+
+.product-appraise-user ul {
+	list-style: none;
+	padding: 0;
+}
+
+.product-appraise-user ul li {
+	list-style: none;
+	padding-top: 2%;
+	margin-top: 2%;
+	border-top: 1px solid #CCCCCC;
+}
+
+.product-appraise-user img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.product-appraise-return {
+	width: auto;
+	height: auto;
+	line-height: 30px;
+	padding-left: 5px;
+	margin: 0 2% 0 2%;
+	background-color: #CCCCCC;
+	border-radius: 2px;
+}
+
+.product-appraise-return p {
+	width: auto;
+	line-height: 30px;
+	color: #D43F3A;
+	word-break: break-all;
 }

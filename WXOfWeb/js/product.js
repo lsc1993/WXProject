@@ -9,8 +9,49 @@ function getParam() {
 	alert(param);
 }
 
+var productDetali = new Vue({
+	el: "#product-detail",
+	data:{
+		imgurls:[
+		    {imgurl : "../img/20172001.jpg"},
+		    {imgurl : "../img/20172001.jpg"},
+		    {imgurl : "../img/20172001.jpg"}
+		]
+	}
+})
+
+var productAppraise = new Vue({
+	el: "#product-appraise",
+	data:{
+		isShowReturn : false,
+		userappraise:[
+		    {userimg: "../img/20172001.jpg",
+		     username: "liushuang",
+		     userappraise: "好评",
+		     time: "2017-07-09 12:10:30",
+		     sellerreturn: "drgftewartgfdfsfdsfdsdfgserrrrrrrrsdfgdfgregregedsgewfafsdfa"
+		   },
+		   {userimg: "../img/20172001.jpg",
+		     username: "liushuang",
+		     userappraise: "好评",
+		     time: "2017-07-09 12:10:30",
+		     sellerreturn: "drgftewartgfdfsfdsfdsdfgserrrrrrrrsdfgdfgregregedsgewfafsdfa"
+		    }
+		]
+	},
+    methods:{
+    	showSellerReturn: function(){
+    		if (this.userappraise[0].sellerreturn == "" || this.userappraise[0].sellerreturn.length == 0) {
+    			this.isShowReturn = false;
+    		} else {
+    			this.isShowReturn = true;
+    		}
+    	}
+    }
+})
+
 var popupWindow = Vue.component("popup-window",{
-	props:['productitem'],
+	props:['productitem','projectimg'],
 	template: "#popup-window-modal"
 })
 
@@ -22,7 +63,11 @@ var popup = new Vue({
 		    {imgurl: "../img/20172001.jpg",
 		     name: "wow",
 		     price: "299",
-		     labels: ["weqwdqwdqwdq","qweqwqweqe","dasfdwqef"]
+		     labels: [
+		         {label : "weqwdqwdrtyrtqwdq"},
+		         {label : "qweqwqweqyerte"},
+		         {label : "dasfdwqeftryrty"}
+		         ]
 		    }
 		]
 	},

@@ -58,18 +58,58 @@
 								<i class="icon-angle-right"></i>
 							</div>
 						</div>
+						<div class="product-detail-appraise">
+							<div class="product-detail-appraise-title">
+								<p>商品详情</p>
+								<p>销量和评价</p>
+							</div>
+							<div class="product-detail-appraise-container">
+								<div id="product-detail" class="product-detail-container">
+									<ul>
+										<li v-for="img in imgurls" v-bind:key="img">
+											<img :src="img.imgurl"/>
+										</li>
+									</ul>
+								</div>
+								<div id="product-appraise" class="product-appraise-container">
+									<div class="product-appraise-content">
+										<div class="product-appraise-user container">
+											<ul>
+												<li v-for="appraise in userappraise" v-bind:key="appraise">
+													<div class="row">
+														<div class="col-md-2 col-sm-2 col-xs-3">
+															<img :src="appraise.userimg"/>
+														</div>
+														<div class="col-md-10 col-sm-10 col-xs-9">
+															<p>{{appraise.username}}</p>
+															<p>{{appraise.time}}</p>
+														</div>
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<p>{{appraise.userappraise}}</p>
+														</div>
+														<div class="product-appraise-return col-md-12 col-sm-12 col-xs-12">
+															<p v-if="showSellerReturn">{{appraise.sellerreturn}}</p>
+														</div>
+													</div>
+												</li>		
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="dialog-div">
-			<!--<button @click="showDialog('hello lsc')">dialog</button>
+			<!--<button @click="showDialog('hello lsc')">dialog</button>-->
 			<dialog-component id="dialog-modal-me" v-if="showModal" @close="showModal = false" :message="message">
-			</dialog-component>-->
+			</dialog-component>
 		</div>
 		<div id="popup-window-div">
 			<popup-window v-if="isShow" @close="dismiss()" :productitem="productMessage"></popup-window>
-			<button @click="showPopupWindow()">ssss</button>
+			<!--<button @click="showPopupWindow()">ssss</button>-->
 		</div>
 		<!--content end-->
 		<!--页面底部选项-->
@@ -124,7 +164,7 @@
 								<slot name="product-detail">
 									<div class="row">
 										<div class="product-img-pop col-md-2 col-sm-2 col-xs-3">
-											<img src="../img/20172001.jpg" />
+											<img :src="productitem[0].imgurl" />
 										</div>
 										<div class="product-price-name col-md-9 col-sm-9 col-xs-8">
 											<p>{{productitem[0].name}}</p>
@@ -141,9 +181,11 @@
 								<p>standard:</p>
 								<div class="product-standard-ul">
 									<ul>
-										<li>1ewrwerwerwerwe</li>
-										<li>1ewrwerwerwerwe</li>
-										<li>1ewrwerwerwerwe</li>
+										<li v-for="label in productitem[0].labels" v-bind:key="label">
+											{{label.label}}
+										</li>
+										<!--<li>1ewrwerwerwerwe</li>
+										<li>1ewrwerwerwerwe</li>-->
 									</ul>
 								</div>
 							</div>
