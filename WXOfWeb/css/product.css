@@ -7,6 +7,11 @@
 	padding: 0;
 }
 
+.product-img-turn {
+	width: 100%;
+	height: 45%;
+}
+
 .product-img-turn img {
 	width: 100%;
 	height: 45%;
@@ -36,14 +41,14 @@
 
 .product-name-label {
 	width: 100%;
-	height: 55px;
+	height: auto;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #CCCCCC;
 }
 
 .product-name-label p {
 	width: auto;
-	height: 55px;
+	height: auto;
 	font-size: 18px;
 	margin-left: 3%;
 }
@@ -105,6 +110,9 @@
 	line-height: 45px;
 	text-align: center;
 	display: inline-block;
+}
+
+.product-tab-title-bottom-line {
 	border-bottom: 2px solid #D9534F;
 }
 
@@ -115,6 +123,11 @@
 
 .product-detail-container img {
 	width: 100%;
+}
+
+.product-appraise-container {
+	width: 100%;
+	display: none;
 }
 
 .product-appraise-user {

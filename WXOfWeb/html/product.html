@@ -34,7 +34,7 @@
 			<div class="container-all-width">
 				<div class="">
 					<div class="">
-						<div class="product-img-turn">
+						<div id="product-img-slider" class="product-img-turn">
 							<img src="../img/20172001.jpg" />
 						</div>
 						<div class="product-price-label">
@@ -53,15 +53,15 @@
 							</div>
 						</div>
 						<div class="product-standard">
-							<div>
+							<div onclick="showPopupWindow()">
 								<p>选择：规格</p>
 								<i class="icon-angle-right"></i>
 							</div>
 						</div>
 						<div class="product-detail-appraise">
 							<div class="product-detail-appraise-title">
-								<p>商品详情</p>
-								<p>销量和评价</p>
+								<p id="product-detaile-title" class="product-tab-title-bottom-line" onclick="productDetailTabClick(1)">商品详情</p>
+								<p id="product-appraise-title" onclick="productDetailTabClick(2)">销量和评价</p>
 							</div>
 							<div class="product-detail-appraise-container">
 								<div id="product-detail" class="product-detail-container">
@@ -123,7 +123,7 @@
 					<p>立即购买</p>
 				</div>
 				<div class="footer-tab-btn2">
-					<p>加入购物车</p>
+					<p onclick="showPopupWindow()">加入购物车</p>
 				</div>
 			</div>
 		</footer>
@@ -184,8 +184,6 @@
 										<li v-for="label in productitem[0].labels" v-bind:key="label">
 											{{label.label}}
 										</li>
-										<!--<li>1ewrwerwerwerwe</li>
-										<li>1ewrwerwerwerwe</li>-->
 									</ul>
 								</div>
 							</div>
@@ -211,6 +209,8 @@
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/iSlider.js" ></script>
+		<script type="text/javascript" src="../js/unslider.min.js" ></script>
 		<script type="text/javascript" src="../js/product.js" ></script>
 		<script type="text/javascript" src="../js/dialog.js" ></script>
 		<script type="text/javascript" src="../js/popup-window.js" ></script>

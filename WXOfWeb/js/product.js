@@ -1,5 +1,7 @@
 $(function(){
 	//getParam();
+	//initImgSlider();
+	//$('#product-img-slider').unslider();
 })
 
 function getParam() {
@@ -7,6 +9,33 @@ function getParam() {
 	var index = url.indexOf("pid=");
 	var param = url.substring(index+4,url.length);
 	alert(param);
+}
+
+function productDetailTabClick(index) {
+	$("#product-detaile-title").toggleClass("product-tab-title-bottom-line");
+	$("#product-appraise-title").toggleClass("product-tab-title-bottom-line");
+	if (index == 1) {
+		$("#product-detail").show();
+		$("#product-appraise").hide();
+	} else if (index == 2) {
+		$("#product-detail").hide();
+		$("#product-appraise").show();
+	}
+}
+
+function initImgSlider() {
+	var list = [
+	    {content: '../img/20172001.jpg'},
+	    {content: '../img/20172001.jpg'},
+	    {content: '../img/20172001.jpg'},
+	    {content: '../img/20172001.jpg'}
+	];
+	new iSlider(document.getElementById('product-img-slider'),list,{
+        isAutoplay: 1,
+        isLooping: 1,
+        isOverspread: 1,
+        animateTime: 800
+    });
 }
 
 var productDetali = new Vue({
@@ -80,3 +109,7 @@ var popup = new Vue({
 		}
 	}
 })
+
+function showPopupWindow() {
+	popup.showPopupWindow();
+}

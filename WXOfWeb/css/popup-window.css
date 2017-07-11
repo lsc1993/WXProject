@@ -67,9 +67,8 @@
 .product-standard-ul li {
 	width: auto;
 	display: inline-block;
-	margin-left: 1%;
+	margin-left: 5%;
 	margin-top: 2px;
-	list-style: none;
 	border: 1px solid #CCCCCC;
 	border-radius: 1px;
 }
