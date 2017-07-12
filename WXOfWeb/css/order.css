@@ -1,0 +1,64 @@
+.address-container {
+	width: 100%;
+	height: 60px;
+	background-color: #CCCCCC;
+}
+
+.address-container img {
+	width: 40px;
+	height: 40px;
+	margin-top: 10px;
+}
+
+.address-container p {
+	width: auto;
+	line-height: 60px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.address-container i {
+	line-height: 55px;
+}
+
+.store-name {
+	height: 45px;
+	padding: 1px;
+}
+
+.store-name i,p {
+	line-height: 40px;
+	display: inline-block;
+}
+
+.order-message {
+}
+
+.order-message img {
+	width: 100px;
+	height: 100px;
+}
+
+.order-message p {
+	height: auto;
+	text-align: right;
+	display: block;
+}
+
+.develivery-way {
+	height: 55px;
+}
+
+.develivery-way p {
+	width: 49%;
+	line-height: 55px;
+}
+
+.buyer-message {
+	widows: 100%;
+	height: auto;
+}
+
+.buyer-message input {
+	height: auto;
+}
