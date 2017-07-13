@@ -38,7 +38,7 @@
 			</div>
 			<div>
 				<div class="order-message">
-					<div class="container">
+					<div class="container order-message-container">
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4">
 								<img src="../img/20172001.jpg" />
@@ -55,22 +55,49 @@
 					</div>
 				</div>
 			</div>
-			<div class="develivery-way">
+			<div class="delivery-way">
 				<div class="container">
-					<p>配送方式</p>
-					<p>快递发货</p>
+					<p class="delivery-left-p">配送方式</p>
+					<p class="delivery-right-p">快递发货</p>
 				</div>
 			</div>
-			<div class="buyer-message">
+			<div id="buy-message-container" class="buyer-message">
 				<div class="container">
-					<p>买家留言：</p><!--<input type="text" />-->
-					<textarea rows="1"></textarea>
+					<div class="buy-message-title">
+						<p>买家留言：</p>
+					</div>
+					<textarea id="buy-message" class="textaera-div"></textarea>
 				</div>
 			</div>
-			<div class=""></div>
+			<div class="favoravle-container">
+				<div class="container">
+					<p>优惠</p>
+					<div class="favoravle-tab">
+						<p>使用优惠</p>
+						<i class="icon-angle-right"></i>
+					</div>
+				</div>
+			</div>
+			<div class="order-total">
+				<div class="container">
+					<div class="product-price-content">
+						<p>商品金额</p>
+						<div class="product-price">
+							<p>￥</p><p>88.00</p>
+						</div>
+					</div>
+					<div class="delivery-price-content">
+						<p>运费</p>
+						<div class="delivery-price">
+							<p>+￥</p><p>0.00</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/order.js" ></script>
 	</body>
 </html>
