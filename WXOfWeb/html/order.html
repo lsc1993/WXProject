@@ -13,16 +13,15 @@
 		<link rel="stylesheet" href="../css/popup-window.css" />
 	</head>
 	<body>
-		<div>
+		<div id="order-page">
 			<div class="address-container">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-2 col-sm-2 col-xs-2">
 							<img src="../img/20172001.jpg"/>
-							
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9">
-							<p>新建收获地址</p>
+							<p>选择收获地址</p>
 						</div>
 						<div class="col-md-1 col-sm-1 col-xs-1">
 							<i class="icon-angle-right"></i>
@@ -41,15 +40,18 @@
 					<div class="container order-message-container">
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4">
-								<img src="../img/20172001.jpg" />
+								<img :src="productMessage.imgurl" />
 							</div>
 							<div class="col-md-5 col-sm-5 col-xs-5">
-								<p>哇哈哈哈哈啊哈哈</p>
-								<p>4吨</p>
+								<p class="font-size-medium">{{productMessage.name}}</p>
+								<p class="font-size-medium">{{productMessage.standard}}</p>
 							</div>
 							<div class="col-md-3 col-sm-3 col-xs-3">
-								<p>299.8</p>
-								<p>X1</p>
+								<p class="font-size-medium">{{productMessage.price}}</p>
+								<div class="product-count">
+									<p class="font-size-medium">{{productMessage.count}}</p><p>X</p>
+								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -94,7 +96,79 @@
 					</div>
 				</div>
 			</div>
+			<footer>
+				<div class="order-footer">
+					<div class="order-submit">
+						<p>提交订单</p>
+					</div>
+					<div class="order-total-cost">
+						<p class="font-size-medium">合计：</p>
+						<p>{{totalCost}}</p>
+					</div>
+				</div>
+			</footer>
 		</div>
+		<div id="address-choose">
+			
+		</div>
+		<script type="text/x-template" id="popup-window-address-new">
+			<transition name="popup-window-transition">
+				<div class="popup-window-modal-mask">
+					<div class="popup-window-modal-wrapper">
+						<div class="popup-window-modal-container">
+							
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
+		<script type="text/x-template" id="popup-window-address-choose">
+			<transition name="popup-window-transition">
+				<div class="popup-window-modal-mask">
+					<div class="popup-window-modal-wrapper">
+						<div class="popup-window-modal-container">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="address-choose-title">
+											<p>选择收货地址</p>
+											<button><i class="icon-remove"></i></button>
+										</div>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="address-list">
+											<ul>
+												<li>
+													<div>
+														<input type="radio" />
+													</div>
+													<div class="address-item">
+														<div>
+															<p>ls</p>
+															<p>15700084332</p>
+														</div>
+														<div>
+															<p>收货地址：</p>
+															<p>浙江省杭州市西湖区浙江工业大学屏风校区</p>
+														</div>
+													</div>
+													<div class="address-edit-button">
+														<i class="icon-edit"></i>
+													</div>
+												</li>
+											</ul>
+											<div>
+												<button>新建收货地址</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
