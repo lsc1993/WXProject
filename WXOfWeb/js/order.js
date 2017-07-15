@@ -25,18 +25,49 @@ var orderPage = new Vue({
 		
 	},
 	computed: {
-		totalCost: function() {
+		totalCost: function(){
 			return parseFloat(this.price) + parseFloat(this.deliveryCost);
 		}
 	},
 	methods: {
-		submitOrder: function() {
+		submitOrder: function(){
 			
 		}
 	}
 })
 
-var chooseAddressWindow = Vue.component("chooseAddressWindow",{
+var chooseAddressWindow = Vue.component("choose-address-window",{
 	props: ['addressItem'],
 	template: "#popup-window-address-choose"
 })
+
+var newAddressWindow = Vue.component("new-address-window",{
+	props: ['addressMessage'],
+	template: "#popup-window-address-new"
+})
+
+var chooseAddress = new Vue({
+	el: "#address-choose",
+	data: {
+		isShowChooseWindow: false,
+		addressItems: [
+		    {}
+		]
+	},
+	methods: {
+		showChooseWindow: function(){
+			this.isShowChooseWindow = true;
+		},
+		removeChooseWindow: function(){
+			this.isShowChooseWindow = false;
+		}
+	},
+	components: {
+		'choose-address-window':chooseAddressWindow,
+		'new-address-window':newAddressWindow
+	}
+})
+
+function showChooseWindow() {
+	chooseAddress.showChooseWindow();
+}
