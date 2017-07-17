@@ -265,6 +265,7 @@
 	line-height: 50px;
 	font-size: 16px;
 	display: inline-block;
+	float: left;
 }
 
 .address-message-content input {
@@ -286,6 +287,7 @@
 	width: 30%;
 	line-height: 50px;
 	display: inline-block;
+	float: left;
 }
 
 .address-message-list {

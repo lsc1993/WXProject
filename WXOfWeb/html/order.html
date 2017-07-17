@@ -108,23 +108,48 @@
 				</div>
 			</footer>
 		</div>
-		<div id="address-choose">
-			<!--<choose-address-window v-if="isShowChooseWindow" @close="removeChooseWindow()"></choose-address-window>
-			 <new-address-window></new-address-window>-->
-		</div>
+		
 		<div id="address-aera-choose">
-			<address-dialog>
+			<address-dialog v-if="isShowDialog" >
 				<p slot="dialog-header">
-					请选择省份
+					{{title}}
 				</p>
-				<ul slot="dialog-content">
-					<li v-for="addressList in aera" v-bind:key="addressList">
-						<p>{{addressList[1]}}</p>
+				<ul slot="dialog-content" id="address-dialog">
+					<li 
+						v-for="(addressList,index) in aera" 
+						v-bind:key="addressList"
+						v-bind:index="index"
+						>
+						<p onclick="selectAddress($(this).text())">{{addressList[1]}}</p>
 					</li>
 				</ul>
 				<p slot="dialog-footer"></p>
 			</address-dialog>
 		</div>
+		<div id="address-choose">
+				<choose-address-window 
+					v-show="isShowChooseWindow" 
+					@close="removeChooseWindow()" 
+					@shownewwindow="showOneBtnWindow()" 
+					@showeditwindow="showTwoBtnWindow()"
+					:addressitem="addressItems">
+				</choose-address-window>
+				 <new-address-window 
+				 	v-show="isShowEditWindow" 
+				 	@close="removeEditWindow()" 
+				 	@chooseprovince="chooseProvince()" 
+				 	@choosecity="chooseCity()" 
+				 	@chooseregion="chooseRegion()"
+				 	:addressregion="addressRegion">
+				 	<p name="edit-window-title">
+				 		{{editTitle}}
+				 	</p>
+				 	<div slot="popup-btn-container">
+				 		<button class="btn btn-success">保存</button> 
+						<button class="btn btn-danger" v-show="isOneButton">删除</button>
+				 	</div>
+				 </new-address-window>
+			</div>
 		<!--选择地址的popupwindow模板-->
 		<script type="text/x-template" id="popup-window-address-choose">
 			<transition name="popup-window-transition">
@@ -142,26 +167,26 @@
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<div class="address-list">
 											<ul>
-												<li>
+												<li v-for="address in addressitem" :key="address">
 													<div class="address-item-radio">
 														<input type="radio" />
 													</div>
 													<div class="address-item-message">
 														<div class="product-receiver">
-															<p>ls</p>
-															<p>15700084332</p>
+															<p>{{address.name}}</p>
+															<p>{{address.tel}}</p>
 														</div>
 														<div class="receiver-address">
-															<p>收货地址：浙江省杭州市西湖区浙江工业大学屏峰校区</p>
+															<p>收货地址：{{address.address}}</p>
 														</div>
 													</div>
 													<div class="address-edit-button">
-														<i class="icon-edit"></i>
+														<i class="icon-edit" v-on:click="$emit('showeditwindow')"></i>
 													</div>
 												</li>
 											</ul>
 											<div class="add-address-button">
-												<button class="btn btn-primary">新建收货地址</button>
+												<button class="btn btn-primary" v-on:click="$emit('shownewwindow')">新建收货地址</button>
 											</div>
 										</div>
 									</div>
@@ -182,7 +207,9 @@
 								<div class="row">
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<div class="address-choose-title">
-											<p>新建收货地址</p>
+											<slot name="edit-window-title">
+												<p>新建收货地址</p>
+											</slot>
 											<button v-on:click="$emit('close')"><i class="icon-remove"></i></button>
 										</div>
 									</div>
@@ -193,9 +220,9 @@
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>选择地区</p>
 										<ul>
-											<li id="select-province">选择省份</li>
-											<li id="select-city">选择城市</li>
-											<li id="select-region">选择地区</li>
+											<li v-on:click="$emit('chooseprovince')">{{addressregion.province}}</li>
+											<li v-on:click="$emit('choosecity')">{{addressregion.city}}</li>
+											<li v-on:click="$emit('chooseregion')">{{addressregion.region}}</li>
 										</ul>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
@@ -211,8 +238,10 @@
 										<input type="text" placeholder="邮政编码(选填)"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-operator-button">
-										<button class="btn btn-success">保存</button>
-										<button class="btn btn-danger">删除</button>
+										<slot name="popup-btn-container">
+											<button class="btn btn-success">保存</button>
+											<button class="btn btn-danger">删除</button>
+										</slot>
 									</div>
 								</div>
 							</div>
@@ -244,7 +273,7 @@
 				</div>
 			</transition>
 		</script>
-		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery-3.2.1.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/order.js" ></script>

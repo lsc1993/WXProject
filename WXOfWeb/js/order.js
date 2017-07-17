@@ -37,12 +37,12 @@ var orderPage = new Vue({
 })
 
 var chooseAddressWindow = Vue.component("choose-address-window",{
-	props: ['addressItem'],
+	props: ['addressitem'],
 	template: "#popup-window-address-choose"
 })
 
 var newAddressWindow = Vue.component("new-address-window",{
-	props: ['addressMessage'],
+	props: ['addressregion'],
 	template: "#popup-window-address-new"
 })
 
@@ -50,16 +50,49 @@ var chooseAddress = new Vue({
 	el: "#address-choose",
 	data: {
 		isShowChooseWindow: false,
-		addressItems: [
-		    {}
-		]
+		isShowEditWindow: false,
+		isOneButton: false,
+		editTitle: "新建收货地址",
+		addressRegion: {
+			province: "选择省份",
+			city: "选择城市",
+			region: "选择地区",
+		},
+		addressItems: [{
+			name: "刘爽",
+			tel: "15700084332",
+			address: "浙江省杭州市西湖区浙江工业大学屏峰校区",
+			posycode: "453400"
+		}]
 	},
 	methods: {
 		showChooseWindow: function(){
 			this.isShowChooseWindow = true;
 		},
+		showOneBtnWindow: function(){
+			this.isShowEditWindow = true;
+			this.isOneButton = false;
+			this.editTitle = "新建收货地址";
+		},
+		showTwoBtnWindow: function(){
+			this.isShowEditWindow = true;
+			this.isOneButton = true;
+			this.editTitle = "编辑收货地址";
+		},
 		removeChooseWindow: function(){
 			this.isShowChooseWindow = false;
+		},
+		removeEditWindow: function(){
+			this.isShowEditWindow = false;
+		},
+		chooseProvince: function(){
+			dialog.chooseProvince();
+		},
+		chooseCity: function(){
+			dialog.chooseCity();
+		},
+		chooseRegion: function(){
+			dialog.chooseRegion(); 
 		}
 	},
 	components: {
