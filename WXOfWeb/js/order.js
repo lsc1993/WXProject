@@ -14,15 +14,22 @@ function autoHeightTextaera() {
 var orderPage = new Vue({
 	el: "#order-page",
 	data: {
+		isShowAddress: false,
 		productMessage: 
-		    {imgurl: "../img/20172001.jpg",
-		     name: "change",
-		     standard: "4斤",
-		     price: "299.90",
-		     count: "1",
-		     deliveryCost: "0.00",
-		    }
-		
+		{	imgurl: "../img/20172001.jpg",
+		    name: "change",
+		    standard: "4斤",
+		    price: "299.90",
+		    count: "1",
+		    deliveryCost: "0.00",
+		},
+		addressMessage: 
+		{
+			name: "",
+			tel: "",
+			address: "",
+			postcode: ""
+		}
 	},
 	computed: {
 		totalCost: function(){
@@ -54,15 +61,24 @@ var chooseAddress = new Vue({
 		isOneButton: false,
 		editTitle: "新建收货地址",
 		addressRegion: {
-			province: "选择省份",
-			city: "选择城市",
-			region: "选择地区",
+			name: "刘爽",
+			tel: "15700084332",
+			province: "浙江省",
+			city: "杭州市",
+			region: "西湖区",
+			road: "浙江工业大学屏峰校区",
+			address: "浙江省杭州市西湖区浙江工业大学屏峰校区",
+			postcode: "453400"
 		},
 		addressItems: [
 		{
 			index: 0,
 			name: "刘爽",
 			tel: "15700084332",
+			province: "浙江省",
+			city: "杭州市",
+			region: "西湖区",
+			road: "浙江工业大学屏峰校区",
 			address: "浙江省杭州市西湖区浙江工业大学屏峰校区",
 			posycode: "453400"
 		},
@@ -70,6 +86,10 @@ var chooseAddress = new Vue({
 			index: 1,
 			name: "刘小爽",
 			tel: "15700084332",
+			province: "浙江省",
+			city: "杭州市",
+			region: "西湖区",
+			road: "留和路288号浙江工业大学屏峰校区",
 			address: "浙江省杭州市西湖区留和路288号浙江工业大学屏峰校区",
 			posycode: "453400"
 		},
@@ -116,5 +136,10 @@ function showChooseWindow() {
 }
 
 function chooseAddressOfIndex(index) {
-	alert("w"+index);
+	orderPage.addressMessage.name = chooseAddress.addressItems[index].name;
+	orderPage.addressMessage.tel = chooseAddress.addressItems[index].tel;
+	orderPage.addressMessage.address = chooseAddress.addressItems[index].address;
+	orderPage.addressMessage.postcode = chooseAddress.addressItems[index].postcode;
+	chooseAddress.isShowChooseWindow = false;
+	orderPage.isShowAddress = true;
 }

@@ -1,24 +1,68 @@
 .address-container {
 	width: 100%;
-	height: 60px;
+	height: auto;
 	background-color: #CCCCCC;
 }
 
-.address-container img {
+.address-choose-container {
+	width: auto;
+	height: 60px;
+}
+
+.address-choose-container p {
+	width: auto;
+	line-height: 60px;
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.address-choose-container i {
+	line-height: 60px;
+}
+
+.address-choose-container img {
 	width: 40px;
 	height: 40px;
 	margin-top: 10px;
 }
 
-.address-container p {
-	width: auto;
-	line-height: 60px;
-	font-size: 20px;
-	font-weight: 600;
+.address-content {
+	display: table;
+	margin: 2% 0 0 0;
 }
 
-.address-container i {
-	line-height: 55px;
+.address-icon {
+	width: 8%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.address-message {
+	width: 83%;
+	height: auto;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.address-user-message p {
+	width: auto;
+	line-height: 18px;
+	font-size: 16px;
+}
+
+.address-user-addr p {
+	width: auto;
+	line-height: 15px;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+.address-choose-icon {
+	width: 5%;
+	height: auto;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
 
 .store-name {

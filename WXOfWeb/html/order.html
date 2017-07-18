@@ -16,7 +16,7 @@
 		<div id="order-page">
 			<div class="address-container" onclick="showChooseWindow()">
 				<div class="container">
-					<div class="row">
+					<div class="row address-choose-container"  v-show="!isShowAddress">
 						<div class="col-md-2 col-sm-2 col-xs-2">
 							<img src="../img/20172001.jpg"/>
 						</div>
@@ -24,6 +24,23 @@
 							<p>选择收获地址</p>
 						</div>
 						<div class="col-md-1 col-sm-1 col-xs-1">
+							<i class="icon-angle-right"></i>
+						</div>
+					</div>
+					<div class="address-content"  v-show="isShowAddress">
+						<div class="address-icon">
+							<input type="radio" />
+						</div>
+						<div class="address-message">
+							<div class="address-user-message">
+								<p>{{addressMessage.name}}</p>
+								<p>{{addressMessage.tel}}</p>
+							</div>
+							<div class="address-user-addr">
+								<p>收货地址：{{addressMessage.address}}</p>
+							</div>
+						</div>
+						<div class="address-choose-icon">
 							<i class="icon-angle-right"></i>
 						</div>
 					</div>
@@ -174,7 +191,7 @@
 													</div>
 													<div class="address-item-message">
 														<div class="product-receiver">
-															<p>{{address.name}}{{address.index}}</p>
+															<p>{{address.name}}</p>
 															<p>{{address.tel}}</p>
 														</div>
 														<div class="receiver-address">
@@ -216,7 +233,7 @@
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>收货人</p>
-										<input type="text" placeholder="名字"/>
+										<input type="text" :value="addressregion.name" placeholder="名字"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>选择地区</p>
@@ -228,15 +245,15 @@
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>联系电话</p>
-										<input type="text" placeholder="手机号或固定电话"/>
+										<input type="text" :value="addressregion.tel" placeholder="手机号或固定电话"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>详细地址</p>
-										<input type="text" placeholder="如街道、楼层、门牌号等"/>
+										<input type="text" :value="addressregion.road" placeholder="如街道、楼层、门牌号等"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>邮政编码</p>
-										<input type="text" placeholder="邮政编码(选填)"/>
+										<input type="text" :value="addressregion.postcode" placeholder="邮政编码(选填)"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-operator-button">
 										<slot name="popup-btn-container">
