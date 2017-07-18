@@ -117,9 +117,7 @@
 				<ul slot="dialog-content" id="address-dialog">
 					<li 
 						v-for="(addressList,index) in aera" 
-						v-bind:key="addressList"
-						v-bind:index="index"
-						>
+						v-bind:key="addressList">
 						<p onclick="selectAddress($(this).text())">{{addressList[1]}}</p>
 					</li>
 				</ul>
@@ -132,6 +130,7 @@
 					@close="removeChooseWindow()" 
 					@shownewwindow="showOneBtnWindow()" 
 					@showeditwindow="showTwoBtnWindow()"
+					@chooseaddr="chooseAddress(1)"
 					:addressitem="addressItems">
 				</choose-address-window>
 				 <new-address-window 
@@ -167,13 +166,15 @@
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<div class="address-list">
 											<ul>
-												<li v-for="address in addressitem" :key="address">
+												<li v-for="(address,index) in addressitem" 
+													v-bind:key="address"
+													v-on:click="chooseAddressOfIndex(index)">
 													<div class="address-item-radio">
 														<input type="radio" />
 													</div>
 													<div class="address-item-message">
 														<div class="product-receiver">
-															<p>{{address.name}}</p>
+															<p>{{address.name}}{{address.index}}</p>
 															<p>{{address.tel}}</p>
 														</div>
 														<div class="receiver-address">

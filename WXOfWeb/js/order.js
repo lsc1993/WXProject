@@ -58,12 +58,22 @@ var chooseAddress = new Vue({
 			city: "选择城市",
 			region: "选择地区",
 		},
-		addressItems: [{
+		addressItems: [
+		{
+			index: 0,
 			name: "刘爽",
 			tel: "15700084332",
 			address: "浙江省杭州市西湖区浙江工业大学屏峰校区",
 			posycode: "453400"
-		}]
+		},
+		{
+			index: 1,
+			name: "刘小爽",
+			tel: "15700084332",
+			address: "浙江省杭州市西湖区留和路288号浙江工业大学屏峰校区",
+			posycode: "453400"
+		},
+		]
 	},
 	methods: {
 		showChooseWindow: function(){
@@ -103,4 +113,8 @@ var chooseAddress = new Vue({
 
 function showChooseWindow() {
 	chooseAddress.showChooseWindow();
+}
+
+function chooseAddressOfIndex(index) {
+	alert("w"+index);
 }

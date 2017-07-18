@@ -568,7 +568,7 @@ var dialog = new Vue({
 	data: {
 		isShowDialog: false,
 		title: "请选择省份",
-	    aera: addr_arr[0],
+	    aera: "",
 	    province: "",
 	    city: "",
 	    region: "",
