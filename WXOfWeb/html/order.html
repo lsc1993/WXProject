@@ -184,18 +184,19 @@
 										<div class="address-list">
 											<ul>
 												<li v-for="(address,index) in addressitem" 
-													v-bind:key="address"
-													v-on:click="chooseAddressOfIndex(index)">
-													<div class="address-item-radio">
-														<input type="radio" />
-													</div>
-													<div class="address-item-message">
-														<div class="product-receiver">
-															<p>{{address.name}}</p>
-															<p>{{address.tel}}</p>
+													v-bind:key="address">
+													<div v-on:click="chooseAddressOfIndex(index)">
+														<div class="address-item-radio">
+															<input type="radio" />
 														</div>
-														<div class="receiver-address">
-															<p>收货地址：{{address.address}}</p>
+														<div class="address-item-message">
+															<div class="product-receiver">
+																<p>{{address.name}}</p>
+																<p>{{address.tel}}</p>
+															</div>
+															<div class="receiver-address">
+																<p>收货地址：{{address.address}}</p>
+															</div>
 														</div>
 													</div>
 													<div class="address-edit-button">
@@ -223,8 +224,8 @@
 						<div class="popup-window-modal-container">
 							<div class="container address-message-content">
 								<div class="row">
-									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
-										<div class="address-choose-title">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="address-new-title">
 											<slot name="edit-window-title">
 												<p>新建收货地址</p>
 											</slot>

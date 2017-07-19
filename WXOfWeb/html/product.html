@@ -26,7 +26,6 @@
 				</div>
 			</div>
 		</header>
-		<!--header end-->
 		<!--space撑空间-->
 		<div class="space"></div>
 		<!--页面内容-->
@@ -103,15 +102,12 @@
 			</div>
 		</div>
 		<div id="dialog-div">
-			<!--<button @click="showDialog('hello lsc')">dialog</button>-->
 			<dialog-component id="dialog-modal-me" v-if="showModal" @close="showModal = false" :message="message">
 			</dialog-component>
 		</div>
 		<div id="popup-window-div">
 			<popup-window v-if="isShow" @close="dismiss()" :productitem="productMessage"></popup-window>
-			<!--<button @click="showPopupWindow()">ssss</button>-->
 		</div>
-		<!--content end-->
 		<!--页面底部选项-->
 		<footer class="fixed-footer">
 			<div class="fixed-footer-wrapper">
@@ -127,7 +123,6 @@
 				</div>
 			</div>
 		</footer>
-		<!--footer end-->
 		<!--对话框模板-->
 		<script type="text/x-template" id="dialog-modal">
 			<transition name="dialog">
@@ -155,6 +150,7 @@
 				</div>
 			</transition>
 		</script>
+		<!--产品规格选择popupwindow-->
 		<script type="text/x-template" id="popup-window-modal">
 			<transition name="popup-window-transition">
 				<div class="popup-window-modal-mask">

@@ -1,12 +1,110 @@
+/*
+ * 产品页header样式
+ * */
+.fixed-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 50px;
+	background: #FFFFFF;
+	border-radius: 3px;
+	box-shadow: 2px 2px 1px #CCCCCC;
+	z-index: 99;
+}
+
+.fixed-header a {
+	line-height: 50px;
+	text-decoration: none;
+	float: left;
+}
+
+.fixed-header a i {
+	transform: scale(2);
+	-webkit-transform: scale(2);
+}
+
+.fixed-header p {
+	line-height: 50px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 40;
+}
+
+.space {
+	height: 65px;
+}
+
+/*
+ * 产品页footer样式
+ * */
+.fixed-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    height: 50px;
+	background: #FFFFFF;
+	z-index: 99;
+}
+
+.fixed-footer-wrapper {
+	width: 100%;
+	min-height: 50px;
+	border-bottom: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+}
+
+.footer-tab-btn1 {
+	width: auto;
+	height: 50px;
+	padding: 5px;
+	display: inline-block;
+	text-align: center;
+	border-right: 1px solid #CCCCCC;
+}
+
+.footer-tab-btn2 {
+	width: 28%;
+	line-height: 50px;
+	background-color: #D9534F;
+	display: inline-block;
+	float: right;
+	text-align: center;
+	color: #FFFFFF;
+	font-weight: 500;
+	border-right: 1px solid #CCCCCC;
+}
+
+.footer-tab-btn3 {
+	width: 28%;
+	line-height: 50px;
+	background-color: #F0AD4E;
+	display: inline-block;
+	float: right;
+	text-align: center;
+	color: #FFFFFF;
+	font-weight: 500;
+	border-right: 1px solid #CCCCCC;
+}
+
+/*
+ * 产品页面内容样式
+ * */
 .product-container {
 	margin-bottom: 50px;
 }
-
+/*
+ * 布局整体宽度
+ * */
 .container-all-width {
 	width: 100%;
 	padding: 0;
 }
 
+/*
+ * 产品图片样式
+ * */
 .product-img-turn {
 	width: 100%;
 	height: 45%;
@@ -17,6 +115,9 @@
 	height: 45%;
 }
 
+/*
+ * 产品价格样式
+ * */
 .product-price-label {
 	width: 100%;
 	height:55px;
@@ -39,6 +140,9 @@
 	font-size: 26px;
 }
 
+/*
+ * 产品名称样式
+ * */
 .product-name-label {
 	width: 100%;
 	height: auto;
@@ -53,6 +157,9 @@
 	margin-left: 3%;
 }
 
+/*
+ * 产品销售信息样式
+ * */
 .product-sales-volume {
 	width: 100%;
 	height: 40px;
@@ -76,6 +183,9 @@
 	margin-left: 30%;
 }
 
+/*
+ * 产品规格选择样式
+ * */
 .product-standard {
 	width: 100%;
 	height: 40px;
@@ -94,6 +204,9 @@
 	float: right;
 }
 
+/*
+ * 产品详情样式
+ * */
 .product-detail-container {
 	width: 100%;
 	height: auto;
@@ -125,6 +238,10 @@
 	width: 100%;
 }
 
+
+/*
+ * 产品评价样式
+ * */
 .product-appraise-container {
 	width: 100%;
 	display: none;

@@ -2,6 +2,7 @@ $(function(){
 	autoHeightTextaera();
 })
 
+//买家留言输入框高度伸展
 function autoHeightTextaera() {
 	$("#buy-message").focus(function(){
 		$("#buy-message").animate({height:"80px"},300);
@@ -11,6 +12,9 @@ function autoHeightTextaera() {
 	});
 }
 
+/*
+ * 订单页面Vue实例
+ * */
 var orderPage = new Vue({
 	el: "#order-page",
 	data: {
@@ -19,9 +23,9 @@ var orderPage = new Vue({
 		{	imgurl: "../img/20172001.jpg",
 		    name: "change",
 		    standard: "4斤",
-		    price: "299.90",
+		    price: 299.90,
 		    count: "1",
-		    deliveryCost: "0.00",
+		    deliveryCost: 0.00,
 		},
 		addressMessage: 
 		{
@@ -33,7 +37,7 @@ var orderPage = new Vue({
 	},
 	computed: {
 		totalCost: function(){
-			return parseFloat(this.price) + parseFloat(this.deliveryCost);
+			return this.productMessage.price + this.productMessage.deliveryCost;
 		}
 	},
 	methods: {
@@ -43,16 +47,25 @@ var orderPage = new Vue({
 	}
 })
 
+/*
+ * 选择地址Vue组件popupwindow
+ * */
 var chooseAddressWindow = Vue.component("choose-address-window",{
 	props: ['addressitem'],
 	template: "#popup-window-address-choose"
 })
 
+/*
+ * 新建与编辑地址Vue组件popupwindow
+ * */
 var newAddressWindow = Vue.component("new-address-window",{
 	props: ['addressregion'],
 	template: "#popup-window-address-new"
 })
 
+/*
+ * 地址popupwindow的Vue实例
+ * */
 var chooseAddress = new Vue({
 	el: "#address-choose",
 	data: {
@@ -96,32 +109,32 @@ var chooseAddress = new Vue({
 		]
 	},
 	methods: {
-		showChooseWindow: function(){
+		showChooseWindow: function(){ //显示地址选择对话框
 			this.isShowChooseWindow = true;
 		},
-		showOneBtnWindow: function(){
+		showOneBtnWindow: function(){  //显示新建收货地址对话框（有一个按钮）
 			this.isShowEditWindow = true;
 			this.isOneButton = false;
 			this.editTitle = "新建收货地址";
 		},
-		showTwoBtnWindow: function(){
+		showTwoBtnWindow: function(){  //显示新建收货地址对话框（有两个按钮）
 			this.isShowEditWindow = true;
 			this.isOneButton = true;
 			this.editTitle = "编辑收货地址";
 		},
-		removeChooseWindow: function(){
+		removeChooseWindow: function(){  //关闭地址选择对话框
 			this.isShowChooseWindow = false;
 		},
-		removeEditWindow: function(){
+		removeEditWindow: function(){   //关闭新建与编辑地址选择对话框
 			this.isShowEditWindow = false;
 		},
-		chooseProvince: function(){
+		chooseProvince: function(){  //选择省份
 			dialog.chooseProvince();
 		},
-		chooseCity: function(){
+		chooseCity: function(){  //选择城市
 			dialog.chooseCity();
 		},
-		chooseRegion: function(){
+		chooseRegion: function(){  //选择地区
 			dialog.chooseRegion(); 
 		}
 	},
@@ -131,10 +144,12 @@ var chooseAddress = new Vue({
 	}
 })
 
+//显示地址选择对话框
 function showChooseWindow() {
 	chooseAddress.showChooseWindow();
 }
 
+//选择相应位置的地址
 function chooseAddressOfIndex(index) {
 	orderPage.addressMessage.name = chooseAddress.addressItems[index].name;
 	orderPage.addressMessage.tel = chooseAddress.addressItems[index].tel;

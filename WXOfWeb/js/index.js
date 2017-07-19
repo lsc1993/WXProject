@@ -2,6 +2,9 @@ $(function(){
 	
 })
 
+/*
+ * 产品展示列表Vue实例
+ * */
 var productWrapper = new Vue({
 	el:"#product-wrapper",
 	data: {
