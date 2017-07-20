@@ -1,0 +1,73 @@
+/*
+ * 订单列表样式
+ * */
+.order-list-container {
+	
+}
+
+.order-list {
+	width: 100%;
+	height: auto;
+}
+
+.order-list ul {
+	width: 100%;
+	height: auto;
+	list-style: none;
+	padding: 0;
+}
+
+.order-list ul li {
+	width: 100%;
+	height: auto;
+	display: block; 
+	margin-top: 15px;
+	box-shadow: 2px 2px #CCCCCC; 
+}
+
+.order-no p {
+	color: #CCCCCC;
+	font-size: 13px;
+}
+
+.order-status p {
+	color: #FF0000;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.order-message-container {
+	margin-bottom: 5px;
+}
+
+.order-message img {
+	width: 80px;
+	height: 80px;
+}
+
+.order-message p {
+	height: auto;
+	text-align: right;
+	display: block;
+}
+
+.order-total-cost p {
+	float: right;
+}
+
+.product-count p {
+	float: right;
+}
+
+.border-bottom-divider {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.order-operator button {
+	margin-left: 3%;
+	margin-top: 2%;
+	margin-bottom: 3%;
+	float: right;
+	background-color: rgba(255,255,255,.3);
+	border: 1px solid #CCCCCC;
+}

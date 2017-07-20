@@ -7,5 +7,8 @@ function tabClick(index) {
 		$("#tab-3").addClass("tab-choosed").siblings().removeClass("tab-choosed");
 	} else if(index == 4) {
 		$("#tab-4").addClass("tab-choosed").siblings().removeClass("tab-choosed");
+	} else if(index == 5) {        
+		$("#tab-5").addClass("tab-choosed").siblings().removeClass("tab-choosed");
 	}
+
 }
