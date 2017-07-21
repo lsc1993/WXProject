@@ -50,10 +50,18 @@
 	text-align: center;
 }
 
+.my-order-state-container a {
+	color: #000000;
+}
+
 .my-order-list {
 	width: 100%;
 	height: auto;
 	border-bottom: 1px solid #CCCCCC;
+}
+
+.my-order-list a {
+	color: #000000;
 }
 
 .my-order-list p {

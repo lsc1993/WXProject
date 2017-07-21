@@ -1,0 +1,89 @@
+/*
+ * 产品页header样式
+ * */
+.fixed-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 50px;
+	background: #FFFFFF;
+	border-radius: 3px;
+	box-shadow: 2px 2px 1px #CCCCCC;
+	z-index: 99;
+}
+
+.fixed-header a {
+	width: auto;
+	line-height: 50px;
+	color: #4D4D4D;
+	text-decoration: none;
+	float: left;
+}
+
+.fixed-header i {
+	line-height: 50px;
+}
+
+.fixed-header p {
+	line-height: 50px;
+	text-align: center;
+	font-weight: 400;
+	font-size: 20px;
+}
+
+.space {
+	height: 65px;
+}
+/*
+ * 我的收藏列表样式 
+ * */
+.my-trade-container {
+	width: 100%;
+	height: auto;
+}
+
+.my-trade-content {
+	width: 100%;
+	height: auto;
+}
+
+.my-trade-content ul {
+	list-style: none;
+	padding: 0;
+}
+
+.my-trade-content ul li {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.my-trade-list-img {
+	width: 23%;
+	height: auto;
+	bottom: 0;
+	display: inline-block;
+	float: left;
+}
+
+.my-trade-list-img img {
+	width: 80px;
+	max-width: 100%;
+	height: 80px;
+}
+
+.my-trade-list-message {
+	width: 72%;
+	height: auto;
+	display: inline-block;
+	margin-left: 5%;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.my-trade-list-message p {
+	max-width: 90%;
+	font-size: 16px;
+	word-break: break-all;
+	word-wrap: break-word;
+}

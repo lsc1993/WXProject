@@ -14,21 +14,22 @@
 }
 
 .fixed-header a {
+	width: auto;
 	line-height: 50px;
+	color: #4D4D4D;
 	text-decoration: none;
 	float: left;
 }
 
-.fixed-header a i {
-	transform: scale(2);
-	-webkit-transform: scale(2);
+.fixed-header i {
+	line-height: 50px;
 }
 
 .fixed-header p {
 	line-height: 50px;
 	text-align: center;
-	font-weight: 600;
-	font-size: 40;
+	font-weight: 400;
+	font-size: 20px;
 }
 
 .space {
