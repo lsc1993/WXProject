@@ -98,3 +98,17 @@
 	vertical-align: middle;
 	text-align: center;
 }
+
+.address-new-button {
+	position: fixed;
+	width: 100%;
+	height: auto;
+	bottom: 0;
+}
+
+.address-new-button button {
+	width: 90%;
+	height: 45px;
+	margin: 5%;
+	font-size: 18px;
+}

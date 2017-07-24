@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
 		<link rel="stylesheet" href="../css/address-manager.css" />
 		<link rel="stylesheet" href="../css/popup-window.css" />
+		<link rel="stylesheet" href="../css/dialog.css" />
 	</head>
 	<body>
 		<!--页面title-->
@@ -28,34 +29,45 @@
 			<h3 v-if="isShowTip">您还没有填写过地址~</h3>
 			<div class="address-list-content">
 				<ul>
-					<li>
+					<li v-for="(address, index) in addressList" :key="address">
 						<div class="address-icon">
 							<i class="icon-plane icon-large"></i>
 						</div>
 						<div class="address-message">
 							<div>
-								<p>刘爽</p>
-								<p>15700084332</p>
+								<p>{{address.name}}</p>
+								<p>{{address.tel}}</p>
 							</div>
 							<div>
-								<p>收货地址：浙江省杭州市西湖区留和路288号浙江工业大学屏风校区</p>
+								<p>收货地址：{{address.address}}</p>
 							</div>
 						</div>
-						<div class="address-edit-operator">
+						<div class="address-edit-operator" @click="showEditWindow(index)">
 							<i class="icon-edit icon-2x"></i>
 						</div>
 					</li>
 				</ul>
+				<div class="address-new-button">
+					<button class="btn btn-primary" @click="showBuildWindow()">新增收货地址 </button>
+				</div>
 			</div>
 		</div>
-		<div id="address-choose">
-			<new-address-window
+		<div id="address-edit-window">
+			<edit-address-window
 				v-show="isShowEditWindow" 
 				@close="removeEditWindow()" 
 				@chooseprovince="chooseProvince()" 
 				@choosecity="chooseCity()" 
 				@chooseregion="chooseRegion()"
-				:addressregion="addressRegion"></new-address-window>
+				:addressregion="addressRegion">
+				<p slot="edit-window-title">
+				 	{{editTitle}}
+				</p>
+				<div slot="popup-btn-container">
+				 	<button class="btn btn-success">保存</button> 
+					<button class="btn btn-danger" v-show="isOneButton">删除</button>
+				</div
+			</edit-address-window>
 		</div>
 		<div id="address-aera-choose">
 			<address-dialog v-if="isShowDialog" >
@@ -72,8 +84,23 @@
 				<p slot="dialog-footer"></p>
 			</address-dialog>
 		</div>
+		<div id="tip-dialog-div">
+			<tip-dialog v-if="isShowTip" @close="isShowTip = false"
+				@confirm="confirm()">
+				<p slot="dialog-header">
+					提示
+				</p>
+				<p slot="dialog-content">
+					{{message}}
+				</p>
+				<div slot="dialog-footer">
+					<p class="dialog-button-left" @click="$emit('close')">取消</p>
+					<p class="dialog-button-right" @click="$emit('close')">确认</p>
+				</div>
+			</tip-dialog>
+		</div>
 		<!--新建地址popupwindow模板-->
-		<script type="text/x-template" id="popup-window-address-new">
+		<script type="text/x-template" id="popup-window-address-edit">
 			<transition name="popup-window-transition">
 				<div class="popup-window-modal-mask">
 					<div class="popup-window-modal-wrapper">
@@ -119,6 +146,30 @@
 										</slot>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
+		<!--地区选择对话框模板-->
+		<script type="text/x-template" id="address-dialog-modal">
+			<transition name="dialog">
+				<div class="dialog-modal-mask">
+					<div class="dialog-modal-wrapper">
+						<div class="dialog-modal-container"> 
+							<div class="dialog-header">
+								<slot name="dialog-header">
+								</slot>
+							</div>
+							<div class="dialog-content">
+								<slot name="dialog-content">
+								</slot>
+							</div>
+							<div class="dialog-footer">
+								<slot name="dialog-footer">
+									
+								</slot>
 							</div>
 						</div>
 					</div>

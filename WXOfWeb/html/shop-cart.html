@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  />
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/shop-cart.css" />
+	</head>
+	<body>
+		<!--页面title-->
+		<header class="fixed-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="menu-wrapper">
+							<a><i class="icon-angle-left icon-2x"></i></a>
+							<p>购物车</p>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</header>
+		<!--space撑空间-->
+		<div class="space"></div>
+		<div class="shop-order-container" id="shop-cart">
+			<div class="">
+				<div class="shop-order-list">
+					<ul>
+						<li v-for="(shopOrder, index) in shopOrderList"
+							:key="shopOrder">
+							<div>
+								<div class="shop-order-type">
+									<i class="icon-home icon-large">{{shopOrder.type}}</i>
+									<p>删除</p>
+								</div>
+								<div class="shop-order-content">
+									<div class="shop-order-checkbox">
+										<input type="checkbox" />
+									</div>
+									<div class="shop-order-message">
+										<img :src="shopOrder.imgurl" @click="gotoProductDetail(index)"/>
+										<div class="shop-order-product-name" @click="gotoProductDetail(index)">
+											<p>{{shopOrder.name}}</p>
+											<p>{{shopOrder.standard}}</p>
+										</div>
+										<div class="shop-order-cost">
+											<div class="shop-order-product-count">
+												<p @click="subCount(index)">-</p>
+												<p>{{shopOrder.count}}</p>
+												<p @click="addCount(index)">+</p>
+											</div>
+											<div class="shop-order-product-price">
+												<p>￥{{shopOrder.total}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<footer class="shop-order-footer"> 
+				<div class="shop-order-all-check">
+					<input type="checkbox" />
+					<p>全选</p>
+				</div>
+				<div class="shop-order-pay">
+					<p>结算</p>
+				</div>
+				<div class="shop-order-total">
+					<p>合计: {{total}}</p>
+					<p>不含运费</p>
+				</div>
+			</footer>
+		</div>
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/bignumber.min.js" ></script>
+		<script type="text/javascript" src="../js/shop-cart.js" ></script>
+	</body>
+</html>
+ 

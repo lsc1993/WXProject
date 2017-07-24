@@ -80,7 +80,7 @@ var chooseAddress = new Vue({
 			city: "杭州市",
 			region: "西湖区",
 			road: "浙江工业大学屏峰校区",
-			address: "浙江省杭州市西湖区浙江工业大学屏峰校区",
+			address: "浙江省杭州市西湖区浙江工业大学屏峰校sdsds区",
 			postcode: "453400"
 		},
 		addressItems: [
