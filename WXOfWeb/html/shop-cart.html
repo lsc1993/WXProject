@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="../css/bootstrap.min.css" />
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
 		<link rel="stylesheet" href="../css/shop-cart.css" />
+		<link rel="stylesheet" href="../css/dialog.css" />
 	</head>
 	<body>
 		<!--页面title-->
@@ -33,11 +34,12 @@
 							<div>
 								<div class="shop-order-type">
 									<i class="icon-home icon-large">{{shopOrder.type}}</i>
-									<p>删除</p>
+									<p @click="deleteOrder(index)">删除</p>
 								</div>
 								<div class="shop-order-content">
 									<div class="shop-order-checkbox">
-										<input type="checkbox" />
+										<label class="input-check-bg" :class="{'input-check-bg-checked' : shopOrder.isChecked }"
+											@click="checkItem(index)"></label>
 									</div>
 									<div class="shop-order-message">
 										<img :src="shopOrder.imgurl" @click="gotoProductDetail(index)"/>
@@ -47,9 +49,9 @@
 										</div>
 										<div class="shop-order-cost">
 											<div class="shop-order-product-count">
-												<p @click="subCount(index)">-</p>
+												<button @click="subCount(index)"><i class="icon-minus"></i></button>
 												<p>{{shopOrder.count}}</p>
-												<p @click="addCount(index)">+</p>
+												<button @click="addCount(index)"><i class="icon-plus"></i></button>
 											</div>
 											<div class="shop-order-product-price">
 												<p>￥{{shopOrder.total}}</p>
@@ -64,22 +66,58 @@
 			</div>
 			<footer class="shop-order-footer"> 
 				<div class="shop-order-all-check">
-					<input type="checkbox" />
+					<label id="check-all" class="input-check-bg" 
+						@click="checkAll()"
+						:class="{'input-check-bg-checked' : isCheckAll }">
+					</label>
 					<p>全选</p>
+					
 				</div>
 				<div class="shop-order-pay">
 					<p>结算</p>
 				</div>
 				<div class="shop-order-total">
 					<p>合计: {{total}}</p>
-					<p>不含运费</p>
+					<p class="shop-order-total-p-height">不含运费</p>
 				</div>
 			</footer>
 		</div>
+		<div id="dialog-tip">
+			<dialog-component v-if="isShow"
+				:message="message"
+				@close="isShow = false"
+				@confirm=""></dialog-component>
+		</div>
+		<!--对话框模板-->
+		<script type="text/x-template" id="dialog-modal">
+			<transition name="dialog">
+				<div class="dialog-modal-mask">
+					<div class="dialog-modal-wrapper">
+						<div class="dialog-modal-container"> 
+							<div class="dialog-header">
+								<slot name="dialog-header">
+									提示
+								</slot>
+							</div>
+							<div class="dialog-content">
+								<slot name="dialog-content">
+									{{message}}
+								</slot>
+							</div>
+							<div class="dialog-footer">
+								<slot name="dialog-footer">
+									<p class="dialog-button-left" @click="$emit('close')">取消</p>
+									<p class="dialog-button-right" @click="$emit('confirm')">确认</p>
+								</slot>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
-		<script type="text/javascript" src="../js/bignumber.min.js" ></script>
 		<script type="text/javascript" src="../js/shop-cart.js" ></script>
 	</body>
 </html>

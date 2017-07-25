@@ -43,6 +43,9 @@
 	width: 100%;
 }
 
+/*
+ * 购物车产品列表
+ * */
 .shop-order-list {
 	width: 100%;
 	height: auto;
@@ -81,7 +84,9 @@
 
 .shop-order-checkbox {
 	width: 8%;
+	height: auto;
 	float: left;
+	margin-top: 2%;
 }
 
 .shop-order-message {
@@ -93,25 +98,26 @@
 .shop-order-message img {
 	width: 80px;
 	height: 80px;
-	max-width: 30%;
+	max-width: 28%;
 	float: left;
 }
 
 .shop-order-product-name {
-	width: auto;
+	width: 36%;
 	max-width: 40%;
 	display: inline-block;
 	margin-left: 3%;
 }
 
 .shop-order-product-name p {
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .shop-order-cost {
-	min-width: 30%;
+	width: 30%;
 	max-width: 30%;
 	display: inline-block;
+	padding: 0;
 	float: right;
 } 
 
@@ -120,10 +126,18 @@
 }
 
 .shop-order-product-count p {
-	width: 30px;
+	width: 30%;
+	max-width: 30%;
 	height: 30px;
 	text-align: center;
-	font-size: 20px;
+	font-size: 18px;
+}
+
+.shop-order-product-count button {
+	width: 25%;
+	max-width: 30%;
+	height: 25px;
+	background-color: rgba(255,255,255,.5);
 	border: 1px solid #CCCCCC;
 }
 
@@ -136,54 +150,60 @@
 	font-size: 18px;
 }
 
+/*
+ * 购物车页面footer
+ * */
 .shop-order-footer {
 	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	width: 100%;
-	height: 50px;
+	height: auto;
 }
 
 .shop-order-all-check {
+	max-width: 28%;
 	display: inline-block;
 	float: left;
 }
 
-.shop-order-all-check input[type=checkbox] {
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-}
-
 .shop-order-all-check p {
 	width: auto;
-	line-height: 50px;
 	font-size: 16px;
 	display: inline-block;
+	margin-left: 5px;
 }
 
 .shop-order-total {
-	max-width: 45%;
+	position: absolute;
+	bottom: 0;
+	right: 33%;
+	max-width: 40%;
 	height: auto;
-	float: right;
 }
 
 .shop-order-total p {
 	width: auto;
 	max-width: 100%;
-	height: 18px;
 	font-size: 16px;
+	padding: 0;
+}
+
+.shop-order-total-p-height {
+	height: 10px;
 }
 
 .shop-order-pay {
+	position: absolute;
+	bottom: 0;
+	right: 0;
 	width: 30%;
+	max-width: 30%;
 	height: 50px;
 	background-color: #D9534F;
 	display: inline-block;
 	text-align: center;
-	float: right;
-	margin-left: 3%;
 }
 
 .shop-order-pay p {
@@ -191,4 +211,21 @@
 	line-height: 50px;
 	color: #FFFFFF;
 	font-size: 20px;
+}
+
+/*
+ * checkbox样式
+ * */
+.input-check-bg {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	float: left;
+	background: url(../img/blue.png) no-repeat;
+	background-position: 0px 0;
+}
+
+.input-check-bg-checked {
+	background: url(../img/blue.png) no-repeat;
+	background-position: -22px 0;
 }
