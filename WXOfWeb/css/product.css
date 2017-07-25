@@ -239,13 +239,12 @@
 	width: 100%;
 }
 
-
 /*
  * 产品评价样式
  * */
 .product-appraise-container {
 	width: 100%;
-	display: none;
+	height: auto;
 }
 
 .product-appraise-user {

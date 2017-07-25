@@ -84,7 +84,7 @@ var shopCart = new Vue({
 		checkAll: function(){
 			if (!this.isCheckAll){
 				this.isCheckAll = true;
-				var aTotal = parseFloat(this.total);
+				var aTotal = 0;
 				for(var i = 0;i < this.shopOrderList.length;++i){
 					this.shopOrderList[i].isChecked = true;
 					var pTotal = parseFloat(this.shopOrderList[i].total);
@@ -141,7 +141,7 @@ var shopCart = new Vue({
 			}
 		},
 		deleteOrder: function(index){
-			
+			dialog.showDialog(index);
 		}
 	}
 })
@@ -156,6 +156,18 @@ var dialog = new Vue({
 	el: "#dialog-tip",
 	data: {
 		isShow: false,
-		message: "是否删除？"
+		message: "是否删除？",
+		index: 0
+	},
+	methods: {
+		showDialog: function(index){
+			this.isShow = true;
+			this.index = index;
+		},
+		confirm:function(){
+			shopCart.shopOrderList.splice(this.index,1);
+			this.isShow = false;
+			shopCart.checkAllState();
+		}
 	}
 })

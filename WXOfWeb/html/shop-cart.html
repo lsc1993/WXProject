@@ -16,7 +16,7 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="menu-wrapper">
-							<a><i class="icon-angle-left icon-2x"></i></a>
+							<a href="index.html"><i class="icon-angle-left icon-2x"></i></a>
 							<p>购物车</p>
 						</div>	
 					</div>
@@ -86,7 +86,7 @@
 			<dialog-component v-if="isShow"
 				:message="message"
 				@close="isShow = false"
-				@confirm=""></dialog-component>
+				@confirm="confirm()"></dialog-component>
 		</div>
 		<!--对话框模板-->
 		<script type="text/x-template" id="dialog-modal">

@@ -74,8 +74,15 @@
 	display: inline-block;
 	margin-left: 5%;
 	margin-top: 2px;
-	border: 1px solid #CCCCCC;
 	border-radius: 1px;
+}
+
+.product-standard-unchoosed {
+	border: 1px solid #CCCCCC;
+}
+
+.product-standard-choosed {
+	border: 1px solid #EEA236;
 }
 
 .product-sale-count {

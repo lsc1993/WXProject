@@ -1,80 +1,64 @@
 $(function(){
 	//getParam();
-	//initImgSlider();
-	//$('#product-img-slider').unslider();
 })
 
 function getParam() {
 	var url = window.location.href;
 	var index = url.indexOf("pid=");
 	var param = url.substring(index+4,url.length);
-	alert(param);
 }
 
-function productDetailTabClick(index) {
-	$("#product-detaile-title").toggleClass("product-tab-title-bottom-line");
-	$("#product-appraise-title").toggleClass("product-tab-title-bottom-line");
-	if (index == 1) {
-		$("#product-detail").show();
-		$("#product-appraise").hide();
-	} else if (index == 2) {
-		$("#product-detail").hide();
-		$("#product-appraise").show();
-	}
-}
-
-function initImgSlider() {
-	var list = [
-	    {content: '../img/20172001.jpg'},
-	    {content: '../img/20172001.jpg'},
-	    {content: '../img/20172001.jpg'},
-	    {content: '../img/20172001.jpg'}
-	];
-	new iSlider(document.getElementById('product-img-slider'),list,{
-        isAutoplay: 1,
-        isLooping: 1,
-        isOverspread: 1,
-        animateTime: 800
-    });
-}
-
-var productDetali = new Vue({
-	el: "#product-detail",
-	data:{
-		imgurls:[
+var productPage = new Vue({
+	el: "#product-page",
+	data: {
+		isShowDetail: true,
+		isShowAppraise: false,
+		isDetail: true,
+		isAppraise: false,
+		imgurls: [
 		    {imgurl : "../img/20172001.jpg"},
 		    {imgurl : "../img/20172001.jpg"},
 		    {imgurl : "../img/20172001.jpg"}
-		]
-	}
-})
-
-var productAppraise = new Vue({
-	el: "#product-appraise",
-	data:{
-		isShowReturn : false,
-		userappraise:[
-		    {userimg: "../img/20172001.jpg",
-		     username: "liushuang",
-		     userappraise: "好评",
-		     time: "2017-07-09 12:10:30",
-		     sellerreturn: "drgftewartgfdfsfdsfdsdfgserrrrrrrrsdfgdfgregregedsgewfafsdfa"
+		],
+		userappraise: [
+		    {
+		    	img: "../img/20172001.jpg",
+		    	name: "liushuang",
+		     	appraise: "好评",
+		     	time: "2017-07-09 12:10:30",
+		     	feedback: ""
 		   },
-		   {userimg: "../img/20172001.jpg",
-		     username: "liushuang",
-		     userappraise: "好评",
-		     time: "2017-07-09 12:10:30",
-		     sellerreturn: "drgftewartgfdfsfdsfdsdfgserrrrrrrrsdfgdfgregregedsgewfafsdfa"
+		   {
+		   		img: "../img/20172001.jpg",
+		    	name: "liushuang",
+		    	appraise: "好评",
+		    	time: "2017-07-09 12:10:30",
+		    	feedback: "drgftewartgfdfsfdsfdsdfgserrrrrrrrsdfgdfgregregedsgewfafsdfa"
 		    }
 		]
 	},
     methods:{
-    	showSellerReturn: function(){
-    		if (this.userappraise[0].sellerreturn == "" || this.userappraise[0].sellerreturn.length == 0) {
-    			this.isShowReturn = false;
+    	showSellerReturn: function(index){
+    		if (this.userappraise[index].feedback == "" || this.userappraise[index].feedback.length == 0) {
+    			return false;
     		} else {
-    			this.isShowReturn = true;
+    			return true;
     		}
+    	},
+    	showProductDetail: function(){
+    		this.isShowDetail = true;
+    		this.isShowAppraise = false;
+    		this.isDetail = true;
+    		this.isAppraise = false;
+    	},
+    	showProductAppraise: function(){
+    		this.isShowDetail = false;
+    		this.isShowAppraise = true;
+    		this.isDetail = false;
+    		this.isAppraise = true;
+    	},
+    	showPopupWindow: function(){
+    		popup.showPopupWindow();
     	}
     }
 })
@@ -88,17 +72,16 @@ var popup = new Vue({
 	el: "#popup-window-div",
 	data:{
 		isShow : false,
-		productMessage:[
-		    {imgurl: "../img/20172001.jpg",
-		     name: "wow",
-		     price: "299",
-		     labels: [
-		         {label : "weqwdqwdrtyrtqwdq"},
-		         {label : "qweqwqweqyerte"},
-		         {label : "dasfdwqeftryrty"}
-		         ]
-		    }
-		]
+		productMessage: {
+			imgurl: "../img/20172001.jpg",
+		    name: "wow",
+		    price: "299",
+		    labels: [
+		        {label: "weqwdqwdrtyrtqwdq", isChoosed: false},
+		        {label: "qweqwqweqyerte", isChoosed: false},
+		        {label: "dasfdwqeftryrty", isChoosed: false}
+		    ]
+		}
 	},
 	methods: {
 		showPopupWindow: function(){
@@ -110,6 +93,17 @@ var popup = new Vue({
 	}
 })
 
-function showPopupWindow() {
-	popup.showPopupWindow();
+function chooseLabel(index){
+	var length = popup.productMessage.labels.length;
+	for(var i = 0;i < length;++i){
+		if(i == index){
+			popup.productMessage.labels[i].isChoosed = true;
+			var a=popup.productMessage.labels[i];
+			popup.productMessage.labels.splice(i,1,a)
+		} else {
+			popup.productMessage.labels[i].isChoosed = false;
+			var a=popup.productMessage.labels[i];
+			popup.productMessage.labels.splice(i,1,a)
+		}
+	}	
 }
