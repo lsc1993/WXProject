@@ -54,9 +54,16 @@
 }
 
 .product-pop-remove {
-	top: 0;
-	right: 4%;
+	position: absolute;
+	right: 3%;
+	top: 3%;
 	z-index: 1000;
+}
+
+.product-pop-remove button {
+	border-radius: 50%;
+	border: 1px solid #CCCCCC;
+	background-color: rgba(255,255,255,.5);
 }
 
 .product-standard-pop {
