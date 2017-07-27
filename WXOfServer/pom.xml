@@ -7,20 +7,9 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>WXOfServer Maven Webapp</name>
   <url>http://maven.apache.org</url>
-  <repositories>
-    <!-- maven仓库 -->  
-    <repository>  
-      <id>maven</id>  
-      <name>Maven Repository Switchboard</name>  
-      <layout>default</layout>  
-      <url>http://repo1.maven.org/maven2</url>  
-      <snapshots>  
-        <enabled>false</enabled>  
-      </snapshots>  
-    </repository> 
-  </repositories>
-  
-  <!-- 属性值定义（版本号） -->
+   <build>
+    <finalName>WXOfServer</finalName>
+  </build>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- spring版本号 -->
@@ -30,12 +19,6 @@
     <!-- log4j日志文件管理包版本 -->
     <log4j.version>1.2.17</log4j.version>
   </properties>
-  
-  <build>
-    <finalName>WXOfServer</finalName>
-  </build>
-  
-  <!-- 依赖包配置 -->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -43,14 +26,13 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <!-- 文件上传 -->
+     <!-- 文件上传 -->
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
       <version>1.2.2</version>
     </dependency>
- 
-    <!-- fastJson json数组有关的 -->
+     <!-- fastJson json数组有关的 -->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
@@ -63,6 +45,7 @@
       <artifactId>jackson-mapper-asl</artifactId>
       <version>1.9.11</version>
     </dependency>
+    
     <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
@@ -73,7 +56,7 @@
         <artifactId>jackson-databind</artifactId>
         <version>2.6.3</version>
     </dependency>
-    <!-- mysql驱动包 -->
+     <!-- mysql驱动包 -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
@@ -98,6 +81,7 @@
       <artifactId>aspectjweaver</artifactId>
       <version>1.7.1</version>
     </dependency>
+ 
     <!-- hibernate5 -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -119,6 +103,7 @@
       <artifactId>hibernate-jpa-2.1-api</artifactId>
       <version>1.0.0.Final</version>
     </dependency>
+ 
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
@@ -130,6 +115,7 @@
       <artifactId>spring-webmvc</artifactId>
       <version>${spring.version}</version>
     </dependency>
+ 
     <!-- spring4 -->
     <dependency>
       <groupId>org.springframework</groupId>
