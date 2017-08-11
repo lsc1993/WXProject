@@ -1,0 +1,20 @@
+.fixed-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	min-height: 50px;
+	background: #FFFFFF;
+	z-index: 99;
+}
+
+.bottom-tab {
+	margin: 0 auto;
+}
+
+.bottom-tab-button {
+	width: inherit;
+	line-height: auto;
+	margin: 0 auto;
+	text-align: center;
+}

@@ -1,0 +1,231 @@
+/*
+ * 产品页header样式
+ * */
+.fixed-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 50px;
+	background: #FFFFFF;
+	border-radius: 3px;
+	box-shadow: 2px 2px 1px #CCCCCC;
+	z-index: 99;
+}
+
+.fixed-header a {
+	width: auto;
+	line-height: 50px;
+	color: #4D4D4D;
+	text-decoration: none;
+	float: left;
+}
+
+.fixed-header i {
+	line-height: 50px;
+}
+
+.fixed-header p {
+	line-height: 50px;
+	text-align: center;
+	font-weight: 400;
+	font-size: 20px;
+}
+
+.space {
+	height: 65px;
+}
+
+/*
+ * 购物车页面样式
+ * */
+.shop-order-container {
+	width: 100%;
+}
+
+/*
+ * 购物车产品列表
+ * */
+.shop-order-list {
+	width: 100%;
+	height: auto;
+}
+
+.shop-order-list ul {
+	width: 100%;
+	list-style: none;
+	padding: 0;
+}
+
+.shop-order-list ul li {
+	width: 100%;
+	height: auto;
+	padding: 2%;
+}
+
+.shop-order-type {
+	width: 100%;
+	height: auto;
+}
+
+.shop-order-type p {
+	display: inline-block;
+	font-size: 16px;
+	color: #269ABC;
+	float: right;
+	margin-left: 5%;
+}
+
+.shop-order-content {
+	width: auto;
+	height: auto;
+	margin-top: 2%;
+}
+
+.shop-order-checkbox {
+	width: 8%;
+	height: auto;
+	float: left;
+	margin-top: 2%;
+}
+
+.shop-order-message {
+	width: 92%;
+	height: auto;
+	display: inline-block;
+}
+
+.shop-order-message img {
+	width: 80px;
+	height: 80px;
+	max-width: 28%;
+	float: left;
+}
+
+.shop-order-product-name {
+	width: 36%;
+	max-width: 40%;
+	display: inline-block;
+	margin-left: 3%;
+}
+
+.shop-order-product-name p {
+	font-size: 14px;
+}
+
+.shop-order-cost {
+	width: 30%;
+	max-width: 30%;
+	display: inline-block;
+	padding: 0;
+	float: right;
+} 
+
+.shop-order-cost p {
+	display: inline-block;
+}
+
+.shop-order-product-count p {
+	width: 30%;
+	max-width: 30%;
+	height: 30px;
+	text-align: center;
+	font-size: 18px;
+}
+
+.shop-order-product-count button {
+	width: 25%;
+	max-width: 30%;
+	height: 25px;
+	background-color: rgba(255,255,255,.5);
+	border: 1px solid #CCCCCC;
+}
+
+.shop-order-product-count p:active {
+	background-color: #CCCCCC;
+}
+
+.shop-order-product-price p {
+	max-width: 90%;
+	font-size: 18px;
+}
+
+/*
+ * 购物车页面footer
+ * */
+.shop-order-footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: auto;
+}
+
+.shop-order-all-check {
+	max-width: 28%;
+	display: inline-block;
+	float: left;
+}
+
+.shop-order-all-check p {
+	width: auto;
+	font-size: 16px;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.shop-order-total {
+	position: absolute;
+	bottom: 0;
+	right: 33%;
+	max-width: 40%;
+	height: auto;
+}
+
+.shop-order-total p {
+	width: auto;
+	max-width: 100%;
+	font-size: 16px;
+	padding: 0;
+}
+
+.shop-order-total-p-height {
+	height: 10px;
+}
+
+.shop-order-pay {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 30%;
+	max-width: 30%;
+	height: 50px;
+	background-color: #D9534F;
+	display: inline-block;
+	text-align: center;
+}
+
+.shop-order-pay p {
+	width: auto;
+	line-height: 50px;
+	color: #FFFFFF;
+	font-size: 20px;
+}
+
+/*
+ * checkbox样式
+ * */
+.input-check-bg {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	float: left;
+	background: url(../img/blue.png) no-repeat;
+	background-position: 0px 0;
+}
+
+.input-check-bg-checked {
+	background: url(../img/blue.png) no-repeat;
+	background-position: -22px 0;
+}

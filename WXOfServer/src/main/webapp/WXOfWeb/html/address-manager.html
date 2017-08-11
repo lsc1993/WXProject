@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  />
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/address-manager.css" />
+		<link rel="stylesheet" href="../css/popup-window.css" />
+		<link rel="stylesheet" href="../css/dialog.css" />
+	</head>
+	<body>
+		<!--页面title-->
+		<header class="fixed-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="menu-wrapper">
+							<a><i class="icon-angle-left icon-2x"></i></a>
+							<p>地址管理</p>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="space"></div>
+		<div class="address-list-container" id="address-manager">
+			<h3 v-if="isShowTip">您还没有填写过地址~</h3>
+			<div class="address-list-content">
+				<ul>
+					<li v-for="(address, index) in addressList" :key="address">
+						<div class="address-icon">
+							<i class="icon-plane icon-large"></i>
+						</div>
+						<div class="address-message">
+							<div>
+								<p>{{address.name}}</p>
+								<p>{{address.tel}}</p>
+							</div>
+							<div>
+								<p>收货地址：{{address.address}}</p>
+							</div>
+						</div>
+						<div class="address-edit-operator" @click="showEditWindow(index)">
+							<i class="icon-edit icon-2x"></i>
+						</div>
+					</li>
+				</ul>
+				<div class="address-new-button">
+					<button class="btn btn-primary" @click="showBuildWindow()">新增收货地址 </button>
+				</div>
+			</div>
+		</div>
+		<div id="address-edit-window">
+			<edit-address-window
+				v-show="isShowEditWindow" 
+				@close="removeEditWindow()" 
+				@chooseprovince="chooseProvince()" 
+				@choosecity="chooseCity()" 
+				@chooseregion="chooseRegion()"
+				:addressregion="addressRegion">
+				<p slot="edit-window-title">
+				 	{{editTitle}}
+				</p>
+				<div slot="popup-btn-container">
+				 	<button class="btn btn-success">保存</button> 
+					<button class="btn btn-danger" v-show="isOneButton">删除</button>
+				</div>
+			</edit-address-window>
+		</div>
+		<div id="address-aera-choose">
+			<address-dialog v-if="isShowDialog" >
+				<p slot="dialog-header">
+					{{title}}
+				</p>
+				<ul slot="dialog-content" id="address-dialog">
+					<li 
+						v-for="(addressList,index) in aera" 
+						v-bind:key="addressList">
+						<p onclick="selectAddress($(this).text())">{{addressList[1]}}</p>
+					</li>
+				</ul>
+				<p slot="dialog-footer"></p>
+			</address-dialog>
+		</div>
+		<div id="tip-dialog-div">
+			<tip-dialog v-if="isShowTip" @close="isShowTip = false"
+				@confirm="confirm()">
+				<p slot="dialog-header">
+					提示
+				</p>
+				<p slot="dialog-content">
+					{{message}}
+				</p>
+				<div slot="dialog-footer">
+					<p class="dialog-button-left" @click="$emit('close')">取消</p>
+					<p class="dialog-button-right" @click="$emit('close')">确认</p>
+				</div>
+			</tip-dialog>
+		</div>
+		<!--新建地址popupwindow模板-->
+		<script type="text/x-template" id="popup-window-address-edit">
+			<transition name="popup-window-transition">
+				<div class="popup-window-modal-mask">
+					<div class="popup-window-modal-wrapper">
+						<div class="popup-window-modal-container">
+							<div class="container address-message-content">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="address-new-title">
+											<slot name="edit-window-title">
+												<p>新建收货地址</p>
+											</slot>
+											<button v-on:click="$emit('close')"><i class="icon-remove"></i></button>
+										</div>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
+										<p>收货人</p>
+										<input type="text" :value="addressregion.name" placeholder="名字"/>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
+										<p>选择地区</p>
+										<ul>
+											<li v-on:click="$emit('chooseprovince')">{{addressregion.province}}</li>
+											<li v-on:click="$emit('choosecity')">{{addressregion.city}}</li>
+											<li v-on:click="$emit('chooseregion')">{{addressregion.region}}</li>
+										</ul>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
+										<p>联系电话</p>
+										<input type="text" :value="addressregion.tel" placeholder="手机号或固定电话"/>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
+										<p>详细地址</p>
+										<input type="text" :value="addressregion.road" placeholder="如街道、楼层、门牌号等"/>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
+										<p>邮政编码</p>
+										<input type="text" :value="addressregion.postcode" placeholder="邮政编码(选填)"/>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12 address-operator-button">
+										<slot name="popup-btn-container">
+											<button class="btn btn-success">保存</button>
+											<button class="btn btn-danger">删除</button>
+										</slot>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
+		<!--地区选择对话框模板-->
+		<script type="text/x-template" id="address-dialog-modal">
+			<transition name="dialog">
+				<div class="dialog-modal-mask">
+					<div class="dialog-modal-wrapper">
+						<div class="dialog-modal-container"> 
+							<div class="dialog-header">
+								<slot name="dialog-header">
+								</slot>
+							</div>
+							<div class="dialog-content">
+								<slot name="dialog-content">
+								</slot>
+							</div>
+							<div class="dialog-footer">
+								<slot name="dialog-footer">
+									
+								</slot>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/address-choose-dialog.js" ></script>
+		<script type="text/javascript" src="../js/address-manager.js" ></script>
+	</body>
+</html>

@@ -1,0 +1,97 @@
+/*
+ * 用户信息样式，包括用户头像和用户昵称
+ **/
+.user-message {
+	width: 100%;
+	height: auto;
+	padding: 1%;
+	background-color: #FFF8DC;
+}
+
+.user-img {
+	width: 100%;
+	text-align: center;
+}
+
+.user-img img {
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+	border-radius: 25px;
+}
+
+.user-name p {
+	width: auto;
+	height: 20px;
+	margin-top: 1%;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 400;
+}
+/*
+ * 订单操作与查询样式
+ * */
+.my-order-state-container {
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.my-order-state-container ul {
+	width: inherit;
+	list-style: none;
+	padding: 0;
+	margin: 2% 0 0 0;
+}
+
+.my-order-state-container ul li {
+	width: 24%;
+	display: inline-block;
+	text-align: center;
+}
+
+.my-order-state-container a {
+	color: #000000;
+}
+
+.my-order-list {
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.my-order-list a {
+	color: #000000;
+}
+
+.my-order-list p {
+	width: auto;
+	height: auto;
+	display: inline-block;
+	font-size: 18px;
+	font-weight: 400;
+	margin-left: 5%;
+}
+
+.my-order-list i {
+	width: 5%;
+	line-height: 50px;
+	text-align: center;
+}
+
+.angle-to-left {
+	float: right;
+}
+
+.my-collection-container {
+	margin-top: 5%;
+}
+
+.border-top {
+	border-top: 1px solid #CCCCCC;
+}
+
+.my-setting-container {
+	margin-top: 5%;
+	margin-bottom: 60px;
+}

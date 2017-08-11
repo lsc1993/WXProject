@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />  
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/product.css" />
+		<link rel="stylesheet" href="../css/dialog.css" />
+		<link rel="stylesheet" href="../css/popup-window.css" />
+	</head>
+	<body>
+		<!--页面title-->
+		<header class="fixed-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="menu-wrapper">
+							<a href="index.html"><i class="icon-angle-left icon-2x"></i></a>
+							<p>产品</p>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</header>
+		<!--space撑空间-->
+		<div class="space"></div>
+		<!--页面内容-->
+		<div id="product-page" class="product-container">
+			<div class="container-all-width">
+				<div class="">
+					<div class="">
+						<div class="product-img-turn">
+							<img src="../img/20172001.jpg" />
+						</div>
+						<div class="product-price-label">
+							<p class="price-text-small">￥</p>
+							<p class="price-text-large">{{productMessage.price}}</p>
+						</div>
+						<div class="product-name-label">
+							<p>{{productMessage.describe}}</p>
+						</div>
+						<div class="product-sales-volume">
+							<div class="product-transport-fare">
+								<p>运费：</p><p>{{productMessage.delivery}}</p>
+							</div>
+							<div class="product-sales-fare">
+								<p>销量：</p><p>{{productMessage.saleVolume}}</p>
+							</div>
+						</div>
+						<div class="product-standard">
+							<div @click="showPopupWindow()">
+								<p>选择：规格</p>
+								<i class="icon-angle-right"></i>
+							</div>
+						</div>
+						<div class="product-detail-appraise">
+							<div class="product-detail-appraise-title">
+								<p :class="{'product-tab-title-bottom-line' : isDetail}"
+								   @click="showProductDetail()">商品详情</p>
+								<p :class="{'product-tab-title-bottom-line' : isAppraise}"
+								   @click="showProductAppraise()">销量和评价</p>
+							</div>
+							<div class="product-detail-appraise-container">
+								<div class="product-detail-container" v-show="isShowDetail">
+									<ul>
+										<li v-for="img in imgurls" :key="img">
+											<img :src="img.imgurl"/>
+										</li>
+									</ul>
+								</div>
+								<div class="product-appraise-container" v-show="isShowAppraise">
+									<div class="product-appraise-content">
+										<div class="product-appraise-user container">
+											<ul>
+												<li v-for="(appraise,index) in userappraise" :key="appraise">
+													<div class="row">
+														<div class="col-md-2 col-sm-2 col-xs-3">
+															<img :src="appraise.img"/>
+														</div>
+														<div class="col-md-10 col-sm-10 col-xs-9">
+															<p>{{appraise.name}}</p>
+															<p>{{appraise.time}}</p>
+														</div>
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<p>{{appraise.appraise}}</p>
+														</div>
+														<div class="product-appraise-return col-md-12 col-sm-12 col-xs-12">
+															<p v-if="showSellerReturn(index)">{{appraise.feedback}}</p>
+														</div>
+													</div>
+												</li>		
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面底部选项-->
+			<footer class="fixed-footer">
+				<div class="fixed-footer-wrapper">
+					<div class="footer-tab-btn1" @click="gotoShopCart()">
+						<i class="icon-shopping-cart"></i>
+						<p>购物车</p>
+					</div>
+					<div class="footer-tab-btn3">
+						<p @click="showPopupWindow()">立即购买</p>
+					</div>
+					<div class="footer-tab-btn2">
+						<p @click="showPopupWindow()">加入购物车</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+		<!--对话框组件-->
+		<div id="dialog-div">
+			<dialog-tip v-if="isShowDialog" :message="message" @close="dismiss()"></dialog-tip>
+		</div>
+		<!--popupwindow组件-->
+		<div id="popup-window-div">
+			<popup-window v-if="isShow" @close="dismiss()" :productitem="productMessage">
+				<div slot="product-standard-ul">
+					<ul>
+						<li v-for="(label,index) in productMessage.labels" 
+							:key="label"
+							v-on:click="chooseLabel(index)"
+							:class="{'product-standard-choosed' : label.isChoosed, 'product-standard-unchoosed' : !label.isChoosed}">
+							{{label.label}}
+						</li>
+					</ul>
+				</div>
+			</popup-window>
+		</div>
+		<!--对话框模板-->
+		<script type="text/x-template" id="dialog-modal">
+			<transition name="dialog">
+				<div class="dialog-modal-mask">
+					<div class="dialog-modal-wrapper">
+						<div class="dialog-modal-container"> 
+							<div class="dialog-header">
+								<slot name="dialog-header">
+									提示
+								</slot>
+							</div>
+							<div class="dialog-content">
+								<slot name="dialog-content">
+									{{message}}
+								</slot>
+							</div>
+							<div class="dialog-footer">
+								<slot name="dialog-footer">
+									<p class="dialog-button-left" @click="$emit('close')">取消</p>
+									<p class="dialog-button-right" @click="$emit('close')">确认</p>
+								</slot>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
+		<!--产品规格选择popupwindow-->
+		<script type="text/x-template" id="popup-window-modal">
+			<transition name="popup-window-transition">
+				<div class="popup-window-modal-mask">
+					<div class="popup-window-modal-wrapper">
+						<div class="popup-window-modal-container">
+							<div class="product-detail container">
+								<slot name="product-detail">
+									<div class="row">
+										<div class="product-img-pop col-md-2 col-sm-2 col-xs-3">
+											<img :src="productitem.imgurl" />
+										</div>
+										<div class="product-price-name col-md-9 col-sm-9 col-xs-7">
+											<p>{{productitem.name}}</p>
+											<p>{{productitem.price}}</p>
+										</div>
+										<div class="product-pop-remove col-md-1 col-sm-1 col-xs-1">
+											<button @click="$emit('close')"><i class="icon-remove"></i></button>
+										</div>
+									</div>
+								</slot>
+							</div>
+							<div class="product-standard-pop">
+								<p>规格:</p>
+								<div class="product-standard-ul">
+									<slot name="product-standard-ul">
+									</slot>
+								</div>
+							</div>
+							<div class="product-sale-count">
+								<p>数量:</p>
+								<div class="product-count-caculator">
+									<p onclick="subCount()">-</p>
+									<p>{{productitem.count}}</p>
+									<p onclick="addCount()">+</p>
+								</div>
+							</div>
+							<div class="product-operator">
+								<div class="product-add-shopcart product-operator-half-width"
+									onclick="addShopCart()">
+									<p>加入购物车</p>
+								</div>
+								<div class="product-buy-now product-operator-half-width"
+									onclick="buyNow()">
+									<p>购买</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/product.js" ></script>
+	</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" href="../css/order-list.css" />
+	</head>
+	<body>
+		<!--页面title-->
+		<header class="fixed-header">
+			<div class="menu-wrapper">
+				<ul class="navbar-ul-5">
+					<li id="tab-1" class="tab-choosed" onclick="tabClick(1)"><a>全部订单</a></li>
+					<li id="tab-2" onclick="tabClick(2)"><a>待付款</a></li>
+					<li id="tab-3" onclick="tabClick(3)"><a>待接单</a></li>
+					<li id="tab-4" onclick="tabClick(4)"><a>待发货</a></li>
+					<li id="tab-5" onclick="tabClick(5)"><a>待收货</a></li>
+				</ul>
+			</div>				
+		</header>
+		<div class="space"></div>
+		<div class="order-list-container" id="order-list">
+			<!--全部订单-->
+			<div class="order-list"  v-show="isShowAllOrder">
+				<ul>
+					<li v-for="order in orderAll" :key="order">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-5 col-sm-10 col-xs-9">
+									<div class="order-no">
+										<p>订单编号：{{order.orderNo}}</p>
+									</div>
+								</div>
+								<div class="col-md-1 col-sm-2 col-xs-3">
+									<div class="order-status">
+										<p>{{order.orderStatus}}</p>
+									</div>
+								</div>
+								<div class="order-message-container order-message">
+									<div class="col-md-2 col-sm-4 col-xs-4">
+										<img :src="order.orderImg"/>
+									</div>
+									<div class="col-md-3 col-sm-5 col-xs-5">
+										<p class="font-size-medium">{{order.orderName}}</p>
+										<p class="font-size-medium">{{order.orderStandard}}</p>
+									</div>
+									<div class="col-md-1 col-sm-3 col-xs-3">
+										<p class="font-size-medium">{{order.orderPrice}}</p>
+										<div class="product-count">
+											<p class="font-size-medium">{{order.orderCount}}</p><p>X</p>
+										</div>
+									</div>
+								</div>
+								<div class="order-total-cost">
+									<div class="col-md-6 col-sm-12 col-xs-12 border-bottom-divider">
+										<p>合计：{{order.orderTotal}}</p>
+									</div>
+								</div>
+								<div class="order-operator">
+									<div class="col-md-6 col-sm-12 col-xs-12">
+										<button>再次购买</button>
+										<button>评价</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--待付款-->
+			<div class="order-list" v-show="isShowPayOrder">
+				<ul>
+					<li v-for="order in orderPay" :key="order">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-5 col-sm-10 col-xs-9">
+									<div class="order-no">
+										<p>订单编号：{{order.orderNo}}</p>
+									</div>
+								</div>
+								<div class="col-md-1 col-sm-2 col-xs-3">
+									<div class="order-status">
+										<p>{{order.orderStatus}}</p>
+									</div>
+								</div>
+								<div class="order-message-container order-message">
+									<div class="col-md-2 col-sm-4 col-xs-4">
+										<img :src="order.orderImg"/>
+									</div>
+									<div class="col-md-3 col-sm-5 col-xs-5">
+										<p class="font-size-medium">{{order.orderName}}</p>
+										<p class="font-size-medium">{{order.orderStandard}}</p>
+									</div>
+									<div class="col-md-1 col-sm-3 col-xs-3">
+										<p class="font-size-medium">{{order.orderPrice}}</p>
+										<div class="product-count">
+											<p class="font-size-medium">{{order.orderCount}}</p><p>X</p>
+										</div>
+									</div>
+								</div>
+								<div class="order-total-cost">
+									<div class="col-md-6 col-sm-12 col-xs-12 border-bottom-divider">
+										<p>合计：{{order.orderTotal}}</p>
+									</div>
+								</div>
+								<div class="order-operator">
+									<div class="col-md-6 col-sm-12 col-xs-12">
+										<button>取消订单</button>
+										<button>付款</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--待接单-->
+			<div class="order-list" v-show="isShowAcceptOrder">
+				<ul>
+					<li v-for="order in orderAccept" :key="order">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-5 col-sm-10 col-xs-9">
+									<div class="order-no">
+										<p>订单编号：{{order.orderNo}}</p>
+									</div>
+								</div>
+								<div class="col-md-1 col-sm-2 col-xs-3">
+									<div class="order-status">
+										<p>{{order.orderStatus}}</p>
+									</div>
+								</div>
+								<div class="order-message-container order-message">
+									<div class="col-md-2 col-sm-4 col-xs-4">
+										<img :src="order.orderImg"/>
+									</div>
+									<div class="col-md-3 col-sm-5 col-xs-5">
+										<p class="font-size-medium">{{order.orderName}}</p>
+										<p class="font-size-medium">{{order.orderStandard}}</p>
+									</div>
+									<div class="col-md-1 col-sm-3 col-xs-3">
+										<p class="font-size-medium">{{order.orderPrice}}</p>
+										<div class="product-count">
+											<p class="font-size-medium">{{order.orderCount}}</p><p>X</p>
+										</div>
+									</div>
+								</div>
+								<div class="order-total-cost">
+									<div class="col-md-6 col-sm-12 col-xs-12 border-bottom-divider">
+										<p>合计：{{order.orderTotal}}</p>
+									</div>
+								</div>
+								<div class="order-operator">
+									<div class="col-md-6 col-sm-12 col-xs-12">
+										<button>催单</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--待发货-->
+			<div class="order-list" v-show="isShowSendOrder">
+				<ul>
+					<li v-for="order in orderSend" :key="order">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-5 col-sm-10 col-xs-9">
+									<div class="order-no">
+										<p>订单编号：{{order.orderNo}}</p>
+									</div>
+								</div>
+								<div class="col-md-1 col-sm-2 col-xs-3">
+									<div class="order-status">
+										<p>{{order.orderStatus}}</p>
+									</div>
+								</div>
+								<div class="order-message-container order-message">
+									<div class="col-md-2 col-sm-4 col-xs-4">
+										<img :src="order.orderImg"/>
+									</div>
+									<div class="col-md-3 col-sm-5 col-xs-5">
+										<p class="font-size-medium">{{order.orderName}}</p>
+										<p class="font-size-medium">{{order.orderStandard}}</p>
+									</div>
+									<div class="col-md-1 col-sm-3 col-xs-3">
+										<p class="font-size-medium">{{order.orderPrice}}</p>
+										<div class="product-count">
+											<p class="font-size-medium">{{order.orderCount}}</p><p>X</p>
+										</div>
+									</div>
+								</div>
+								<div class="order-total-cost">
+									<div class="col-md-6 col-sm-12 col-xs-12 border-bottom-divider">
+										<p>合计：{{order.orderTotal}}</p>
+									</div>
+								</div>
+								<div class="order-operator">
+									<div class="col-md-6 col-sm-12 col-xs-12">
+										<button>催单</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--待收货-->
+			<div class="order-list" v-show="isShowReceiveOrder">
+				<ul>
+					<li v-for="order in orderReceive" :key="order">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-5 col-sm-10 col-xs-9">
+									<div class="order-no">
+										<p>订单编号：{{order.orderNo}}</p>
+									</div>
+								</div>
+								<div class="col-md-1 col-sm-2 col-xs-3">
+									<div class="order-status">
+										<p>{{order.orderStatus}}</p>
+									</div>
+								</div>
+								<div class="order-message-container order-message">
+									<div class="col-md-2 col-sm-4 col-xs-4">
+										<img :src="order.orderImg"/>
+									</div>
+									<div class="col-md-3 col-sm-5 col-xs-5">
+										<p class="font-size-medium">{{order.orderName}}</p>
+										<p class="font-size-medium">{{order.orderStandard}}</p>
+									</div>
+									<div class="col-md-1 col-sm-3 col-xs-3">
+										<p class="font-size-medium">{{order.orderPrice}}</p>
+										<div class="product-count">
+											<p class="font-size-medium">{{order.orderCount}}</p><p>X</p>
+										</div>
+									</div>
+								</div>
+								<div class="order-total-cost">
+									<div class="col-md-6 col-sm-12 col-xs-12 border-bottom-divider">
+										<p>合计：{{order.orderTotal}}</p>
+									</div>
+								</div>
+								<div class="order-operator">
+									<div class="col-md-6 col-sm-12 col-xs-12">
+										<button>确认收货</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/order-list.js" ></script>
+	</body>
+</html>

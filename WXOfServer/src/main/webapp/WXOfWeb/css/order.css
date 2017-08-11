@@ -1,0 +1,242 @@
+.address-container {
+	width: 100%;
+	height: auto;
+	background-color: #CCCCCC;
+}
+
+.address-choose-container {
+	width: auto;
+	height: 60px;
+}
+
+.address-choose-container p {
+	width: auto;
+	line-height: 60px;
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.address-choose-container i {
+	line-height: 60px;
+}
+
+.address-choose-container img {
+	width: 40px;
+	height: 40px;
+	margin-top: 10px;
+}
+
+.address-content {
+	display: table;
+	margin: 2% 0 0 0;
+}
+
+.address-icon {
+	width: 8%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.address-message {
+	width: 83%;
+	height: auto;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.address-user-message p {
+	width: auto;
+	line-height: 18px;
+	font-size: 16px;
+}
+
+.address-user-addr p {
+	width: auto;
+	line-height: 15px;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+.address-choose-icon {
+	width: 5%;
+	height: auto;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.store-name {
+	height: 45px;
+	padding: 1px;
+}
+
+.store-name i,p {
+	line-height: 40px;
+	display: inline-block;
+}
+
+.order-message {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.order-message-container {
+	margin-bottom: 5px;
+}
+
+.order-message img {
+	width: 100px;
+	height: 100px;
+}
+
+.order-message p {
+	height: auto;
+	text-align: right;
+	display: block;
+}
+
+.product-count p {
+	float: right;
+}
+
+.delivery-way {
+	height: 55px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.delivery-left-p  {
+	width: auto;
+	line-height: 55px;
+}
+
+.delivery-right-p {
+	width: auto;
+	line-height: 55px;
+	float: right;
+}
+
+.buyer-message {
+	position: relative;
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.buy-message-title {
+	height: 30px;
+}
+
+.buy-message-title p {
+	width: auto;
+	line-height: 30px;
+	font-size: 15px;
+}
+
+.textaera-div {
+	width: 100%;
+	height: 30px;
+	margin-bottom: 5px;
+	border: 1px solid #67B168;
+	overflow-y: auto;
+}
+
+.textaera-div textarea {
+	
+}
+
+.favoravle-container {
+	height: 55px;
+	margin-top: 5%;
+}
+
+.favoravle-container p {
+	line-height: 55px;
+	display: inline-block;
+}
+
+.favoravle-tab {
+	display: inline-block;
+	float: right;
+}
+
+.product-price-content {
+	width: 100%;
+	height: 50px;
+	display: inline-block;
+}
+
+.order-total {
+	margin-top: 5%;
+}
+
+.product-price-content p {
+	width: auto;
+	line-height: 50px;
+}
+
+.product-price {
+	display: inline-block;
+	float: right;
+}
+
+.delivery-price-content {
+	width: 100%;
+	height: 50px;
+	display: inline-block;
+}
+
+.delivery-price-content p {
+	width: auto;
+	line-height: 50px;
+}
+
+.delivery-price {
+	display: inline-block;
+	float: right;
+}
+
+.order-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 55px;
+}
+
+.order-total-cost {
+	display: inline-block;
+	float: right;
+	margin-right: 2%;
+}
+
+.order-total-cost p {
+	width: auto;
+	line-height: 55px;
+}
+
+.order-submit {
+	width: 33%;
+	height: 55px;
+	display: inline-block;
+	background-color: #D9534F;
+	text-align: center;
+	float: right;
+}
+
+.order-submit p {
+	width: auto;
+	line-height: 55px;
+	color: #FFFFFF;
+}
+
+.font-size-small {
+	font-size: small;
+}
+
+.font-size-medium {
+	font-size: medium;
+}
+
+.font-size-large {
+	font-size: large;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"  />
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/footer.css" />
+		<link rel="stylesheet" href="../css/mine.css" />
+	</head>
+	<body>
+		<!--"我的"页面-->
+		<div id="mine-page">
+			<!--"我的"页面头部-用户信息-->
+			<header>
+				<div class="user-message">
+					<div class="user-img">
+						<img :src="userMessage.userImg" />
+					</div>
+					<div class="user-name">
+						<p>{{userMessage.userName}}</p>
+					</div>
+				</div>
+			</header>
+			<div class="my-order-operator">
+				<div class="my-order-state-container">
+					<ul>
+						<li>
+							<a href="order-list.html?tab=2">
+								<i class="icon-indent-right icon-large"></i>
+								<p>待付款</p>
+							</a>
+						</li>
+						<li>
+							<a href="order-list.html?tab=3">
+								<i class="icon-tasks icon-large"></i>
+								<p>待接单</p>
+							</a>
+						</li>
+						<li>
+							<a href="order-list.html?tab=4">
+								<i class="icon-inbox icon-large"></i>
+								<p>待发货</p>
+							</a>
+						</li>
+						<li>
+							<a href="order-list.html?tab=5">
+								<i class="icon-truck icon-large"></i>
+								<p>待收货</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="my-order-list">
+					<a href="order-list.html?tab=1">
+						<div class="container">
+							<i class="icon-align-justify icon-large"></i>
+							<p>全部订单</p>
+							<i class="icon-angle-right icon-2x angle-to-left"></i>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="my-collection-container">
+				<div class="my-order-list border-top">
+					<div class="container">
+						<i class="icon-heart icon-large"></i>
+						<p>我的收藏</p>
+						<i class="icon-angle-right icon-2x angle-to-left"></i>
+					</div>
+				</div>
+				<div class="my-order-list">
+					<div class="container">
+						<i class="icon-star icon-large"></i>
+						<p>我买过的</p>
+						<i class="icon-angle-right icon-2x angle-to-left"></i>
+					</div>
+				</div>
+				<div class="my-order-list">
+					<div class="container">
+						<i class="icon-eye-open icon-large"></i>
+						<p>我的浏览记录</p>
+						<i class="icon-angle-right icon-2x angle-to-left"></i>
+					</div>
+				</div>
+			</div>
+			<div class="my-collection-container">
+				<div class="my-order-list border-top">
+					<div class="container">
+						<i class="icon-credit-card icon-large"></i>
+						<p>我的优惠卷</p>
+						<i class="icon-angle-right icon-2x angle-to-left"></i>
+					</div>
+				</div>
+				<div class="my-order-list">
+					<div class="container">
+						<i class="icon-credit-card icon-large"></i>
+						<p>我的会员卡</p>
+						<i class="icon-angle-right icon-2x angle-to-left"></i>
+					</div>
+				</div>
+			</div>
+			<div class="my-setting-container">
+				<div class="my-order-list border-top">
+					<div class="container">
+						<i class="icon-home icon-large"></i>
+						<p>修改收货地址</p>
+						<i class="icon-angle-right icon-2x angle-to-left"></i>
+					</div>
+				</div>
+				<div class="my-order-list">
+					<div class="container">
+						<i class="icon-phone-sign icon-large"></i>
+						<p>联系我们</p>
+						<i class="icon-angle-right icon-2x angle-to-left"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--"我的"页面底部选项-->
+		<footer class="fixed-footer">
+			<div class="bottom-tab">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<div class="bottom-tab-button">
+								<i class="icon-apple"></i>
+								<p>ddd</p>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<div class="bottom-tab-button">
+								<i class="icon-desktop"></i>
+								<p>ddd</p>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<div class="bottom-tab-button">
+								<i class="icon-envelope"></i>
+								<p>ddd</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/mine.js" ></script>
+	</body>
+</html>

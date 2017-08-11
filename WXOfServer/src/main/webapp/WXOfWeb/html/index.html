@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />  
+		<!-- UC强制全屏 -->
+    	<meta name="full-screen" content="yes">
+   		<!-- QQ强制全屏 -->
+    	<meta name="x5-fullscreen" content="true">
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/index.css" />
+		<link rel="stylesheet" href="../css/dropload.css" />
+		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" href="../css/footer.css" />
+	</head>
+	<body>
+		<!--页面title-->
+		<header class="fixed-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-sm-2 col-xs-2">
+						<span class="navbar-title">Project</span>
+					</div>
+					<div class="col-md-10 col-sm-10 col-xs-10">
+						<div class="menu-wrapper">
+							<ul class="navbar-ul">
+								<li id="tab-1" class="tab-choosed" onclick="tabClick(1)"><a>Home</a></li>
+								<li id="tab-2" onclick="tabClick(2)"><a>About</a></li>
+								<li id="tab-3" onclick="tabClick(3)"><a>Product</a></li>
+								<li id="tab-4" onclick="tabClick(4)"><a>Me</a></li>
+							</ul>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</header>
+		<!--space撑空间-->
+		<div class="space"></div>
+		<!--页面内容-->
+		<div id="product-wrapper" class="product-container">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<ul class="project-ul">
+							<li v-for="product in products" v-bind:key="product"><a href="product.html?pid=20172001"><img :src="product.img"></a></li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!--页面底部选项-->
+		<footer class="fixed-footer">
+			<div class="bottom-tab">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<div class="bottom-tab-button" id="sss">
+								<i class="icon-apple"></i>
+								<p>ddd</p>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<div class="bottom-tab-button">
+								<i class="icon-desktop"></i>
+								<p>ddd</p>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<div class="bottom-tab-button">
+								<i class="icon-envelope"></i>
+								<p>ddd</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/header.js" ></script>
+		<script type="text/javascript" src="../js/dropload.js" ></script>
+		<script type="text/javascript" src="../js/index.js" ></script>
+	</body>
+</html>
