@@ -1,5 +1,7 @@
 package com.fuyao.model.product;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,12 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="standards")
-public class ProductStandard {
+@Table(name="product_sale_volum")
+public class ProductSaleVolum {
 	private long id;
-	private String standard;
 	private long pId;
-	private float price;
+	private int saleVolum;
+	private Date saleDate;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,27 +27,28 @@ public class ProductStandard {
 		this.id = id;
 	}
 	
-	@Column(name="standard",nullable=false,length=32)
-	public String getStandard() {
-		return standard;
-	}
-	public void setStandard(String standard) {
-		this.standard = standard;
-	}
-	
 	@Column(name="pid",nullable=false,length=11)
-	public long getpId() {
+	public long getPId() {
 		return pId;
 	}
-	public void setpId(long pId) {
+	public void setPId(long pId) {
 		this.pId = pId;
 	}
 	
-	@Column(name="price",nullable=false)
-	public float getPrice() {
-		return price;
+	@Column(name="sale_volum",nullable=false)
+	public int getSaleVolum() {
+		return saleVolum;
 	}
-	public void setPrice(float price) {
-		this.price = price;
+	public void setSaleVolum(int saleVolum) {
+		this.saleVolum = saleVolum;
 	}
+	
+	@Column(name="sale_time",nullable=false)
+	public Date getSaleDate() {
+		return saleDate;
+	}
+	public void setSaleDate(Date saleDate) {
+		this.saleDate = saleDate;
+	}
+	
 }

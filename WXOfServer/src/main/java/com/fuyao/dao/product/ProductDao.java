@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fuyao.model.product.Product;
 import com.fuyao.model.product.ProductImages;
+import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
 import com.fuyao.page.ProductPage;
 
@@ -71,6 +72,14 @@ public class ProductDao implements IProductDao {
 		String pId = data.get("pId");
 		String hql = "from Product where pid=:pid";
 		Query<Product> query = this.getCurrentSession().createQuery(hql,Product.class);
+		query.setParameter("pid", pId);
+		return query.getSingleResult();
+	}
+
+	public ProductSaleVolum getProductSaleVolum(long pId) {
+		// TODO Auto-generated method stub
+		String hql = "from ProductSaleVolum where pid=:pid";
+		Query<ProductSaleVolum> query = this.getCurrentSession().createQuery(hql,ProductSaleVolum.class);
 		query.setParameter("pid", pId);
 		return query.getSingleResult();
 	}

@@ -1,11 +1,29 @@
 $(function(){
-	//getParam();
+	imgPath = "http://localhost/imageResource/";
+	getProductDetail();
 })
 
-function getParam() {
+function getProductDetail() {
 	var url = window.location.href;
-	var index = url.indexOf("pid=");
+	var index = url.indexOf("pId=");
 	var param = url.substring(index+4,url.length);
+	alert(param);
+	var data = {"pId": param};
+	$.ajax({
+		type: "post",
+		dataType: "json",
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
+		url: "http://localhost:8080/WXOfServer/product/detail",
+		async: true,
+		success: function(data){
+			productPage.initProductMessage(data);
+			popup.initProductStandard(data);
+		},
+		error: function(){
+			alert("服务器无响应");
+		}
+	});
 }
 
 var productPage = new Vue({
@@ -24,9 +42,9 @@ var productPage = new Vue({
 			saleVolume: 668
 		},
 		imgurls: [
+		    /*{imgurl : "../img/20172001.jpg"},
 		    {imgurl : "../img/20172001.jpg"},
-		    {imgurl : "../img/20172001.jpg"},
-		    {imgurl : "../img/20172001.jpg"}
+		    {imgurl : "../img/20172001.jpg"}*/
 		],
 		userappraise: [
 		    {
@@ -46,6 +64,21 @@ var productPage = new Vue({
 		]
 	},
     methods:{
+    	initProductMessage: function(data){
+    		this.productMessage.productId = data.product.pId;
+    		this.productMessage.name = data.product.name;
+    		this.productMessage.price = data.product.price;
+    		this.productMessage.describe = data.product.describe;
+    		this.productMessage.delivery = "免运费";
+    		this.productMessage.saleVolume = data.saleVolum.saleVolum;
+    		
+    		var images = data.images;
+    		for(var i=0;i < images.length;++i){
+    			if(images[i].image.startsWith("dImg")){
+    				this.imgurls.push(imgPath + images[i]);
+    			}
+    		}
+    	},
     	showSellerReturn: function(index){
     		if (this.userappraise[index].feedback == "" || this.userappraise[index].feedback.length == 0) {
     			return false;
@@ -87,16 +120,29 @@ var popup = new Vue({
 			imgurl: "../img/20172001.jpg",
 			productId: "20172648",
 		    name: "wow",
-		    price: "299",
+		    price: 299,
 		    count: 1,
 		    labels: [
-		        {label: "weqwdqwdrtyrtqwdq", isChoosed: false},
+		        /*{label: "weqwdqwdrtyrtqwdq", isChoosed: false},
 		        {label: "qweqwqweqyerte", isChoosed: false},
-		        {label: "dasfdwqeftryrty", isChoosed: false}
+		        {label: "dasfdwqeftryrty", isChoosed: false}*/
 		    ]
 		}
 	},
 	methods: {
+		initProductStandard: function(data){
+			this.productMessage.productId = data.product.pId;
+    		this.productMessage.name = data.product.name;
+    		this.productMessage.price = data.product.price;
+    		this.productMessage.count = 1;
+    		alert(this.productMessage.productId+this.productMessage.name+this.productMessage.price);
+    		
+    		var standard = data.standard;
+    		for(var i=0;i < standard.length;++i){
+    			var s = {label: standard[i].standard,prict: standard[i].price, isChoosed: false}
+    			this.productMessage.labels.push(s);
+    		}
+		},
 		showPopupWindow: function(){
 			this.isShow = true;
 		},

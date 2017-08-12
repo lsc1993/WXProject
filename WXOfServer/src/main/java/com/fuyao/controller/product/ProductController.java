@@ -27,8 +27,16 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping("/list")
 	private JSON getProductList(@RequestBody HashMap<String,String> data) {
-		Log.log(data.toString());
+		Log.log("list:" + data.toString());
 		JSON json = productService.getIndexProductList(data);
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/detail")
+	private JSON getProductDetail(@RequestBody HashMap<String,String> data) {
+		Log.log("detail:" + data.toString());
+		JSON json = productService.getProductDetail(data);
 		return json;
 	}
 }

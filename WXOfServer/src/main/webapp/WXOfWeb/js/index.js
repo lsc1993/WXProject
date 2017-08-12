@@ -18,6 +18,11 @@ var productWrapper = new Vue({
 		    {img : "../img/20172001.jpg", productId : 20172001},
 		    {img : "../img/20172001.jpg", productId : 20172001},*/
 		]
+	},
+	methods: {
+		gotoProduct: function(index){
+			window.location.href = "product.html?pId="+this.products[index].productId;
+		}
 	}
 })
 

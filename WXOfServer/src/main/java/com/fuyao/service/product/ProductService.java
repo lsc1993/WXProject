@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.fuyao.dao.product.IProductDao;
 import com.fuyao.model.product.Product;
 import com.fuyao.model.product.ProductImages;
+import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
 import com.fuyao.util.Log;
 
@@ -28,13 +29,18 @@ public class ProductService {
 	
 	public JSON getProductDetail(HashMap<String,String> data) {
 		Product p = productDao.getProduct(data);
-		long pId = Long.parseLong(data.get("pId"));
-		List<ProductImages> images = productDao.getProductImages(pId); 
-		List<ProductStandard> standard = productDao.getProductStandard(pId);
-		Log.log("product json:" + JSON.toJSONString(p));
-		Log.log("images json:" + JSON.toJSONString(images));
-		Log.log("standard json:" + JSON.toJSONString(standard));
-		return null;
+		//long pId = Long.parseLong(data.get("pId"));
+		List<ProductImages> images = productDao.getProductImages(p.getId()); 
+		List<ProductStandard> standard = productDao.getProductStandard(p.getId());
+		ProductSaleVolum saleVolum = productDao.getProductSaleVolum(p.getId());
+		StringBuilder builder = new StringBuilder();
+		builder.append("{").append("\"product\":").append(JSON.toJSONString(p))
+			.append(",").append("\"images\":").append(JSON.toJSONString(images))
+			.append(",").append("\"standard\":").append(JSON.toJSONString(standard))
+			.append(",").append("\"saleVolum\":").append(JSON.toJSONString(saleVolum))
+			.append("}");
+		Log.log("json:" + builder.toString());
+		return (JSON) JSON.parse(builder.toString());
 	}
 	
 	public JSON getIndexProductList(HashMap<String,String> data) {
