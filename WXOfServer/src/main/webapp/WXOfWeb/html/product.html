@@ -65,8 +65,8 @@
 							<div class="product-detail-appraise-container">
 								<div class="product-detail-container" v-show="isShowDetail">
 									<ul>
-										<li v-for="img in imgurls" :key="img">
-											<img :src="img.imgurl"/>
+										<li v-for="img in imgurls" :key="img.id">
+											<img :src="img.img"/>
 										</li>
 									</ul>
 								</div>
@@ -74,7 +74,7 @@
 									<div class="product-appraise-content">
 										<div class="product-appraise-user container">
 											<ul>
-												<li v-for="(appraise,index) in userappraise" :key="appraise">
+												<li v-for="(appraise,index) in userappraise" :key="appraise.id">
 													<div class="row">
 														<div class="col-md-2 col-sm-2 col-xs-3">
 															<img :src="appraise.img"/>
@@ -126,7 +126,7 @@
 				<div slot="product-standard-ul">
 					<ul>
 						<li v-for="(label,index) in productMessage.labels" 
-							:key="label"
+							:key="label.id"
 							v-on:click="chooseLabel(index)"
 							:class="{'product-standard-choosed' : label.isChoosed, 'product-standard-unchoosed' : !label.isChoosed}">
 							{{label.label}}

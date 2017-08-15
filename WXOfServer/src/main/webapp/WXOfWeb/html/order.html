@@ -6,8 +6,6 @@
 		<title></title>
 		<link rel="stylesheet" href="../css/bootstrap.css" />
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
-		<link rel="stylesheet" href="../css/product-header.css" />
-		<link rel="stylesheet" href="../css/product-footer.css" />
 		<link rel="stylesheet" href="../css/order.css" />
 		<link rel="stylesheet" href="../css/dialog.css" />
 		<link rel="stylesheet" href="../css/popup-window.css" />
@@ -133,7 +131,7 @@
 				<ul slot="dialog-content" id="address-dialog">
 					<li 
 						v-for="(addressList,index) in aera" 
-						v-bind:key="addressList">
+						v-bind:key="addressList.id">
 						<p onclick="selectAddress($(this).text())">{{addressList[1]}}</p>
 					</li>
 				</ul>
@@ -146,7 +144,6 @@
 					@close="removeChooseWindow()" 
 					@shownewwindow="showOneBtnWindow()" 
 					@showeditwindow="showTwoBtnWindow()"
-					@chooseaddr="chooseAddress(1)"
 					:addressitem="addressItems">
 				</choose-address-window>
 				 <new-address-window 
@@ -160,8 +157,8 @@
 				 		{{editTitle}}
 				 	</p>
 				 	<div slot="popup-btn-container">
-				 		<button class="btn btn-success">保存</button> 
-						<button class="btn btn-danger" v-show="isOneButton">删除</button>
+				 		<button class="btn btn-success" @click="saveAddress()">保存</button> 
+						<button class="btn btn-danger" v-show="isOneButton" @click="deleteAddress()">删除</button>
 				 	</div>
 				 </new-address-window>
 			</div>
@@ -183,7 +180,7 @@
 										<div class="address-list">
 											<ul>
 												<li v-for="(address,index) in addressitem" 
-													v-bind:key="address">
+													v-bind:key="address.id"> 
 													<div v-on:click="chooseAddressOfIndex(index)">
 														<div class="address-item-radio">
 															<input type="radio" />
@@ -199,7 +196,7 @@
 														</div>
 													</div>
 													<div class="address-edit-button">
-														<i class="icon-edit" v-on:click="$emit('showeditwindow')"></i>
+														<i class="icon-edit icon-large" v-on:click="showEditWindow(index)"></i>
 													</div>
 												</li>
 											</ul>
@@ -233,7 +230,7 @@
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>收货人</p>
-										<input type="text" :value="addressregion.name" placeholder="名字"/>
+										<input type="text" :value="addressregion.name" v-model="addressregion.name" placeholder="名字"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>选择地区</p>
@@ -245,15 +242,15 @@
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>联系电话</p>
-										<input type="text" :value="addressregion.tel" placeholder="手机号或固定电话"/>
+										<input type="text" :value="addressregion.tel" v-model="addressregion.tel" placeholder="手机号或固定电话"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>详细地址</p>
-										<input type="text" :value="addressregion.road" placeholder="如街道、楼层、门牌号等"/>
+										<input type="text" :value="addressregion.road" v-model="addressregion.road" placeholder="如街道、楼层、门牌号等"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>邮政编码</p>
-										<input type="text" :value="addressregion.postcode" placeholder="邮政编码(选填)"/>
+										<input type="text" :value="addressregion.postcode" v-model="addressregion.postcode" placeholder="邮政编码(选填)"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-operator-button">
 										<slot name="popup-btn-container">

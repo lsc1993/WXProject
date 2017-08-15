@@ -616,5 +616,4 @@ function selectAddress(p) {
 		dialog.isShowDialog = false;
 		dialog.index = 1;      
 	}
-	
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -73,7 +74,13 @@ public class ProductDao implements IProductDao {
 		String hql = "from Product where pid=:pid";
 		Query<Product> query = this.getCurrentSession().createQuery(hql,Product.class);
 		query.setParameter("pid", pId);
-		return query.getSingleResult();
+		Product p;
+		try {
+			p = query.getSingleResult();
+		} catch (NoResultException e) {
+			p = null;
+		}
+		return p;
 	}
 
 	public ProductSaleVolum getProductSaleVolum(long pId) {

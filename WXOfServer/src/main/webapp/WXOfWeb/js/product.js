@@ -7,7 +7,6 @@ function getProductDetail() {
 	var url = window.location.href;
 	var index = url.indexOf("pId=");
 	var param = url.substring(index+4,url.length);
-	alert(param);
 	var data = {"pId": param};
 	$.ajax({
 		type: "post",
@@ -42,9 +41,9 @@ var productPage = new Vue({
 			saleVolume: 668
 		},
 		imgurls: [
-		    /*{imgurl : "../img/20172001.jpg"},
-		    {imgurl : "../img/20172001.jpg"},
-		    {imgurl : "../img/20172001.jpg"}*/
+		    /*{img : "../img/20172001.jpg"},
+		    {img : "../img/20172001.jpg"},
+		    {img : "../img/20172001.jpg"}*/
 		],
 		userappraise: [
 		    {
@@ -75,7 +74,9 @@ var productPage = new Vue({
     		var images = data.images;
     		for(var i=0;i < images.length;++i){
     			if(images[i].image.startsWith("dImg")){
-    				this.imgurls.push(imgPath + images[i]);
+    				var imageurl = {img: imgPath + images[i].image};
+    				//alert(imageurl.img);
+    				this.imgurls.push(imageurl);
     			}
     		}
     	},
@@ -133,15 +134,17 @@ var popup = new Vue({
 		initProductStandard: function(data){
 			this.productMessage.productId = data.product.pId;
     		this.productMessage.name = data.product.name;
-    		this.productMessage.price = data.product.price;
     		this.productMessage.count = 1;
-    		alert(this.productMessage.productId+this.productMessage.name+this.productMessage.price);
+    		this.productMessage.price = data.product.price;
     		
     		var standard = data.standard;
-    		for(var i=0;i < standard.length;++i){
-    			var s = {label: standard[i].standard,prict: standard[i].price, isChoosed: false}
-    			this.productMessage.labels.push(s);
-    		}
+    		if(standard.length > 0){
+    			//this.productMessage.price = standard[0].price;
+    			for(var i=0;i < standard.length;++i){
+    				var s = {label: standard[i].standard,price: standard[i].price, isChoosed: false};
+    				this.productMessage.labels.push(s);
+    			}
+    		}	
 		},
 		showPopupWindow: function(){
 			this.isShow = true;
@@ -155,11 +158,12 @@ var popup = new Vue({
 				if(i == index){
 					this.productMessage.labels[i].isChoosed = true;
 					var a=this.productMessage.labels[i];
-					this.productMessage.labels.splice(i,1,a)
+					this.productMessage.labels.splice(i,1,a);
+					this.productMessage.price = this.productMessage.labels[i].price;
 				} else {
 					this.productMessage.labels[i].isChoosed = false;
 					var a=this.productMessage.labels[i];
-					this.productMessage.labels.splice(i,1,a)
+					this.productMessage.labels.splice(i,1,a);
 				}
 			}	
 		}
@@ -220,21 +224,24 @@ function addShopCart(){
 function buyNow(){
 	var length = popup.productMessage.labels.length;
     var index = -1;
-    var standard = "";
+    var standard = "1";
+    var price = 0;
     for(var i = 0;i < length;++i){
     	if(popup.productMessage.labels[i].isChoosed){
     		index = i;
     		standard = popup.productMessage.labels[i].label;
+    		price = popup.productMessage.labels[i].price;
     	}
     }
-    if(index == -1 || standard == ""){
+    if(index == -1 && standard == ""){
   		dialog.showDialog();
     }else{
     	var url = "order.html?"; 
     	var param = "pid=" + popup.productMessage.productId
     	+ "|count=" + popup.productMessage.count
-    	+ "|standard=" + standard;
-    	var encodeParam = window.btoa(param);
+    	+ "|standard=" + standard
+    	+ "|price=" + price;
+    	var encodeParam = encodeURIComponent(param);
     	window.location.href = url + encodeParam;
     }
 }

@@ -29,6 +29,8 @@ public class ProductService {
 	
 	public JSON getProductDetail(HashMap<String,String> data) {
 		Product p = productDao.getProduct(data);
+		if (null == p)
+			return (JSON) JSON.parse("{\"result\":\"fault\",\"message\":,\"没有该产品\"}");
 		//long pId = Long.parseLong(data.get("pId"));
 		List<ProductImages> images = productDao.getProductImages(p.getId()); 
 		List<ProductStandard> standard = productDao.getProductStandard(p.getId());
