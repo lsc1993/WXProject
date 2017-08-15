@@ -1,7 +1,7 @@
 $(function(){
 	imgPath = "http://localhost/imageResource/";
 	autoHeightTextaera();
-	initOrder();
+	//initOrder();
 })
 
 //买家留言输入框高度伸展
@@ -68,7 +68,20 @@ var orderPage = new Vue({
  * */
 var chooseAddressWindow = Vue.component("choose-address-window",{
 	props: ['addressitem'],
-	template: "#popup-window-address-choose"
+	template: "#popup-window-address-choose",
+	methods: {
+		chooseAddressOfIndex: function(index){ //选择相应位置的地址
+			orderPage.addressMessage.name = chooseAddress.addressItems[index].name;
+			orderPage.addressMessage.tel = chooseAddress.addressItems[index].tel;
+			orderPage.addressMessage.address = chooseAddress.addressItems[index].address;
+			orderPage.addressMessage.postcode = chooseAddress.addressItems[index].postcode;
+			chooseAddress.isShowChooseWindow = false;
+			orderPage.isShowAddress = true;
+		},
+		showEditWindow: function(index){ //显示地址编辑对话框
+			chooseAddress.showTwoBtnWindow(index);
+		}
+	}
 })
 
 /*
@@ -260,6 +273,9 @@ var chooseAddress = new Vue({
 				return false;
 			}
 			return true;
+		},
+		choose: function(index){
+			alert(index);
 		}
 	},
 	components: {
@@ -271,21 +287,6 @@ var chooseAddress = new Vue({
 //显示地址选择对话框
 function showChooseWindow() {
 	chooseAddress.showChooseWindow();
-}
-
-//选择相应位置的地址
-function chooseAddressOfIndex(index){
-	orderPage.addressMessage.name = chooseAddress.addressItems[index].name;
-	orderPage.addressMessage.tel = chooseAddress.addressItems[index].tel;
-	orderPage.addressMessage.address = chooseAddress.addressItems[index].address;
-	orderPage.addressMessage.postcode = chooseAddress.addressItems[index].postcode;
-	chooseAddress.isShowChooseWindow = false;
-	orderPage.isShowAddress = true;
-}
-
-//显示地址编辑对话框
-function showEditWindow(index){
-	chooseAddress.showTwoBtnWindow(index);
 }
 
 function initOrder(){
@@ -314,6 +315,7 @@ function initOrder(){
 	initAddress(1);
 }
 
+//初始化产品订单信息
 function initProduct(pId,standard,count,price){
 	var data = {"pId": pId};
 	$.ajax({
@@ -332,6 +334,7 @@ function initProduct(pId,standard,count,price){
 	});
 }
 
+//初始化用户地址
 function initAddress(uId){
 	var data =  {"uId": uId};
 	$.ajax({
