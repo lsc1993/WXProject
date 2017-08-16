@@ -141,7 +141,7 @@ var popup = new Vue({
     		if(standard.length > 0){
     			//this.productMessage.price = standard[0].price;
     			for(var i=0;i < standard.length;++i){
-    				var s = {label: standard[i].standard,price: standard[i].price, isChoosed: false};
+    				var s = {id: standard[i].id,label: standard[i].standard,price: standard[i].price, isChoosed: false};
     				this.productMessage.labels.push(s);
     			}
     		}	
@@ -224,21 +224,24 @@ function addShopCart(){
 function buyNow(){
 	var length = popup.productMessage.labels.length;
     var index = -1;
-    var standard = "1";
+    var sid = -1;
+    var standard = "";
     var price = 0;
     for(var i = 0;i < length;++i){
     	if(popup.productMessage.labels[i].isChoosed){
     		index = i;
+    		sid = popup.productMessage.labels[i].id;
     		standard = popup.productMessage.labels[i].label;
     		price = popup.productMessage.labels[i].price;
     	}
     }
-    if(index == -1 && standard == ""){
+    if(index == -1 || standard == "" || sid == -1){
   		dialog.showDialog();
     }else{
     	var url = "order.html?"; 
     	var param = "pid=" + popup.productMessage.productId
     	+ "|count=" + popup.productMessage.count
+    	+ "|sid=" + sid
     	+ "|standard=" + standard
     	+ "|price=" + price;
     	var encodeParam = encodeURIComponent(param);

@@ -4,7 +4,7 @@ Vue.component('dialog-component', {
     template: '#dialog-modal'
 })
 
-new Vue({
+var dia = new Vue({
   el: '#dialog-div',
   data: {
   	showModal: false,
@@ -14,6 +14,9 @@ new Vue({
 		showDialog: function(text){
 			this.message = text;
 			this.showModal = true;
+		},
+		dismiss: function(){
+			this.showModal = false;
 		}
 	}
 })

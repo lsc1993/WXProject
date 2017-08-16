@@ -23,10 +23,15 @@
 	bottom: 0;
 	width: 100%;
 	height: auto;
+	max-height: 60%;
+	overflow-y: scroll;
 	margin: 0px auto;
 	background-color: #fff;
 	transition: all .3s ease;
 	font-family: Helvetica, Arial, sans-serif;
+}
+.popup-window-modal-container::-webkit-scrollbar {
+    display: none;
 }
 /*
  * 产品页面产品选择popupwindow样式

@@ -99,20 +99,20 @@
 					<div class="product-price-content">
 						<p>商品金额</p>
 						<div class="product-price">
-							<p>￥</p><p>88.00</p>
+							<p>￥</p><p>{{pTotal}}</p>
 						</div>
 					</div>
 					<div class="delivery-price-content">
 						<p>运费</p>
 						<div class="delivery-price">
-							<p>+￥</p><p>0.00</p>
+							<p>+￥</p><p>{{deliveryCost}}</p>
 						</div>
 					</div>
 				</div>
 			</div>
 			<footer>
 				<div class="order-footer">
-					<div class="order-submit">
+					<div class="order-submit" @click="submitOrder()">
 						<p>提交订单</p>
 					</div>
 					<div class="order-total-cost">
@@ -122,17 +122,29 @@
 				</div>
 			</footer>
 		</div>
-		
+		<div id="dialog-div" v-if="showModal" :message="message">
+			<address-dialog>
+				<p slot="dialog-header">
+					提示
+				</p>
+				<p slot="dialog-content">
+					{{message}}
+				</p>
+				<div slot="dialog-footer">
+					<p class="dialog-button-middle" @click="dismiss()">确认</p>
+				</div>
+			</address-dialog>
+		</div>
 		<div id="address-aera-choose">
 			<address-dialog v-if="isShowDialog" >
 				<p slot="dialog-header">
 					{{title}}
 				</p>
 				<ul slot="dialog-content" id="address-dialog">
-					<li 
+					<li onclick="selectAddress($(this).text())" 
 						v-for="(addressList,index) in aera" 
 						v-bind:key="addressList.id">
-						<p onclick="selectAddress($(this).text())">{{addressList[1]}}</p>
+						<p>{{addressList[1]}}</p>
 					</li>
 				</ul>
 				<p slot="dialog-footer"></p>
@@ -294,5 +306,6 @@
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/order.js" ></script>
 		<script type="text/javascript" src="../js/address-choose-dialog.js" ></script>
+		<script type="text/javascript" src="../js/dialog.js" ></script>
 	</body>
 </html>

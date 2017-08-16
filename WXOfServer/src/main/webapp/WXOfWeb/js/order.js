@@ -1,7 +1,7 @@
 $(function(){
 	imgPath = "http://localhost/imageResource/";
 	autoHeightTextaera();
-	//initOrder();
+	initOrder();
 })
 
 //买家留言输入框高度伸展
@@ -22,8 +22,11 @@ var orderPage = new Vue({
 	data: {
 		isShowAddress: false,
 		productMessage: 
-		{	imgurl: "../img/20172001.jpg",
+		{	
+			pId: "",
+			imgurl: "../img/20172001.jpg",
 		    name: "change",
+		    sId: -1,
 		    standard: "4斤",
 		    price: 299.90,
 		    count: "1",
@@ -31,6 +34,7 @@ var orderPage = new Vue({
 		},
 		addressMessage: 
 		{
+			id: "",
 			name: "",
 			tel: "",
 			address: "",
@@ -41,12 +45,22 @@ var orderPage = new Vue({
 		totalCost: function(){
 			var price = parseFloat(this.productMessage.price) + parseFloat(this.productMessage.deliveryCost);
 			return price.toFixed(2);
+		},
+		pTotal: function(){
+			var price = parseFloat(this.productMessage.price);
+			return price.toFixed(2);
+		},
+		deliveryCost: function(){
+			var price = parseFloat(this.productMessage.deliveryCost);
+			return price.toFixed(2);
 		}
 	},
 	methods: {
-		initOrderMessage: function(data,standard,count,price){
+		initOrderMessage: function(data,pId,sId,standard,count,price){
+			this.productMessage.pId = pId;
 			this.productMessage.name = data.product.name;
 			this.productMessage.count = count;
+			this.productMessage.sId = sId;
 			this.productMessage.standard = standard;
 			this.productMessage.price = (parseFloat(price) * count).toFixed(2);
 			var images = data.images;
@@ -58,6 +72,41 @@ var orderPage = new Vue({
     		}
 		},
 		submitOrder: function(){
+			if(this.addressMessage.id == "" || this.addressMessage.name == "" || this.addressMessage.tel == "" || this.addressMessage.address == ""){
+				dia.showDialog("请选择收货地址");
+				return;
+			}
+			var data= { uid:1,
+						pid:this.productMessage.pId,
+						sid:this.productMessage.sId,
+						pTotal: this.productMessage.price,
+						sendCost: this.productMessage.deliveryCost,
+						total: parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
+						count: this.productMessage.count,
+						standard: this.productMessage.standard,
+						discount: "1",
+						buyerMsg: $("#buy-message").val(),
+						sendWay: "快递发货",
+						aid: this.addressMessage.id,
+						receiver: this.addressMessage.name,
+						phone: this.addressMessage.tel,
+						address: this.addressMessage.address,
+						postcode: this.addressMessage.postcode};
+			
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				url: "http://localhost:8080/WXOfServer/order/submit",
+				async: true,
+				success: function(data){
+					dia.showDialog(data.message);
+				},
+				error: function(){
+					alert("服务器无响应");
+				}
+			});
 			
 		}
 	}
@@ -71,6 +120,7 @@ var chooseAddressWindow = Vue.component("choose-address-window",{
 	template: "#popup-window-address-choose",
 	methods: {
 		chooseAddressOfIndex: function(index){ //选择相应位置的地址
+			orderPage.addressMessage.id = chooseAddress.addressItems[index].id;
 			orderPage.addressMessage.name = chooseAddress.addressItems[index].name;
 			orderPage.addressMessage.tel = chooseAddress.addressItems[index].tel;
 			orderPage.addressMessage.address = chooseAddress.addressItems[index].address;
@@ -127,9 +177,8 @@ var chooseAddress = new Vue({
 							city: address.city,
 							region: address.region,
 							road: address.detailAddress,
-							address: address.province+address.city+address.region+data.detailAddress,
+							address: address.province+address.city+address.region+address.detailAddress,
 							postcode: address.postcode};
-				alert(address.receiver);
 				this.addressItems.push(addr);
 			}
 			
@@ -295,6 +344,7 @@ function initOrder(){
 	var paramUrl = decodeURIComponent(url.substr(pos+1,url.length));
 	var params = paramUrl.split("|");
 	var pId = "";
+	var sId = "";
 	var standard = "";
 	var count;
 	var price;
@@ -303,6 +353,8 @@ function initOrder(){
 		var pa = params[i].split("=");
 		if("pid" == pa[0]){
 			pId = pa[1];
+		}else if("sid" == pa[0]){
+			sId = pa[1];
 		}else if("standard" == pa[0]){
 			standard = pa[1];
 		}else if("count" == pa[0]){
@@ -311,12 +363,12 @@ function initOrder(){
 			price = pa[1];
 		}
 	}
-	initProduct(pId,standard,count,price);
+	initProduct(pId,sId,standard,count,price);
 	initAddress(1);
 }
 
 //初始化产品订单信息
-function initProduct(pId,standard,count,price){
+function initProduct(pId,sId,standard,count,price){
 	var data = {"pId": pId};
 	$.ajax({
 		type: "post",
@@ -326,7 +378,7 @@ function initProduct(pId,standard,count,price){
 		url: "http://localhost:8080/WXOfServer/product/detail",
 		async: true,
 		success: function(data){
-			orderPage.initOrderMessage(data,standard,count,price);
+			orderPage.initOrderMessage(data,pId,sId,standard,count,price);
 		},
 		error: function(){
 			alert("服务器无响应");
@@ -351,4 +403,8 @@ function initAddress(uId){
 			alert("服务器无响应");
 		}
 	});
+}
+
+function gotoOrderList(){
+	window.location.href = "order-list.html";
 }

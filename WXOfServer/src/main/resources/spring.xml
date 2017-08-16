@@ -16,5 +16,7 @@
 			com.fuyao.service.product,
 			com.fuyao.dao.product,
 			com.fuyao.service.user,
-			com.fuyao.dao.user" />
+			com.fuyao.dao.user,
+			com.fuyao.service.order,
+			com.fuyao.dao.order" />
 </beans>

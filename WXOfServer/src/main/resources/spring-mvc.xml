@@ -15,7 +15,8 @@
 		base-package="
 			com.fuyao.controller.login,
 			com.fuyao.controller.product,
-			com.fuyao.controller.user" />
+			com.fuyao.controller.user,
+			com.fuyao.controller.order" />
 
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler/>

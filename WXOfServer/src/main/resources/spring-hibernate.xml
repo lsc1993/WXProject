@@ -65,6 +65,7 @@
 				<value>com.fuyao.model.login</value>
 				<value>com.fuyao.model.product</value>
 				<value>com.fuyao.model.user</value>
+				<value>com.fuyao.model.order</value>
 			</list>
 		</property>
 	</bean>

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -25,7 +26,7 @@ public class ProductController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/list")
+	@RequestMapping(value="/list",method=RequestMethod.POST)
 	private JSON getProductList(@RequestBody HashMap<String,String> data) {
 		Log.log("list:" + data.toString());
 		JSON json = productService.getIndexProductList(data);
@@ -33,7 +34,7 @@ public class ProductController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/detail")
+	@RequestMapping(value="/detail",method=RequestMethod.POST)
 	private JSON getProductDetail(@RequestBody HashMap<String,String> data) {
 		Log.log("detail:" + data.toString());
 		JSON json = productService.getProductDetail(data);
