@@ -517,6 +517,9 @@ function addrEmptyInit() {//什么都没选，空初始化
 } 
 
 function getProvIdByName(prov_name) {//工具函数，通过省份名省获取到省份id
+	if(prov_name == ""){
+		return -1;
+	}
     var provinces = [];
     provinces = addr_arr[0];
     prov_name = $.trim(prov_name);
@@ -529,6 +532,9 @@ function getProvIdByName(prov_name) {//工具函数，通过省份名省获取�
 }        
 
 function getProvIdByCityId(city_id) {//工具函数，通过城市id获取到省份id
+	if(city_id == ""){
+		return -1;
+	}
     for (var i = 1; i < 36; i++) {
         for (var j = 0; j < addr_arr[i].length; j++) {
             if (addr_arr[i][j][0] == city_id) {
@@ -540,6 +546,9 @@ function getProvIdByCityId(city_id) {//工具函数，通过城市id获取到省
 }
 
 function getCityIdByName(cityName,addr_arr) {
+	if(cityName == "" || addr_arr == ""){
+		return -1;
+	}
 	cityName = $.trim(cityName);
     for (var i = 0;i < addr_arr.length;++i) {
     	if (cityName == addr_arr[i][1]) {
@@ -572,14 +581,14 @@ var dialog = new Vue({
 			this.isShowDialog = true;
 			this.aera = addr_arr[0];
 			this.title = "请选择省份";
-			dialog.index = 1;
+			this.index = 1;
 		},
 		chooseCity: function(){
 			this.isShowDialog = true;
 			var id = getProvIdByName(this.province);
 			this.aera = addr_arr[id];
 			this.title = "请选择城市";
-			dialog.index = 2;
+			this.index = 2;
 		},
 		chooseRegion: function() {
 			this.isShowDialog = true;
@@ -588,32 +597,33 @@ var dialog = new Vue({
 			var rId = getCityIdByName(this.city,addr_arr[id]);
 			this.aera = addr_arr[rId];
 			this.title = "请选择地区";
-			dialog.index = 3;
+			this.index = 3;
 		},
+		dismiss: function(){
+			this.isShowDialog = false;
+		},
+		selectAddress: function(ev){
+			var el = ev.currentTarget;
+			var p = $(el).text();
+			if (this.index == 1) {
+				chooseAddress.addressRegion.province = p;
+				chooseAddress.addressRegion.city = "选择城市";
+				chooseAddress.addressRegion.region = "选择地区";
+				this.province = p;
+				this.city = "";
+				this.region = "";
+				this.isShowDialog = false;
+			} else if (this.index == 2 && this.province != "") {
+				chooseAddress.addressRegion.city = p;
+				chooseAddress.addressRegion.region = "选择地区";
+				this.city = p;
+				this.region = "";
+				this.isShowDialog = false;
+			} else if (this.index == 3 && this.city != "") {
+				chooseAddress.addressRegion.region = p;
+				this.region = p;
+				this.isShowDialog = false;    
+			}
+		}
 	}
 })
-
-function selectAddress(p) {
-	if (dialog.index == 1) {
-		chooseAddress.addressRegion.province = p;
-		chooseAddress.addressRegion.city = "选择城市";
-		chooseAddress.addressRegion.region = "选择地区";
-		dialog.province = p;
-		dialog.city = "";
-		dialog.region = "";
-		dialog.isShowDialog = false;
-		dialog.index = 2;
-	} else if (dialog.index == 2 && dialog.province != "") {
-		chooseAddress.addressRegion.city = p;
-		chooseAddress.addressRegion.region = "选择地区";
-		dialog.city = p;
-		dialog.region = "";
-		dialog.isShowDialog = false;
-		dialog.index = 3;
-	} else if (dialog.index == 3 && dialog.city != "") {
-		chooseAddress.addressRegion.region = p;
-		dialog.region = p;
-		dialog.isShowDialog = false;
-		dialog.index = 1;      
-	}
-}

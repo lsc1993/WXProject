@@ -41,9 +41,11 @@ public class UserDao implements IUserDao {
 		try {
 			this.getCurrentSession().update(address);
 			result.put("result", "success");
+			result.put("message", "修改成功");
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			result.put("result", "falut");
+			result.put("message", "修改失败，请稍后重试");
 		}
 		return result;
 	}
@@ -58,7 +60,7 @@ public class UserDao implements IUserDao {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			result.put("result", "falut");
-			result.put("message", "删除失败");
+			result.put("message", "删除失败，请稍后重试");
 		}
 		return result;
 	}
@@ -71,9 +73,15 @@ public class UserDao implements IUserDao {
 			result.put("result", "too many address");
 			result.put("message", "每个用户最多只能有10个收货地址");
 		} else {
-			this.getCurrentSession().save(address);
-			result.put("result", "success");
-			result.put("message", "地址添加成功");
+			try {
+				this.getCurrentSession().save(address);
+				result.put("result", "success");
+				result.put("message", "删除成功");
+			} catch (HibernateException e) {
+				e.printStackTrace();
+				result.put("result", "falut");
+				result.put("message", "删除失败，请稍后重试");
+			}
 		}
 		return result;
 	}

@@ -4,7 +4,7 @@ Vue.component('dialog-component', {
     template: '#dialog-modal'
 })
 
-var dia = new Vue({
+var tip = new Vue({
   el: '#dialog-div',
   data: {
   	showModal: false,

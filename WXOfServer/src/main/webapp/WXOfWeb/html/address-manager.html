@@ -17,7 +17,7 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="menu-wrapper">
-							<a><i class="icon-angle-left icon-2x"></i></a>
+							<a href="mine.html"><i class="icon-angle-left icon-2x"></i></a>
 							<p>地址管理</p>
 						</div>	
 					</div>
@@ -28,8 +28,8 @@
 		<div class="address-list-container" id="address-manager">
 			<h3 v-if="isShowTip">您还没有填写过地址~</h3>
 			<div class="address-list-content">
-				<ul>
-					<li v-for="(address, index) in addressList" :key="address">
+				<ul v-if="!isShowTip">
+					<li v-for="(address, index) in addressList" :key="address.id">
 						<div class="address-icon">
 							<i class="icon-plane icon-large"></i>
 						</div>
@@ -64,8 +64,8 @@
 				 	{{editTitle}}
 				</p>
 				<div slot="popup-btn-container">
-				 	<button class="btn btn-success">保存</button> 
-					<button class="btn btn-danger" v-show="isOneButton">删除</button>
+				 	<button class="btn btn-success" @click="saveAddress()">保存</button> 
+					<button class="btn btn-danger" v-show="isOneButton" @click="deleteAddress()">删除</button>
 				</div>
 			</edit-address-window>
 		</div>
@@ -75,29 +75,23 @@
 					{{title}}
 				</p>
 				<ul slot="dialog-content" id="address-dialog">
-					<li 
-						v-for="(addressList,index) in aera" 
-						v-bind:key="addressList">
-						<p onclick="selectAddress($(this).text())">{{addressList[1]}}</p>
+					<li v-for="(addressList,index) in aera" :key="addressList.id">
+						<p @click="selectAddress($event)">{{addressList[1]}}</p>
 					</li>
 				</ul>
-				<p slot="dialog-footer"></p>
+				<div slot="dialog-footer">
+					<p class="dialog-button-middle" @click="dismiss()">取消</p>
+				</div>
 			</address-dialog>
 		</div>
-		<div id="tip-dialog-div">
-			<tip-dialog v-if="isShowTip" @close="isShowTip = false"
-				@confirm="confirm()">
-				<p slot="dialog-header">
-					提示
-				</p>
-				<p slot="dialog-content">
-					{{message}}
-				</p>
+		<div id="dialog-div">
+			<address-dialog v-if="showModal" :message="message">
+				<p slot="dialog-header">提示</p>
+				<p slot="dialog-content">{{message}}</p>
 				<div slot="dialog-footer">
-					<p class="dialog-button-left" @click="$emit('close')">取消</p>
-					<p class="dialog-button-right" @click="$emit('close')">确认</p>
+					<p class="dialog-button-middle" @click="dismiss()">确认</p>
 				</div>
-			</tip-dialog>
+			</address-dialog>
 		</div>
 		<!--新建地址popupwindow模板-->
 		<script type="text/x-template" id="popup-window-address-edit">
@@ -117,27 +111,27 @@
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>收货人</p>
-										<input type="text" :value="addressregion.name" placeholder="名字"/>
+										<input type="text" :value="addressregion.name" v-model="addressregion.name" placeholder="名字"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>选择地区</p>
 										<ul>
-											<li v-on:click="$emit('chooseprovince')">{{addressregion.province}}</li>
-											<li v-on:click="$emit('choosecity')">{{addressregion.city}}</li>
-											<li v-on:click="$emit('chooseregion')">{{addressregion.region}}</li>
+											<li @click="$emit('chooseprovince')">{{addressregion.province}}</li>
+											<li @click="$emit('choosecity')">{{addressregion.city}}</li>
+											<li @click="$emit('chooseregion')">{{addressregion.region}}</li>
 										</ul>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>联系电话</p>
-										<input type="text" :value="addressregion.tel" placeholder="手机号或固定电话"/>
+										<input type="text" :value="addressregion.tel" v-model="addressregion.tel" placeholder="手机号或固定电话"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>详细地址</p>
-										<input type="text" :value="addressregion.road" placeholder="如街道、楼层、门牌号等"/>
+										<input type="text" :value="addressregion.road" v-model="addressregion.road" placeholder="如街道、楼层、门牌号等"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-message-list">
 										<p>邮政编码</p>
-										<input type="text" :value="addressregion.postcode" placeholder="邮政编码(选填)"/>
+										<input type="text" :value="addressregion.postcode" v-model="addressregion.postcode" placeholder="邮政编码(选填)"/>
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12 address-operator-button">
 										<slot name="popup-btn-container">
@@ -168,7 +162,6 @@
 							</div>
 							<div class="dialog-footer">
 								<slot name="dialog-footer">
-									
 								</slot>
 							</div>
 						</div>
@@ -181,5 +174,6 @@
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/address-choose-dialog.js" ></script>
 		<script type="text/javascript" src="../js/address-manager.js" ></script>
+		<script type="text/javascript" src="../js/dialog.js" ></script>
 	</body>
 </html>

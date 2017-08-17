@@ -122,14 +122,10 @@
 				</div>
 			</footer>
 		</div>
-		<div id="dialog-div" v-if="showModal" :message="message">
-			<address-dialog>
-				<p slot="dialog-header">
-					提示
-				</p>
-				<p slot="dialog-content">
-					{{message}}
-				</p>
+		<div id="dialog-div">
+			<address-dialog v-if="showModal" :message="message">
+				<p slot="dialog-header">提示</p>
+				<p slot="dialog-content">{{message}}</p>
 				<div slot="dialog-footer">
 					<p class="dialog-button-middle" @click="dismiss()">确认</p>
 				</div>
@@ -141,10 +137,8 @@
 					{{title}}
 				</p>
 				<ul slot="dialog-content" id="address-dialog">
-					<li onclick="selectAddress($(this).text())" 
-						v-for="(addressList,index) in aera" 
-						v-bind:key="addressList.id">
-						<p>{{addressList[1]}}</p>
+					<li v-for="(addressList,index) in aera" :key="addressList.id">
+						<p @click="selectAddress($event)">{{addressList[1]}}</p>
 					</li>
 				</ul>
 				<p slot="dialog-footer"></p>
@@ -293,7 +287,6 @@
 							</div>
 							<div class="dialog-footer">
 								<slot name="dialog-footer">
-									
 								</slot>
 							</div>
 						</div>

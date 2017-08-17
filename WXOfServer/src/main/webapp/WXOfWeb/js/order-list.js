@@ -145,3 +145,7 @@ var orderList = new Vue({
 		}
 	}
 })
+
+function initOrder(index){
+	
+}

@@ -19,6 +19,7 @@ public class Order {
 	private String pid;
 	private long sid;
 	private long aid;
+	private String imgurl;
 	private float total;
 	private float sendCost;
 	private float pTotal;
@@ -32,6 +33,7 @@ public class Order {
 	private String address;
 	private String postcode;
 	private Date date;
+	private String status;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -81,6 +83,14 @@ public class Order {
 	}
 	public void setAid(long aid) {
 		this.aid = aid;
+	}
+	
+	@Column(name="imgurl",nullable=false,length=128)
+	public String getImgurl() {
+		return imgurl;
+	}
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
 	
 	@Column(name="total",nullable=false)
@@ -184,5 +194,13 @@ public class Order {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	@Column(name="status",nullable=false,length=10)
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

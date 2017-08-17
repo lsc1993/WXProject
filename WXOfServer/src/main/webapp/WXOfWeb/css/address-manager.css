@@ -41,7 +41,7 @@
 .address-list-container {
 	width: 100%;
 	height: auto;
-	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 60px;
 }
 
 .address-list-container h3 {
@@ -79,14 +79,13 @@
 
 .address-message {
 	width: 75%;
+	min-width: 75%;
 	height: auto;
 	display: table-cell;
 	vertical-align: middle;
 }
 
 .address-message p {
-	width: inherit;
-	max-width: 100%;
 	display: inline-block;
 	font-size: 16px;
 }

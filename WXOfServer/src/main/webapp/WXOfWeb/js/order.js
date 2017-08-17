@@ -73,12 +73,13 @@ var orderPage = new Vue({
 		},
 		submitOrder: function(){
 			if(this.addressMessage.id == "" || this.addressMessage.name == "" || this.addressMessage.tel == "" || this.addressMessage.address == ""){
-				dia.showDialog("请选择收货地址");
+				tip.showDialog("请选择收货地址");
 				return;
 			}
 			var data= { uid:1,
 						pid:this.productMessage.pId,
 						sid:this.productMessage.sId,
+						imgurl: this.productMessage.imgurl,
 						pTotal: this.productMessage.price,
 						sendCost: this.productMessage.deliveryCost,
 						total: parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
@@ -101,7 +102,7 @@ var orderPage = new Vue({
 				url: "http://localhost:8080/WXOfServer/order/submit",
 				async: true,
 				success: function(data){
-					dia.showDialog(data.message);
+					tip.showDialog(data.message);
 				},
 				error: function(){
 					alert("服务器无响应");

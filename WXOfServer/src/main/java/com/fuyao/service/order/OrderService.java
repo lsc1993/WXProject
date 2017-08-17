@@ -34,6 +34,7 @@ public class OrderService {
 		order.setUid(Long.parseLong(data.get("uid")));
 		order.setPid(data.get("pid"));
 		order.setSid(Long.parseLong(data.get("sid")));
+		order.setImgurl(data.get("imgurl"));
 		order.setPTotal(Float.parseFloat(data.get("pTotal")));
 		order.setSendCost(Float.parseFloat(data.get("sendCost")));
 		order.setTotal(Float.parseFloat(data.get("total")));
@@ -47,6 +48,22 @@ public class OrderService {
 		order.setPhone(data.get("phone"));
 		order.setAddress(data.get("address"));
 		order.setPostcode(data.get("postcode"));
+		order.setStatus(OrderStatus.WAITACCEPT.name());
 		return orderDao.submitOrder(order);
+	}
+	
+	enum OrderStatus{
+		WAITPAY("待付款"),WAITACCEPT("待接单"),WAITSEND("待发货"),WAITRECEIVE("待收货"),COMPLETE("交易完成");
+		
+		private String status;
+		
+		private OrderStatus(String status) {
+			this.status = status;
+		}
+		
+		@Override
+		public String toString() {
+			return this.status;
+		}
 	}
 }

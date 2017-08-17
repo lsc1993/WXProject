@@ -73,6 +73,7 @@
 
 .dialog-button-middle {
 	width: 100%;
+	line-height: 35px;
 	text-align: center;
 	color: #46B8DA;
 	margin: 0 auto;
