@@ -196,7 +196,7 @@ public class Order {
 		this.date = date;
 	}
 	
-	@Column(name="status",nullable=false,length=10)
+	@Column(name="order_status",nullable=false,length=10)
 	public String getStatus() {
 		return status;
 	}

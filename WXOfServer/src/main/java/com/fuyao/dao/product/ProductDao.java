@@ -15,7 +15,7 @@ import com.fuyao.model.product.Product;
 import com.fuyao.model.product.ProductImages;
 import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
-import com.fuyao.page.ProductPage;
+import com.fuyao.page.CommonPage;
 
 @Repository("productDao")
 public class ProductDao implements IProductDao {
@@ -47,8 +47,9 @@ public class ProductDao implements IProductDao {
 			limit = 15;
 			e.printStackTrace();
 		}
-		ProductPage page = new ProductPage();
-		Query<Product> query = page.createQuery(this.getCurrentSession(), start, limit);
+		String hql = "select p from Product p";
+		CommonPage page = new CommonPage();
+		Query<Product> query = page.createQuery(this.getCurrentSession(), hql, start, limit);
 		return query.getResultList();
 	}
 

@@ -2,15 +2,18 @@ package com.fuyao.service.order;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.fuyao.dao.order.IOrderDao;
 import com.fuyao.model.order.Order;
 import com.fuyao.util.FuyaoUtil;
+import com.fuyao.util.Log;
 
 @Transactional
 @Service("orderService")
@@ -48,12 +51,41 @@ public class OrderService {
 		order.setPhone(data.get("phone"));
 		order.setAddress(data.get("address"));
 		order.setPostcode(data.get("postcode"));
-		order.setStatus(OrderStatus.WAITACCEPT.name());
+		order.setStatus(OrderStatus.WAITSEND.name());
 		return orderDao.submitOrder(order);
 	}
 	
-	enum OrderStatus{
-		WAITPAY("待付款"),WAITACCEPT("待接单"),WAITSEND("待发货"),WAITRECEIVE("待收货"),COMPLETE("交易完成");
+	public JSON getOrderList(HashMap<String,String> data) {
+		int start,limit;
+		try {
+			start = Integer.parseInt(data.get("start"));
+		} catch (NumberFormatException e) {
+			start = 0;
+			e.printStackTrace();
+		}
+		try {
+			limit = Integer.parseInt(data.get("limit"));
+		} catch (NumberFormatException e) {
+			limit = 10;
+			e.printStackTrace();
+		}
+		OrderStatus s = OrderStatus.valueOf(data.get("status"));
+		List<Order> orderList = orderDao.getOrderList(s, start, limit);
+		for(Order order : orderList) {
+			order.setStatus(OrderStatus.valueOf(order.getStatus()).status);
+		}
+		int length = orderList.size();
+		StringBuilder builder = new StringBuilder();
+		builder.append("{").append("\"rows\":").
+				append(JSON.toJSONString(orderList)).
+				append(",").append("\"result\":").append(length).
+				append("}");
+		Log.log("orderList:" + builder.toString());
+		return (JSON) JSON.parse(builder.toString());
+	}
+	
+	public enum OrderStatus{
+		WAITPAY("待付款"),CANCEL("已取消"),WAITSEND("待发货"),WAITRECEIVE("待收货"),COMPLETE("交易完成"),ALL("全部订单");
 		
 		private String status;
 		

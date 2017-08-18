@@ -76,23 +76,26 @@ var orderPage = new Vue({
 				tip.showDialog("请选择收货地址");
 				return;
 			}
-			var data= { uid:1,
-						pid:this.productMessage.pId,
-						sid:this.productMessage.sId,
-						imgurl: this.productMessage.imgurl,
-						pTotal: this.productMessage.price,
-						sendCost: this.productMessage.deliveryCost,
-						total: parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
-						count: this.productMessage.count,
-						standard: this.productMessage.standard,
-						discount: "1",
-						buyerMsg: $("#buy-message").val(),
-						sendWay: "快递发货",
-						aid: this.addressMessage.id,
-						receiver: this.addressMessage.name,
-						phone: this.addressMessage.tel,
-						address: this.addressMessage.address,
-						postcode: this.addressMessage.postcode};
+			var data= 
+			{
+						"uid":1,
+						"pid":this.productMessage.pId,
+						"sid":this.productMessage.sId,
+						"imgurl": this.productMessage.imgurl,
+						"pTotal": this.productMessage.price,
+						"sendCost": this.productMessage.deliveryCost,
+						"total": parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
+						"count": this.productMessage.count,
+						"standard": this.productMessage.standard,
+						"discount": "1",
+						"buyerMsg": $("#buy-message").val(),
+						"sendWay": "快递发货",
+						"aid": this.addressMessage.id,
+						"receiver": this.addressMessage.name,
+						"phone": this.addressMessage.tel,
+						"address": this.addressMessage.address,
+						"postcode": this.addressMessage.postcode
+			};
 			
 			$.ajax({
 				type: "post",
@@ -108,7 +111,6 @@ var orderPage = new Vue({
 					alert("服务器无响应");
 				}
 			});
-			
 		}
 	}
 })
@@ -170,16 +172,19 @@ var chooseAddress = new Vue({
 		initAddress: function(data){
 			for(var i=0;i < data.address.length;++i){//初始化地址列表
 				var address = data.address[i];
-				var addr = {id: address.id,
-							uid: address.uid,
-							name: address.receiver,
-							tel: address.phone,
-							province: address.province,
-							city: address.city,
-							region: address.region,
-							road: address.detailAddress,
-							address: address.province+address.city+address.region+address.detailAddress,
-							postcode: address.postcode};
+				var addr = 
+				{
+					"id"      : address.id,
+					"uid"     : address.uid,
+					"name"    : address.receiver,
+					"tel"     : address.phone,
+					"province": address.province,
+					"city"    : address.city,
+					"region"  : address.region,
+					"road"    : address.detailAddress,
+					"address" : address.province+address.city+address.region+address.detailAddress,
+					"postcode": address.postcode
+				};
 				this.addressItems.push(addr);
 			}
 			
@@ -188,15 +193,18 @@ var chooseAddress = new Vue({
 			if(!this.checkAddress()){
 				return;
 			}
-			var data = {"id": this.addressRegion.id,
-						"uid": 1,
-						"receiver": this.addressRegion.name,
-						"phone": this.addressRegion.tel,
-			            "province": this.addressRegion.province,
-			 			"city": this.addressRegion.city,
-			 			"region": this.addressRegion.region,
-						"detailAddress": this.addressRegion.road,
-						"postcode": this.addressRegion.postcode};
+			var data = 
+			{
+				"id": this.addressRegion.id,
+				"uid": 1,
+				"receiver": this.addressRegion.name,
+				"phone": this.addressRegion.tel,
+			    "province": this.addressRegion.province,
+			 	"city": this.addressRegion.city,
+			 	"region": this.addressRegion.region,
+				"detailAddress": this.addressRegion.road,
+				"postcode": this.addressRegion.postcode
+			};
 			var posturl;
 			if(this.addressRegion.id == ""){
 				posturl = "http://localhost:8080/WXOfServer/user/add-addr";
@@ -407,5 +415,5 @@ function initAddress(uId){
 }
 
 function gotoOrderList(){
-	window.location.href = "order-list.html";
+	window.location.href = "order-list.html?tab=1";
 }
