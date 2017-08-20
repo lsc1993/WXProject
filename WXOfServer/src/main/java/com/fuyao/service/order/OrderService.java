@@ -51,7 +51,7 @@ public class OrderService {
 		order.setPhone(data.get("phone"));
 		order.setAddress(data.get("address"));
 		order.setPostcode(data.get("postcode"));
-		order.setStatus(OrderStatus.WAITSEND.name());
+		order.setStatus(OrderStatus.WAITSEND.getStatus());
 		return orderDao.submitOrder(order);
 	}
 	
@@ -71,9 +71,6 @@ public class OrderService {
 		}
 		OrderStatus s = OrderStatus.valueOf(data.get("status"));
 		List<Order> orderList = orderDao.getOrderList(s, start, limit);
-		for(Order order : orderList) {
-			order.setStatus(OrderStatus.valueOf(order.getStatus()).status);
-		}
 		int length = orderList.size();
 		StringBuilder builder = new StringBuilder();
 		builder.append("{").append("\"rows\":").
@@ -91,6 +88,10 @@ public class OrderService {
 		
 		private OrderStatus(String status) {
 			this.status = status;
+		}
+		
+		public String getStatus() {
+			return status;
 		}
 		
 		@Override

@@ -64,7 +64,7 @@ public class OrderDao implements IOrderDao {
 			case COMPLETE:
 				hql = "from Order where status=:status";
 				query = page.createQuery(this.getCurrentSession(), hql, start, limit);
-				query.setParameter("status", status.name());
+				query.setParameter("status", status.getStatus());
 				break;
 			case ALL:
 				hql = "from Order";

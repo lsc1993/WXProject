@@ -29,7 +29,7 @@ function tabClick(index) {
 	orderList.showTab(index);
 	orderList.index = index;
 	times = 0;
-	drop.resetload();
+	//drop.resetload();
 }
 
 var orderList = new Vue({
@@ -143,7 +143,6 @@ function dropUpLoad(){
 			var limit = 1;
 			var url;
 			var data = {"status": status[index1], "start": start[index1], "limit": limit};
-			alert(index1);
         	$.ajax({
         		type: "post",
 				dataType: "json",
