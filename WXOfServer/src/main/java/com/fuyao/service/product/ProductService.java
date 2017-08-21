@@ -1,5 +1,6 @@
 package com.fuyao.service.product;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.fuyao.dao.product.IProductDao;
 import com.fuyao.model.product.Product;
+import com.fuyao.model.product.ProductBrowse;
+import com.fuyao.model.product.ProductCollection;
 import com.fuyao.model.product.ProductImages;
 import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
@@ -28,10 +31,12 @@ public class ProductService {
 	}
 	
 	public JSON getProductDetail(HashMap<String,String> data) {
-		Product p = productDao.getProduct(data);
-		if (null == p)
+		long pId = Long.parseLong(data.get("pId"));
+		Product p = productDao.getProduct(pId);
+		if (null == p) {
 			return (JSON) JSON.parse("{\"result\":\"fault\",\"message\":,\"没有该产品\"}");
-		//long pId = Long.parseLong(data.get("pId"));
+		}	
+
 		List<ProductImages> images = productDao.getProductImages(p.getId()); 
 		List<ProductStandard> standard = productDao.getProductStandard(p.getId());
 		ProductSaleVolum saleVolum = productDao.getProductSaleVolum(p.getId());
@@ -64,4 +69,64 @@ public class ProductService {
 		Log.log("----------------------------------------");
 		return (JSON) JSON.parse(builder.toString());
 	}
+	
+	public HashMap<String,String> collectProduct(HashMap<String,String> data) {
+		HashMap<String,String> result = new HashMap<String,String>();
+		long uid,pid;
+		try {
+			uid = Long.parseLong(data.get("uId"));
+		} catch (NumberFormatException e) {
+			uid = 0;
+			result.put("result", "fault");
+			result.put("message", "该用户不存在，请先登录！");
+			e.printStackTrace();
+			return result;
+		}
+		try {
+			pid = Long.parseLong(data.get("pId"));
+		} catch (NumberFormatException e) {
+			pid = 0;
+			result.put("result", "fault");
+			result.put("message", "产品记录表错误");
+			e.printStackTrace();
+			return result;
+		}
+		ProductCollection collection = new ProductCollection();
+		collection.setUid(uid);
+		collection.setPid(pid);
+		collection.setCollectTime(new Date());
+		result = productDao.collectProduct(collection);
+		return result;
+	}
+	
+	public HashMap<String,String> browseHistory(HashMap<String,String> data) {
+		HashMap<String,String> result = new HashMap<String,String>();
+		long uid,pid;
+		try {
+			uid = Long.parseLong(data.get("uId"));
+		} catch (NumberFormatException e) {
+			uid = 0;
+			result.put("result", "fault");
+			result.put("message", "该用户不存在，请先登录！");
+			e.printStackTrace();
+			return result;
+		}
+		try {
+			pid = Long.parseLong(data.get("pId"));
+		} catch (NumberFormatException e) {
+			pid = 0;
+			result.put("result", "fault");
+			result.put("message", "产品记录表错误");
+			e.printStackTrace();
+			return result;
+		}
+		ProductBrowse brwose = new ProductBrowse();
+		brwose.setUid(uid);
+		brwose.setPid(pid);
+		brwose.setBrowseTime(new Date());
+		productDao.browseHistory(brwose);
+		return result;
+	}
+	
+	
 }

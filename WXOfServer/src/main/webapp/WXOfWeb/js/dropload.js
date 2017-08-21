@@ -302,6 +302,22 @@
             }
         }
     };
+    
+    //重置参数信息
+    MyDropLoad.prototype.reset = function(){
+    	var me = this;
+    	// 上方是否插入DOM
+        me.upInsertDOM = false;
+        // loading状态
+        me.loading = false;
+        // 是否锁定
+        me.isLockUp = false;
+        me.isLockDown = false;
+        // 是否有数据
+        me.isData = true;
+        me._scrollTop = 0;
+        me._threshold = 0;
+    };
 
     // css过渡
     function fnTransition(dom,num){

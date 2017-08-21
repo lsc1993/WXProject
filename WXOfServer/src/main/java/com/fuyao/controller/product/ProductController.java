@@ -40,4 +40,18 @@ public class ProductController {
 		JSON json = productService.getProductDetail(data);
 		return json;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/collect",method=RequestMethod.POST)
+	private HashMap<String,String> collectProduct(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return productService.collectProduct(data);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/browse",method=RequestMethod.POST)
+	private HashMap<String,String> browseHistory(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return productService.browseHistory(data);
+	}
 }

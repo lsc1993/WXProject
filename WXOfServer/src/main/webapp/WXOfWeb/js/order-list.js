@@ -3,18 +3,24 @@ $(function(){
 	start = new Array(0,0,0,0,0);
 	times = 0;
 	initPage();
+	dropUpLoad();
 })
 
 function initPage() { 
 	var url = window.location.href;
 	var pIndex = url.indexOf("tab=");
 	var param = url.substring(pIndex+4,url.length);
-	orderList.index = parseInt(param);
-	dropUpLoad();
-	tabClick(parseInt(param));
+	changeTabStyle(param);
 }
 
-function tabClick(index) {
+function tabClick(index){
+	changeTabStyle(index);
+	times = 0;
+	drop.reset();
+	drop.resetload();
+}
+
+function changeTabStyle(index){
 	if (index == 0) {
 		$("#tab-1").addClass("tab-choosed").siblings().removeClass("tab-choosed");
 	} else if(index == 1) {
@@ -28,8 +34,6 @@ function tabClick(index) {
 	} 
 	orderList.showTab(index);
 	orderList.index = index;
-	times = 0;
-	//drop.resetload();
 }
 
 var orderList = new Vue({
@@ -55,9 +59,9 @@ var orderList = new Vue({
 					"no": o.orderId,
 					"uid": o.uid,
 					"pid": o.pid,
-					"imgurl": o.imgurl,
+					"imgurl": imgPath+o.imgurl,
 					"standard": o.standard,
-					"count": o.count,
+					"count": o.pCount,
 					"pTotal":o.pTotal,
 					"total": o.total,
 					"status": o.status
@@ -71,7 +75,7 @@ var orderList = new Vue({
 					this.orderReceive.push(order);
 				}else if(index1 == 3){
 					this.orderComplete.push(order);
-				}else if(index1 == 1){
+				}else if(index1 == 4){
 					this.orderCancel.push(order);
 				}
 			}
@@ -85,46 +89,7 @@ var orderList = new Vue({
 					this.ShowTabIndex.splice(i,1,false);
 				}
 			}
-			//this.initOrder(index);
-		},
-		/*initOrder: function(index,me){
-			if(index < 0){
-				return;
-			}
-			var status = ["WAITPAY", "WAITSEND", "WAITRECEIVE", "COMPLETE", "CANCEL"];
-			var limit = 1;
-			var url;
-			var data = {"status": status[index], "start": start[index], "limit": limit};
-			//alert(status[index] + start[index]);
-			$.ajax({
-				type: "post",
-				dataType: "json",
-				data: JSON.stringify(data),
-				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/order/list",
-				async: true,
-				success: function(data){
-					start[index]++;
-					var len = data.result;
-					if(len > 0){
-						this.initOrderList(data,index);
-					} else {
-						me.lock();
-						me.noData();
-					}
-					me.resetload();
-				},
-				error: function(){
-					times++;
-					if(times == 5){
-						alert("服务器无响应");
-						$('.dropload-down').hide();
-					} else if(times < 5){
-						me.resetload(); 
-					}
-				}
-			});
-		}*/
+		}
 	}
 })
 

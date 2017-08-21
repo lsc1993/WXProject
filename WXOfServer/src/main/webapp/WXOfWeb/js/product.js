@@ -102,8 +102,27 @@ var productPage = new Vue({
     	showPopupWindow: function(){
     		popup.showPopupWindow();
     	},
-    	gotoShopCart: function() {
+    	gotoShopCart: function(){
     		window.location.href = "shop-cart.html"; 
+    	},
+    	collectProduct: function(){
+    		var url = window.location.href;
+			var index = url.indexOf("pId=");
+			var param = url.substring(index+4,url.length);
+			var data = {"uId": 1, "pId": param};
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				url: "http://localhost:8080/WXOfServer/product/collection",
+				async: true,
+				success: function(data){
+				},
+				error: function(){
+					alert("服务器无响应");
+				}
+			});
     	}
     }
 })

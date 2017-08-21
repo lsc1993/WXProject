@@ -30,7 +30,7 @@
 				<div class="shop-order-list">
 					<ul>
 						<li v-for="(shopOrder, index) in shopOrderList"
-							:key="shopOrder">
+							:key="shopOrder.id">
 							<div>
 								<div class="shop-order-type">
 									<i class="icon-home icon-large">{{shopOrder.type}}</i>
