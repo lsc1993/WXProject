@@ -19,6 +19,7 @@ public class Order {
 	private String pid;
 	private long sid;
 	private long aid;
+	private String name;
 	private String imgurl;
 	private float total;
 	private float sendCost;
@@ -83,6 +84,14 @@ public class Order {
 	}
 	public void setAid(long aid) {
 		this.aid = aid;
+	}
+	
+	@Column(name="pname",nullable=false,length=48)
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Column(name="imgurl",nullable=false,length=128)

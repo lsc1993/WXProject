@@ -37,6 +37,7 @@ public class OrderService {
 		order.setUid(Long.parseLong(data.get("uid")));
 		order.setPid(data.get("pid"));
 		order.setSid(Long.parseLong(data.get("sid")));
+		order.setName(data.get("pName"));
 		order.setImgurl(data.get("imgurl"));
 		order.setPTotal(Float.parseFloat(data.get("pTotal")));
 		order.setSendCost(Float.parseFloat(data.get("sendCost")));

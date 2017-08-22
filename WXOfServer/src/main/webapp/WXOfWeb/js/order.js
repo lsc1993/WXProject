@@ -25,6 +25,7 @@ var orderPage = new Vue({
 		{	
 			pId: "",
 			imgurl: "../img/20172001.jpg",
+			imgname: "",
 		    name: "change",
 		    sId: -1,
 		    standard: "4斤",
@@ -66,6 +67,7 @@ var orderPage = new Vue({
 			var images = data.images;
     		for(var i=0;i < images.length;++i){
     			if(images[i].image.startsWith("sImg")){
+    				this.productMessage.imgname = images[i].image;
     				this.productMessage.imgurl = imgPath + images[i].image;
     				break;
     			}
@@ -78,23 +80,24 @@ var orderPage = new Vue({
 			}
 			var data= 
 			{
-						"uid":1,
-						"pid":this.productMessage.pId,
-						"sid":this.productMessage.sId,
-						"imgurl": this.productMessage.imgurl,
-						"pTotal": this.productMessage.price,
-						"sendCost": this.productMessage.deliveryCost,
-						"total": parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
-						"count": this.productMessage.count,
-						"standard": this.productMessage.standard,
-						"discount": "1",
-						"buyerMsg": $("#buy-message").val(),
-						"sendWay": "快递发货",
-						"aid": this.addressMessage.id,
-						"receiver": this.addressMessage.name,
-						"phone": this.addressMessage.tel,
-						"address": this.addressMessage.address,
-						"postcode": this.addressMessage.postcode
+				"uid":1,
+				"pid":this.productMessage.pId,
+				"sid":this.productMessage.sId,
+				"pName":this.productMessage.name,
+				"imgurl": this.productMessage.imgurl,
+				"pTotal": this.productMessage.price,
+				"sendCost": this.productMessage.deliveryCost,
+				"total": parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
+				"count": this.productMessage.count,
+				"standard": this.productMessage.standard,
+				"discount": "1",
+				"buyerMsg": $("#buy-message").val(),
+				"sendWay": "快递发货",
+				"aid": this.addressMessage.id,
+				"receiver": this.addressMessage.name,
+				"phone": this.addressMessage.tel,
+				"address": this.addressMessage.address,
+				"postcode": this.addressMessage.postcode
 			};
 			
 			$.ajax({

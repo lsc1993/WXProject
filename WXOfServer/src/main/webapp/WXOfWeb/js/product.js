@@ -28,10 +28,10 @@ function getProductDetail() {
 var productPage = new Vue({
 	el: "#product-page",
 	data: {
-		isShowDetail: true,
-		isShowAppraise: false,
-		isDetail: true,
-		isAppraise: false,
+		isShowDetail: true,  //显示产品详情
+		isShowAppraise: false,  //显示评论详情
+		isDetail: true,   //显示产品详情title
+		isAppraise: false,  //显示评论详情title
 		productMessage: {
 			productId: "20172648",
 			name: "ddd",
@@ -40,11 +40,7 @@ var productPage = new Vue({
 			delivery: "免运费",
 			saleVolume: 668
 		},
-		imgurls: [
-		    /*{img : "../img/20172001.jpg"},
-		    {img : "../img/20172001.jpg"},
-		    {img : "../img/20172001.jpg"}*/
-		],
+		imgurls: [],
 		userappraise: [
 		    {
 		    	img: "../img/20172001.jpg",
@@ -75,7 +71,6 @@ var productPage = new Vue({
     		for(var i=0;i < images.length;++i){
     			if(images[i].image.startsWith("dImg")){
     				var imageurl = {img: imgPath + images[i].image};
-    				//alert(imageurl.img);
     				this.imgurls.push(imageurl);
     			}
     		}
@@ -88,10 +83,10 @@ var productPage = new Vue({
     		}
     	},
     	showProductDetail: function(){
-    		this.isShowDetail = true;
-    		this.isShowAppraise = false;
-    		this.isDetail = true;
-    		this.isAppraise = false;
+    		this.isShowDetail = true;  
+    		this.isShowAppraise = false; 
+    		this.isDetail = true;  
+    		this.isAppraise = false;  
     	},
     	showProductAppraise: function(){
     		this.isShowDetail = false;
@@ -105,7 +100,7 @@ var productPage = new Vue({
     	gotoShopCart: function(){
     		window.location.href = "shop-cart.html"; 
     	},
-    	collectProduct: function(){
+    	collectProduct: function(){  //收藏产品
     		var url = window.location.href;
 			var index = url.indexOf("pId=");
 			var param = url.substring(index+4,url.length);
@@ -137,20 +132,19 @@ var popup = new Vue({
 	data:{
 		isShow : false,
 		productMessage: {
-			imgurl: "../img/20172001.jpg",
+			id: "",
 			productId: "20172648",
+			imgurl: "../img/20172001.jpg",
+			imgname: "",
 		    name: "wow",
 		    price: 299,
 		    count: 1,
-		    labels: [
-		        /*{label: "weqwdqwdrtyrtqwdq", isChoosed: false},
-		        {label: "qweqwqweqyerte", isChoosed: false},
-		        {label: "dasfdwqeftryrty", isChoosed: false}*/
-		    ]
+		    labels: []
 		}
 	},
 	methods: {
 		initProductStandard: function(data){
+			this.productMessage.id = data.product.id;
 			this.productMessage.productId = data.product.pId;
     		this.productMessage.name = data.product.name;
     		this.productMessage.count = 1;
@@ -163,7 +157,15 @@ var popup = new Vue({
     				var s = {id: standard[i].id,label: standard[i].standard,price: standard[i].price, isChoosed: false};
     				this.productMessage.labels.push(s);
     			}
-    		}	
+    		}
+    		var images = data.images;
+    		for(var i=0;i < images.length;++i){
+    			if(images[i].image.startsWith("sImg")){
+    				var imageurl = imgPath + images[i].image;
+    				this.productMessage.imgname = images[i].image;
+    				this.productMessage.imgurls = imageurl;
+    			}
+    		}
 		},
 		showPopupWindow: function(){
 			this.isShow = true;
@@ -226,18 +228,49 @@ function subCount(){
 }
 
 function addShopCart(){
-    var length = popup.productMessage.labels.length;
+	var length = popup.productMessage.labels.length;
     var index = -1;
+    var sid = -1;
+    var pid = -1;
+    var pno = "";
     var standard = "";
+    var price = 0;
+    var count = 0;
+    var imgurl;
+    var pname = "";
     for(var i = 0;i < length;++i){
     	if(popup.productMessage.labels[i].isChoosed){
     		index = i;
+    		sid = popup.productMessage.labels[i].id;
     		standard = popup.productMessage.labels[i].label;
+    		price = popup.productMessage.labels[i].price;
     	}
     }
     if(index == -1 || standard == ""){
   		dialog.showDialog();
+  		return;
     }
+    pid = popup.productMessage.id;
+    pno = popup.productMessage.productId;
+    count = popup.productMessage.count;
+    imgurl = popup.productMessage.imgname;
+    pname = popup.productMessage.name;
+    var data = {"uId":1,"pId": pid,"pNo": pno,"sId": sid,"standard": standard,
+    			"price": price,"count": count,"imgurl": imgurl,"pName": pname};
+    $.ajax({
+    	type: "post",
+		dataType: "json",
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
+		url: "http://localhost:8080/WXOfServer/product/shopcart",
+		async: true,
+		success: function(data){
+			alert(data.message);
+		},
+		error: function(){
+			alert("服务器无响应");
+		}
+    });
 }
 
 function buyNow(){

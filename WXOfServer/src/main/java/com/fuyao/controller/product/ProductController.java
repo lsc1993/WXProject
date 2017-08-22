@@ -54,4 +54,25 @@ public class ProductController {
 		Log.log(data.toString());
 		return productService.browseHistory(data);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/shopcart",method=RequestMethod.POST)
+	private HashMap<String,String> addShopCart(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return productService.addShopCart(data);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/shopitem",method=RequestMethod.POST)
+	private JSON getShopItems(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return productService.getShopItems(data);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/del-shop",method=RequestMethod.POST)
+	private HashMap<String,String> deleteShopItem(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return productService.deleteShopItem(data);
+	}
 }

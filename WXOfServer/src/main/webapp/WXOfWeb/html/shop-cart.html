@@ -26,6 +26,9 @@
 		<!--space撑空间-->
 		<div class="space"></div>
 		<div class="shop-order-container" id="shop-cart">
+			<div class="shop-order-tip" v-show="isShowTip">
+				<h4>空空如也<a href="index.html">去逛逛~</a></h4>
+			</div>
 			<div class="">
 				<div class="shop-order-list">
 					<ul>
@@ -33,7 +36,7 @@
 							:key="shopOrder.id">
 							<div>
 								<div class="shop-order-type">
-									<i class="icon-home icon-large">{{shopOrder.type}}</i>
+									<i class="icon-home icon-large">泊心风物</i>
 									<p @click="deleteOrder(index)">删除</p>
 								</div>
 								<div class="shop-order-content">
@@ -73,7 +76,7 @@
 					<p>全选</p>
 					
 				</div>
-				<div class="shop-order-pay">
+				<div class="shop-order-pay" @click="submitOrder()">
 					<p>结算</p>
 				</div>
 				<div class="shop-order-total">

@@ -17,6 +17,7 @@ import com.fuyao.model.product.ProductCollection;
 import com.fuyao.model.product.ProductImages;
 import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
+import com.fuyao.model.product.ShopCart;
 import com.fuyao.util.Log;
 
 @Transactional
@@ -31,7 +32,7 @@ public class ProductService {
 	}
 	
 	public JSON getProductDetail(HashMap<String,String> data) {
-		long pId = Long.parseLong(data.get("pId"));
+		String pId = data.get("pId");
 		Product p = productDao.getProduct(pId);
 		if (null == p) {
 			return (JSON) JSON.parse("{\"result\":\"fault\",\"message\":,\"没有该产品\"}");
@@ -128,5 +129,39 @@ public class ProductService {
 		return result;
 	}
 	
+	public HashMap<String,String> addShopCart(HashMap<String,String> data) {
+		ShopCart shopCart = new ShopCart();
+		shopCart.setUid(Long.parseLong(data.get("uId")));
+		shopCart.setPid(Long.parseLong(data.get("pId")));
+		shopCart.setPno(data.get("pNo"));
+		shopCart.setSid(Long.parseLong(data.get("sId")));
+		shopCart.setName(data.get("pName"));
+		shopCart.setImgurl(data.get("imgurl"));
+		shopCart.setStandard(data.get("standard"));
+		shopCart.setCount(Integer.parseInt(data.get("count")));
+		shopCart.setPrice(Float.parseFloat(data.get("price")));
+		shopCart.setDate(new Date());
+		return productDao.addShopCart(shopCart);
+	}
 	
+	public JSON getShopItems(HashMap<String,String> data) {
+		long uId;
+		try {
+			uId = Long.parseLong(data.get("uId"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return (JSON) JSON.parse("{\"result\":\"fault\",\"message\":,\"无此用户\"}");
+		}
+		List<ShopCart> shopItems = productDao.getShopCartList(uId);
+		StringBuilder builder = new StringBuilder();
+		builder.append("{").append("\"rows\":").append(JSON.toJSONString(shopItems)).
+				append(",").append("\"size\":").append(shopItems.size()).append("}");
+		Log.log(builder.toString());
+		return (JSON) JSON.parse(builder.toString());
+	}
+	
+	public HashMap<String,String> deleteShopItem(HashMap<String,String> data) {
+		long id = Long.parseLong(data.get("id"));
+		return productDao.deleteShopItem(id);
+	}
 }

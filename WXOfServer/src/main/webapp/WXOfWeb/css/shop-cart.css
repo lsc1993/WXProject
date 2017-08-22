@@ -43,6 +43,14 @@
 	width: 100%;
 }
 
+.shop-order-tip {
+	text-align: center;
+}
+
+.shop-order-tip a {
+	text-decoration: none;
+}
+
 /*
  * 购物车产品列表
  * */

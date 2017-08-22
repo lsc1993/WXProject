@@ -59,6 +59,7 @@ var orderList = new Vue({
 					"no": o.orderId,
 					"uid": o.uid,
 					"pid": o.pid,
+					"pName": o.name,
 					"imgurl": imgPath+o.imgurl,
 					"standard": o.standard,
 					"count": o.pCount,

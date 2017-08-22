@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,6 +19,7 @@ import com.fuyao.model.product.ProductCollection;
 import com.fuyao.model.product.ProductImages;
 import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
+import com.fuyao.model.product.ShopCart;
 import com.fuyao.page.CommonPage;
 
 @Repository("productDao")
@@ -92,7 +94,7 @@ public class ProductDao implements IProductDao {
 	 * @see com.fuyao.dao.product.IProductDao#getProduct(java.util.HashMap)
 	 * @param data 产品查询参数
 	 */
-	public Product getProduct(long pId) {
+	public Product getProduct(String pId) {
 		// TODO Auto-generated method stub
 		String hql = "from Product where pid=:pid";
 		Query<Product> query = this.getCurrentSession().createQuery(hql,Product.class);
@@ -194,5 +196,52 @@ public class ProductDao implements IProductDao {
 		Query<ProductBrowse> query = session.createQuery(hql,ProductBrowse.class);
 		query.setParameter("uid", uId);
 		return query.getResultList();
+	}
+
+	public HashMap<String, String> addShopCart(ShopCart shopCart) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> result = new HashMap<String, String>();
+		String hql = "from ShopCart where uid=:uid and pid=:pid";
+		Session session = this.getCurrentSession();
+		Query<ShopCart> query = session.createQuery(hql,ShopCart.class);
+		query.setParameter("uid", shopCart.getUid());
+		query.setParameter("pid", shopCart.getPid());
+		if (query.getResultList().size() >= 1) {
+			int count = query.getResultList().get(0).getCount();
+			count++;
+			query.getResultList().get(0).setCount(count);
+		} else {
+			session.save(shopCart);
+		}
+		result.put("result", "success");
+		result.put("message", "已添加到购物车");
+		return result;
+	}
+
+	public List<ShopCart> getShopCartList(long uId) {
+		// TODO Auto-generated method stub
+		String hql = "from ShopCart where uid=:uid";
+		Session session = this.getCurrentSession();
+		Query<ShopCart> query = session.createQuery(hql,ShopCart.class);
+		query.setParameter("uid", uId);
+		return query.getResultList();
+	}
+
+	public HashMap<String, String> deleteShopItem(long id) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> result = new HashMap<String, String>();
+		try {
+			Session session = this.getCurrentSession();
+			ShopCart shopcart = session.get(ShopCart.class, id);
+			if (null != shopcart) {
+				session.delete(shopcart);
+			}
+			result.put("result", "success");
+			result.put("message", "已删除");
+		} catch (HibernateException e) {
+			result.put("result", "fault");
+			result.put("message", "删除失败，请稍后重试");
+		}
+		return result;
 	}
 }
