@@ -1,7 +1,7 @@
 $(function(){
 	imgPath = "http://localhost/imageResource/";
 	autoHeightTextaera();
-	initOrder();
+	initOrderType();
 })
 
 //买家留言输入框高度伸展
@@ -20,7 +20,9 @@ function autoHeightTextaera() {
 var orderPage = new Vue({
 	el: "#order-page",
 	data: {
+		orderType: -1,
 		isShowAddress: false,
+		deliveCost: 0,
 		productMessage: 
 		{	
 			pId: "",
@@ -33,6 +35,7 @@ var orderPage = new Vue({
 		    count: "1",
 		    deliveryCost: 0.00,
 		},
+		productsMessage: [],
 		addressMessage: 
 		{
 			id: "",
@@ -44,16 +47,41 @@ var orderPage = new Vue({
 	},
 	computed: {
 		totalCost: function(){
-			var price = parseFloat(this.productMessage.price) + parseFloat(this.productMessage.deliveryCost);
+			var price = 0;
+			if(this.orderType == 0){
+				price = parseFloat(this.productMessage.price) + parseFloat(this.productMessage.deliveryCost);
+			}else if(this.orderType == 1){
+				var len = this.productsMessage.length;
+				for(var i=0;i < len;++i){
+					var item = this.productsMessage[i];
+					price += parseFloat(item.price);
+				}
+			}
+			price += this.deliveCost;
 			return price.toFixed(2);
 		},
 		pTotal: function(){
-			var price = parseFloat(this.productMessage.price);
+			var price = 0; 
+			if(this.orderType == 0){
+				price = parseFloat(this.productMessage.price) + parseFloat(this.productMessage.deliveryCost);
+			}else if(this.orderType == 1){
+				var len = this.productsMessage.length;
+				for(var i=0;i < len;++i){
+					var item = this.productsMessage[i];
+					price += parseFloat(item.price);
+				}
+			}
 			return price.toFixed(2);
 		},
 		deliveryCost: function(){
-			var price = parseFloat(this.productMessage.deliveryCost);
-			return price.toFixed(2);
+			var price = parseFloat(this.pTotal);
+			if(price > 88){
+				this.deliveCost = 0;
+			}else{
+				this.deliveCost = 6;
+			}
+			var cost = this.deliveCost; 
+			return cost.toFixed(2);
 		}
 	},
 	methods: {
@@ -78,34 +106,84 @@ var orderPage = new Vue({
 				tip.showDialog("请选择收货地址");
 				return;
 			}
-			var data= 
-			{
-				"uid":1,
-				"pid":this.productMessage.pId,
-				"sid":this.productMessage.sId,
-				"pName":this.productMessage.name,
-				"imgurl": this.productMessage.imgurl,
-				"pTotal": this.productMessage.price,
-				"sendCost": this.productMessage.deliveryCost,
-				"total": parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
-				"count": this.productMessage.count,
-				"standard": this.productMessage.standard,
-				"discount": "1",
-				"buyerMsg": $("#buy-message").val(),
-				"sendWay": "快递发货",
-				"aid": this.addressMessage.id,
-				"receiver": this.addressMessage.name,
-				"phone": this.addressMessage.tel,
-				"address": this.addressMessage.address,
-				"postcode": this.addressMessage.postcode
-			};
+			var data;
+			var url;
+			if(this.orderType == 0){
+				url = "http://localhost:8080/WXOfServer/order/submit";
+				data= {
+					"uid":1,
+					"pid":this.productMessage.pId,
+					"sid":this.productMessage.sId,
+					"pName":this.productMessage.name,
+					"imgurl": this.productMessage.imgurl,
+					"pTotal": this.productMessage.price,
+					"count": this.productMessage.count,
+					"standard": this.productMessage.standard,
+					"sendCost": this.productMessage.deliveCost,
+					"total": parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
+					"discount": "1",
+					"buyerMsg": $("#buy-message").val(),
+					"sendWay": "快递发货",
+					"aid": this.addressMessage.id,
+					"receiver": this.addressMessage.name,
+					"phone": this.addressMessage.tel,
+					"address": this.addressMessage.address,
+					"postcode": this.addressMessage.postcode
+				};
+			}else if(this.orderType == 1){
+				url = "http://localhost:8080/WXOfServer/order/submit-multi";
+				data = [];
+				var len = this.productsMessage.length;
+				var jsonStr = "{";
+				if(len != 0){
+					jsonStr += '"orders"' + ":" + "["
+				}
+				for(var i=0;i < len;++i){
+					var key = "order"+i;
+					var item = this.productsMessage[i];
+					
+					var value = "{"
+								+ toJSONString("pId",item.pId)
+								+ toJSONString("pno",item.pno)
+								+ toJSONString("pname",item.pname) 
+								+ toJSONString("sId",item.sId)
+								+ toJSONString("standard",item.standard)
+								+ toJSONString("imgname",item.imgname)
+								+ toJSONString("imgurl",item.imgurl)
+								+ toJSONString("price",item.price)
+								+ toJSONString("count",item.count)
+								+ toJSONStringWithOutSplit("total",item.total);
+								
+					if(i != len-1){
+						value += "},";
+					}else{
+						value += "}";
+					}
+					jsonStr += value;
+				}
+				if(len != 0){
+					jsonStr += "],";
+				}
+				var common = '"common"' + ":" + "{";
+				common += toJSONString("uid",1)
+					+ toJSONString("discount","1")
+					+ toJSONString("sendWay", "快递发货")
+					+ toJSONString("aid", this.addressMessage.id)
+					+ toJSONString("receiver", this.addressMessage.name)
+					+ toJSONString("phone", this.addressMessage.tel)
+					+ toJSONString("address", this.addressMessage.address)
+					+ toJSONStringWithOutSplit("postcode", this.addressMessage.postcode);
+				common += "}";
+				jsonStr += common;
+				jsonStr += "}";
+			}
 			
 			$.ajax({
 				type: "post",
 				dataType: "json",
-				data: JSON.stringify(data),
+				data: jsonStr,
 				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/order/submit",
+				url: url,
 				async: true,
 				success: function(data){
 					tip.showDialog(data.message);
@@ -350,10 +428,7 @@ function showChooseWindow() {
 	chooseAddress.showChooseWindow();
 }
 
-function initOrder(){
-	var url = window.location.href;
-	var pos = url.indexOf("?");
-	var paramUrl = decodeURIComponent(url.substr(pos+1,url.length));
+function initOrder(paramUrl){
 	var params = paramUrl.split("|");
 	var pId = "";
 	var sId = "";
@@ -419,4 +494,57 @@ function initAddress(uId){
 
 function gotoOrderList(){
 	window.location.href = "order-list.html?tab=1";
+}
+
+function initShopCartOrder(){
+	var count = $.cookie("orderCount");
+	if(count == 0 || count == undefined){
+		return;
+	}
+	for(var i=0;i < count;++i){
+		var order = JSON.parse($.cookie("order"+i));
+		var item = {
+			"pId": order.pId,
+			"pno": order.pno,
+			"pname": order.pname,
+			"sId": order.sId,
+			"standard": order.standard,
+			"imgname": order.imgname,
+			"imgurl": order.imgurl,
+			"price": order.price,
+			"count": order.count,
+			"total": order.price,
+		};
+		orderPage.productsMessage.push(item);
+	}
+	initAddress(1);
+}
+
+function initOrderType(){
+	var url = window.location.href;
+	var pos = url.indexOf("?");
+	var paramUrl = decodeURIComponent(url.substr(pos+1,url.length));
+	var params = paramUrl.split("|");
+	var flag = params[0].split("=");
+	if(flag[0] == "flag"){
+		if(flag[1] == "multi"){
+			orderPage.orderType = 1;
+			initShopCartOrder();
+		}else if(flag[1] == "single"){
+			orderPage.orderType = 0;
+			initOrder(paramUrl);
+		}
+	}else{
+		alert("订单信息有误");
+	}
+}
+
+function toJSONString(key,value){
+	var json = '"' + key + '"' + ":" + '"' + value + '"' + ",";
+	return json;
+}
+
+function toJSONStringWithOutSplit(key,value){
+	var dd = '"' + key + '"' + ":" + '"' + value + '"';
+	return dd;
 }

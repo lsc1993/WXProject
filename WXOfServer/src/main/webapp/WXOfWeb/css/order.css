@@ -94,6 +94,53 @@
 	display: block;
 }
 
+.order-multi-container {
+	width: 100%;
+	display: table;
+}
+
+.order-multi-list {
+	width: 300px;
+	height: 100px;
+	display: table-cell;
+	vertical-align: middle;
+	overflow-x: scroll;
+}
+
+.order-multi-list::-webkit-scrollbar {
+	display: none;
+}
+
+.order-multi-list ul {
+	width: 320px;
+	height: 80px;
+	list-style: none;
+	padding: 0;
+	white-space: nowrap;
+}
+
+.order-multi-list ul li {
+	display: inline-block;
+	margin-right: 2%;
+}
+
+.order-multi-container img {
+	width: 80px;
+	height: 80px;
+}
+
+.order-multi-angle {
+	width: auto;
+	height: auto;
+	display: table-cell;
+	vertical-align: middle;
+	float: right;
+}
+
+.order-multi-angle i {
+	vertical-align: middle;
+}
+
 .product-count p {
 	float: right;
 }

@@ -9,7 +9,40 @@ var shopCart = new Vue({
 		total: "0.00",
 		isCheckAll: false,
 		isShowTip: false,
-		shopOrderList: []
+		shopOrderList: [
+		/*{
+				pId: "20170089",
+				imgurl: "../img/20172001.jpg",
+				name: "车厘子大芒果",
+				standard: "4斤",
+				price: 12.90,
+				total: "12.90",
+				count: 1,
+				type: "泊心风物",
+				isChecked: false,
+			},
+			{
+				pId: "20170089",
+				imgurl: "../img/20172001.jpg",
+				name: "车厘子大芒果",
+				standard: "4斤",
+				price: 22.90,
+				total: "22.90",
+				count: 1,
+				type: "泊心风物",
+				isChecked: false,
+			},
+			{
+				pId: "20170089",
+				imgurl: "../img/20172001.jpg",
+				name: "车厘子大芒果",
+				standard: "4斤",
+				price: 22.90,
+				total: "22.90",
+				count: 1,
+				type: "泊心风物",
+				isChecked: false,
+			}*/]
 	},
 	methods: {
 		subCount: function(index){  //增加产品数量
@@ -127,6 +160,7 @@ var shopCart = new Vue({
 					"pno": items[i].pno,
 					"sId": items[i].sid,
 					"name": items[i].name,
+					"imgname": items[i].imgurl,
 					"imgurl": imgPath + items[i].imgurl,
 					"standard": items[i].standard,
 					"count": items[i].count,
@@ -139,22 +173,55 @@ var shopCart = new Vue({
 			this.checkAllState();
 		},
 		submitOrder: function(){
-			var url = "order.html?"; 
+			if(!navigator.cookieEnabled){
+				alert("cookie被禁用，该功能将无法正常使用，请在浏览器设置中启用cookie！");
+			}
 			var len = this.shopOrderList.length;
 			var param = "";
+			var count = 0;
 			for(var i=0;i < len;++i){
 				var item = this.shopOrderList[i];
 				if(item.isChecked){
-					var pa =  "|pid" + i+ "=" + item.pno 
-							+ "|count" + i+ "=" + item.count
-							+ "|sid" + i+ "=" + item.sId 
-							+ "|standard" + i+ "=" + item.standard
-							+ "|price" + i+ "=" + item.price;
-					param += pa;
+					var data = {
+						"pId": item.pId,
+						"pno": item.pno,
+						"pname": item.name,
+						"imgname": item.imgname,
+						"imgurl": item.imgurl,
+						"count": item.count,
+						"sId": item.sId,
+						"standard": item.standard,
+						"price": item.price
+					}
+					var json = JSON.stringify(data);
+					var cookie_name = "order"+count;
+					$.cookie(cookie_name,json,{path:"/"});
+					count++;
 				}
 			}
-			var encodeParam = encodeURIComponent(param);
-	    	window.location.href = url + encodeParam;
+			if(count == 0){
+				alert("请选择要购买的商品");
+				return;
+			}
+			$.cookie("orderCount",count,{path:"/"});
+			var url = "order.html?";
+			var encodeParam = encodeURIComponent("flag=multi");
+    		window.location.href = url + encodeParam;
+			/*$.ajax({
+				type: "post",
+				dataType: "json",
+				data: JSON.stringify(""),
+				contentType: "application/json; charset=utf-8",
+				url: "http://localhost:8080/WXOfServer/order/cookie",
+				async: true,
+				success: function(data){
+					//shopCart.initShopCart(data);
+				},
+				error: function(){
+					alert("服务器无响应");
+				}
+			});*/
+			//window.location.href="order.html";
 		}
 	}
 })

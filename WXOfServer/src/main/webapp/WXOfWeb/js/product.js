@@ -291,7 +291,8 @@ function buyNow(){
   		dialog.showDialog();
     }else{
     	var url = "order.html?"; 
-    	var param = "pid=" + popup.productMessage.productId
+    	var param = "flag=single"
+    	+ "pid=" + popup.productMessage.productId
     	+ "|count=" + popup.productMessage.count
     	+ "|sid=" + sid
     	+ "|standard=" + standard

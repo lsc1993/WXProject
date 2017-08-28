@@ -51,7 +51,7 @@
 				</div>
 			</div>
 			<div>
-				<div class="order-message">
+				<!--<div class="order-message">
 					<div class="container order-message-container">
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4">
@@ -67,6 +67,20 @@
 									<p class="font-size-medium">{{productMessage.count}}</p><p>X</p>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>-->
+				<div class="container">
+					<div class="order-multi-container">
+						<div class="order-multi-list">
+							<ul>
+								<li v-for="item in productsMessage" :key="item.id">
+									<img :src="item.imgurl" />
+								</li>
+							</ul>
+						</div>
+						<div class="order-multi-angle">
+							<li class="icon-angle-right icon-3x"></li>
 						</div>
 					</div>
 				</div>
@@ -295,6 +309,7 @@
 			</transition>
 		</script>
 		<script type="text/javascript" src="../js/jquery-3.2.1.js" ></script>
+		<script type="text/javascript" src="../js/jquery.cookie-1.4.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/order.js" ></script>
