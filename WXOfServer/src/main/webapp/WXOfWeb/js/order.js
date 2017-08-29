@@ -21,6 +21,7 @@ var orderPage = new Vue({
 	el: "#order-page",
 	data: {
 		orderType: -1,
+		singleOrmulti: false,
 		isShowAddress: false,
 		deliveCost: 0,
 		productMessage: 
@@ -33,7 +34,6 @@ var orderPage = new Vue({
 		    standard: "4斤",
 		    price: 299.90,
 		    count: "1",
-		    deliveryCost: 0.00,
 		},
 		productsMessage: [],
 		addressMessage: 
@@ -49,7 +49,7 @@ var orderPage = new Vue({
 		totalCost: function(){
 			var price = 0;
 			if(this.orderType == 0){
-				price = parseFloat(this.productMessage.price) + parseFloat(this.productMessage.deliveryCost);
+				price = parseFloat(this.productMessage.price);
 			}else if(this.orderType == 1){
 				var len = this.productsMessage.length;
 				for(var i=0;i < len;++i){
@@ -63,7 +63,7 @@ var orderPage = new Vue({
 		pTotal: function(){
 			var price = 0; 
 			if(this.orderType == 0){
-				price = parseFloat(this.productMessage.price) + parseFloat(this.productMessage.deliveryCost);
+				price = parseFloat(this.productMessage.price);
 			}else if(this.orderType == 1){
 				var len = this.productsMessage.length;
 				for(var i=0;i < len;++i){
@@ -110,17 +110,17 @@ var orderPage = new Vue({
 			var url;
 			if(this.orderType == 0){
 				url = "http://localhost:8080/WXOfServer/order/submit";
-				data= {
+				var jsonData= {
 					"uid":1,
 					"pid":this.productMessage.pId,
 					"sid":this.productMessage.sId,
 					"pName":this.productMessage.name,
-					"imgurl": this.productMessage.imgurl,
+					"imgurl": this.productMessage.imgname,
 					"pTotal": this.productMessage.price,
 					"count": this.productMessage.count,
 					"standard": this.productMessage.standard,
-					"sendCost": this.productMessage.deliveCost,
-					"total": parseFloat(this.productMessage.price)+parseFloat(this.productMessage.deliveryCost),
+					"sendCost": this.deliveCost,
+					"total": parseFloat(this.productMessage.price)+parseFloat(this.deliveCost),
 					"discount": "1",
 					"buyerMsg": $("#buy-message").val(),
 					"sendWay": "快递发货",
@@ -130,9 +130,10 @@ var orderPage = new Vue({
 					"address": this.addressMessage.address,
 					"postcode": this.addressMessage.postcode
 				};
+				
+				data = JSON.stringify(jsonData);
 			}else if(this.orderType == 1){
 				url = "http://localhost:8080/WXOfServer/order/submit-multi";
-				data = [];
 				var len = this.productsMessage.length;
 				var jsonStr = "{";
 				if(len != 0){
@@ -168,6 +169,8 @@ var orderPage = new Vue({
 				common += toJSONString("uid",1)
 					+ toJSONString("discount","1")
 					+ toJSONString("sendWay", "快递发货")
+					+ toJSONString("buyMsg", $("#buy-message").val())
+					+ toJSONString("sendCost", this.deliveCost)
 					+ toJSONString("aid", this.addressMessage.id)
 					+ toJSONString("receiver", this.addressMessage.name)
 					+ toJSONString("phone", this.addressMessage.tel)
@@ -176,17 +179,19 @@ var orderPage = new Vue({
 				common += "}";
 				jsonStr += common;
 				jsonStr += "}";
+				data = jsonStr;
 			}
 			
 			$.ajax({
 				type: "post",
 				dataType: "json",
-				data: jsonStr,
+				data: data,
 				contentType: "application/json; charset=utf-8",
 				url: url,
 				async: true,
 				success: function(data){
 					tip.showDialog(data.message);
+					clearCookies();
 				},
 				error: function(){
 					alert("服务器无响应");
@@ -529,9 +534,11 @@ function initOrderType(){
 	if(flag[0] == "flag"){
 		if(flag[1] == "multi"){
 			orderPage.orderType = 1;
+			orderPage.singleOrmulti = true;
 			initShopCartOrder();
 		}else if(flag[1] == "single"){
 			orderPage.orderType = 0;
+			orderPage.singleOrmulti = false;
 			initOrder(paramUrl);
 		}
 	}else{
@@ -547,4 +554,13 @@ function toJSONString(key,value){
 function toJSONStringWithOutSplit(key,value){
 	var dd = '"' + key + '"' + ":" + '"' + value + '"';
 	return dd;
+}
+
+function clearCookies(){
+	var count = $.cookie("orderCount");
+	for(var i=0;i < count;++i){
+		var key = "order" + i;
+		$.cookie(key,null);
+	}
+	$.cookie("orderCount", null);
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fuyao.dao.order.IOrderDao;
 import com.fuyao.model.order.Order;
 import com.fuyao.util.FuyaoUtil;
@@ -54,6 +56,64 @@ public class OrderService {
 		order.setPostcode(data.get("postcode"));
 		order.setStatus(OrderStatus.WAITSEND.getStatus());
 		return orderDao.submitOrder(order);
+	}
+	
+	public HashMap<String,String> submitMultiOrder(String data) {
+		HashMap<String,String> result = new HashMap<String,String>();
+		JSONObject object = JSON.parseObject(data);
+		JSONArray array = (JSONArray) object.get("orders");
+		JSONObject common = object.getJSONObject("common");
+		Long uId = common.getLongValue("uid");
+		String discount = common.getString("discount");
+		long aId = common.getLongValue("aid");
+		String receiver = common.getString("receiver");
+		String phone = common.getString("phone");
+		String address = common.getString("address");
+		String postcode;
+		if (null == common.getString("postcode")) {
+			postcode = "";
+		} else {
+			postcode = common.getString("postcode");
+		}
+		String sendWay = common.getString("sendWay");
+		String buyMsg = common.getString("buyMsg");
+		float sendCost = common.getFloatValue("sendCost");
+		
+		int len = array.size();
+		for (int i = 0;i < len; ++i) {
+			JSONObject obj = array.getJSONObject(i);
+			long orderCount = orderDao.getOrderCount();
+			String orderId = new StringBuilder().append("E").
+								append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
+								.append(String.format("%06d", orderCount+1)).toString();
+			Order order = new Order();
+			order.setOrderId(orderId);
+			order.setDate(new Date());
+			//-----------------common---------------------
+			order.setUid(uId);
+			order.setDiscount(discount);
+			order.setAid(aId);
+			order.setReceiver(receiver);
+			order.setPhone(phone);
+			order.setAddress(address);
+			order.setPostcode(postcode);
+			order.setSendWay(sendWay);
+			order.setBuyerMsg(buyMsg);
+			order.setSendCost(sendCost);
+			order.setStatus(OrderStatus.WAITSEND.getStatus());
+			//------------------order---------------------
+			order.setPid(obj.getString("pno"));
+			order.setName(obj.getString("pname"));
+			order.setSid(obj.getLongValue("sId"));
+			order.setStandard(obj.getString("standard"));
+			order.setImgurl(obj.getString("imgname"));
+			order.setPTotal(obj.getFloatValue("price"));
+			order.setPCount(obj.getIntValue("count"));
+			order.setTotal(obj.getFloatValue("total"));
+			
+			result = orderDao.submitOrder(order);
+		}
+		return result;
 	}
 	
 	public JSON getOrderList(HashMap<String,String> data) {

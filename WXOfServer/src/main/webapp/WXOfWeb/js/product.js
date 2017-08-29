@@ -18,6 +18,7 @@ function getProductDetail() {
 		success: function(data){
 			productPage.initProductMessage(data);
 			popup.initProductStandard(data);
+			addBrowseHistory(data);
 		},
 		error: function(){
 			alert("服务器无响应");
@@ -292,7 +293,7 @@ function buyNow(){
     }else{
     	var url = "order.html?"; 
     	var param = "flag=single"
-    	+ "pid=" + popup.productMessage.productId
+    	+ "|pid=" + popup.productMessage.productId
     	+ "|count=" + popup.productMessage.count
     	+ "|sid=" + sid
     	+ "|standard=" + standard
@@ -300,4 +301,22 @@ function buyNow(){
     	var encodeParam = encodeURIComponent(param);
     	window.location.href = url + encodeParam;
     }
+}
+
+function addBrowseHistory(data){
+	var data = {"uId": 1,"pId": data.product.pId};
+	
+	$.ajax({
+		type: "post",
+		dataType: "json",
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
+		url: "http://localhost:8080/WXOfServer/product/browse",
+		async: true,
+		success: function(data){
+		},
+		error: function(){
+			alert("服务器无响应");
+		}
+	});
 }

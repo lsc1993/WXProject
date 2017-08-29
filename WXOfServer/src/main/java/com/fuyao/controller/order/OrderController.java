@@ -43,10 +43,8 @@ public class OrderController {
 	private HashMap<String,String> submitMultiOrder(@RequestBody String data) {
 		Log.log("------multi-------");
 		Log.log(data);
-		JSONObject json = (JSONObject) JSON.parse(data);
-		JSONObject common = json.getJSONObject("common");
 		HashMap<String,String> result = new HashMap<String,String>();
-		result.put("message", common.getString("address"));
+		result = orderService.submitMultiOrder(data);
 		return result;
 	}
 	

@@ -9,40 +9,7 @@ var shopCart = new Vue({
 		total: "0.00",
 		isCheckAll: false,
 		isShowTip: false,
-		shopOrderList: [
-		/*{
-				pId: "20170089",
-				imgurl: "../img/20172001.jpg",
-				name: "车厘子大芒果",
-				standard: "4斤",
-				price: 12.90,
-				total: "12.90",
-				count: 1,
-				type: "泊心风物",
-				isChecked: false,
-			},
-			{
-				pId: "20170089",
-				imgurl: "../img/20172001.jpg",
-				name: "车厘子大芒果",
-				standard: "4斤",
-				price: 22.90,
-				total: "22.90",
-				count: 1,
-				type: "泊心风物",
-				isChecked: false,
-			},
-			{
-				pId: "20170089",
-				imgurl: "../img/20172001.jpg",
-				name: "车厘子大芒果",
-				standard: "4斤",
-				price: 22.90,
-				total: "22.90",
-				count: 1,
-				type: "泊心风物",
-				isChecked: false,
-			}*/]
+		shopOrderList: []
 	},
 	methods: {
 		subCount: function(index){  //增加产品数量
@@ -202,26 +169,25 @@ var shopCart = new Vue({
 			if(count == 0){
 				alert("请选择要购买的商品");
 				return;
+			}else if(count == 1){
+				var data = $.cookie("order0");
+				var order = JSON.parse(data);
+				var url = "order.html?";
+		    	var param = "flag=single"
+		    				+ "|pid=" + order.pno
+		    				+ "|count=" + order.count
+		    				+ "|sid=" + order.sId
+		    				+ "|standard=" + order.standard
+		    				+ "|price=" + order.price;
+		    	var encodeParam = encodeURIComponent(param);
+		    	window.location.href = url + encodeParam;
+			}else if(count > 1){
+				$.cookie("orderCount",count,{path:"/"});
+				var url = "order.html?";
+				var encodeParam = encodeURIComponent("flag=multi");
+    			window.location.href = url + encodeParam;
 			}
-			$.cookie("orderCount",count,{path:"/"});
-			var url = "order.html?";
-			var encodeParam = encodeURIComponent("flag=multi");
-    		window.location.href = url + encodeParam;
-			/*$.ajax({
-				type: "post",
-				dataType: "json",
-				data: JSON.stringify(""),
-				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/order/cookie",
-				async: true,
-				success: function(data){
-					//shopCart.initShopCart(data);
-				},
-				error: function(){
-					alert("服务器无响应");
-				}
-			});*/
-			//window.location.href="order.html";
+			
 		}
 	}
 })
