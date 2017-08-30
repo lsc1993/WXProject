@@ -51,7 +51,7 @@ public class OrderDao implements IOrderDao {
 		return query.getSingleResult();
 	}
 
-	public List<Order> getOrderList(OrderStatus status, int start, int limit) {
+	public List<Order> getOrderList(OrderStatus status, int start, int limit, long uid) {
 		// TODO Auto-generated method stub
 		String hql = null;
 		Query<Order> query = null;
@@ -62,17 +62,20 @@ public class OrderDao implements IOrderDao {
 			case WAITSEND:
 			case WAITRECEIVE:
 			case COMPLETE:
-				hql = "from Order where status=:status";
+				hql = "from Order where uid=:uid and status=:status";
 				query = page.createQuery(this.getCurrentSession(), hql, start, limit);
+				query.setParameter("uid", uid);
 				query.setParameter("status", status.getStatus());
 				break;
 			case ALL:
-				hql = "from Order";
+				hql = "from Order where uid=:uid";
 				query = page.createQuery(this.getCurrentSession(), hql, start, limit);
+				query.setParameter("uid", uid);
 				break;
 			default:
-				hql = "from Order";
+				hql = "from Order where uid=:uid";
 				query = page.createQuery(this.getCurrentSession(), hql, start, limit);
+				query.setParameter("uid", uid);
 				break;
 		}
 		return query.getResultList();

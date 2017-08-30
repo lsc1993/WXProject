@@ -29,11 +29,11 @@ var orderPage = new Vue({
 			pId: "",
 			imgurl: "../img/20172001.jpg",
 			imgname: "",
-		    name: "change",
+		    name: "",
 		    sId: -1,
-		    standard: "4斤",
-		    price: 299.90,
-		    count: "1",
+		    standard: "",
+		    price: 0.00,
+		    count: "0",
 		},
 		productsMessage: [],
 		addressMessage: 
@@ -101,7 +101,7 @@ var orderPage = new Vue({
     			}
     		}
 		},
-		submitOrder: function(){
+		submitOrder: function(){ // 提交订单或者多订单
 			if(this.addressMessage.id == "" || this.addressMessage.name == "" || this.addressMessage.tel == "" || this.addressMessage.address == ""){
 				tip.showDialog("请选择收货地址");
 				return;
@@ -190,8 +190,9 @@ var orderPage = new Vue({
 				url: url,
 				async: true,
 				success: function(data){
-					tip.showDialog(data.message);
+					//tip.showDialog(data.message);
 					clearCookies();
+					window.location.href = "success.html";
 				},
 				error: function(){
 					alert("服务器无响应");
@@ -417,10 +418,10 @@ var chooseAddress = new Vue({
 				return false;
 			}
 			return true;
-		},
+		}/*,
 		choose: function(index){
 			alert(index);
-		}
+		}*/
 	},
 	components: {
 		'choose-address-window':chooseAddressWindow,

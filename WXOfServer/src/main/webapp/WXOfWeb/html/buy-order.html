@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="../css/bootstrap.min.css" />
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
 		<link rel="stylesheet" href="../css/my-trade-menu.css" />
+		<link rel="stylesheet" href="../css/dropload.css" />
 	</head>
 	<body>
 		<!--页面title-->
@@ -23,10 +24,13 @@
 			</div>
 		</header>
 		<div class="space"></div>
-		<div class="my-trade-container" id="my-buy-order">
-			<div class="my-trade-content">
+		<div class="my-trade-container container" id="my-buy-order">
+			<div class="my-trade-tip" v-show="isShowTip">
+				<h4>空空如也<a href="index.html">去逛逛~</a></h4>
+			</div>
+			<div class="my-trade-content" v-show="!isShowTip">
 				<ul>
-					<li v-for="(buyOrder, index) in buyOrderList" :key="buyOrder"
+					<li v-for="(buyOrder, index) in buyOrderList" :key="buyOrder.id"
 						@click="itemClick(index)">
 						<div class="my-trade-list-img">
 							<img :src="buyOrder.imgurl"/>
@@ -42,6 +46,7 @@
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/dropload.js" ></script>
 		<script type="text/javascript" src="../js/buy-order.js" ></script>
 	</body>
 </html>

@@ -1,22 +1,54 @@
 $(function(){
-	
+	imgPath = "http://localhost/imageResource/";
+	initBrowseHistory();
 })
 
-var myCollection = new Vue({
+var browse = new Vue({
 	el: "#my-watch-order",
 	data: {
-		watchOrderList: [
-			{
-				imgurl: "../img/20172001.jpg",
-				productId: "201707012",
-				describe: "超级超级佛跳墙强强特瑞dsadsswswq",
-				price: "9999"
-			}
-		]
+		isShowTip: false,
+		watchOrderList: []
 	},
 	methods: {
 		itemClick: function(index){
-			window.location.href = "product.html?pid=" + this.watchOrderList[index].productId;
+			window.location.href = "product.html?pId=" + this.watchOrderList[index].pId;
+		},
+		initOrderList: function(data){
+			var list = data.rows;
+			var len = data.size;
+			if(len == 0){
+				this.isShowTip = true;
+				return;
+			}
+			for(var i=0;i < len;++i){
+				var order = list[i];
+				var item = {
+					"id": order.pid,
+					"pId": order.pno,
+					"name": order.pname,
+					"price": order.price,
+					"imgurl": imgPath + order.imgurl
+				}
+				this.watchOrderList.push(item);
+			}
 		}
 	}
 })
+
+function initBrowseHistory(){
+	var data = {"uId": 1};
+	$.ajax({
+		type:"post",
+		dataType: "json",
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
+		url:"http://localhost:8080/WXOfServer/product/browse-history",
+		async:true,
+		success: function(data){
+			browse.initOrderList(data);
+		},
+		error: function(){
+			alert("服务器无响应");
+		}
+	});
+}

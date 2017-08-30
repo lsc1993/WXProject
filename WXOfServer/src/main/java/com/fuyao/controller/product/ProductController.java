@@ -56,6 +56,13 @@ public class ProductController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/browse-history",method=RequestMethod.POST)
+	private JSON getBrowseHistory(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return productService.getBrowseHistory(data);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/shopcart",method=RequestMethod.POST)
 	private HashMap<String,String> addShopCart(@RequestBody HashMap<String,String> data) {
 		Log.log(data.toString());

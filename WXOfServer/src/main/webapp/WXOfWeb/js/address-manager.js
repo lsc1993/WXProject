@@ -6,18 +6,7 @@ var addressManager = new Vue({
 	el: "#address-manager",
 	data: {
 		isShowTip: false,
-		addressList: [
-			/*{
-				name: "刘爽",
-				tel: "15700084332",
-				province: "浙江省",
-				city: "杭州市",
-				region: "西湖区",
-				road: "浙江工业大学屏峰校区ytrytr",
-				address: "浙江省杭州市西湖区浙江工业大学屏峰校区sss",
-				postcode: "453400"	
-			}*/
-		]
+		addressList: []
 	},
 	methods: {
 		initAddressList: function(data){
@@ -28,16 +17,18 @@ var addressManager = new Vue({
 			this.addressList.splice(0,this.addressList.length);
 			for(var i=0;i < aLength;++i){//初始化地址列表
 				var address = data.address[i];
-				var addr = {id: address.id,
-							uid: address.uid,
-							name: address.receiver,
-							tel: address.phone,
-							province: address.province,
-							city: address.city,
-							region: address.region,
-							road: address.detailAddress,
-							address: address.province+address.city+address.region+address.detailAddress,
-							postcode: address.postcode};
+				var addr = {
+					"id": address.id,
+					"uid": address.uid,
+					"name": address.receiver,
+					"tel": address.phone,
+					"province": address.province,
+					"city": address.city,
+					"region": address.region,
+					"road": address.detailAddress,
+					"address": address.province+address.city+address.region+address.detailAddress,
+					"postcode": address.postcode
+				};
 				this.addressList.push(addr);
 			}
 		},

@@ -34,12 +34,12 @@ var productPage = new Vue({
 		isDetail: true,   //显示产品详情title
 		isAppraise: false,  //显示评论详情title
 		productMessage: {
-			productId: "20172648",
-			name: "ddd",
-			price: "199.00",
-			describe: "发文件哦忘记佛我",
-			delivery: "免运费",
-			saleVolume: 668
+			productId: "",
+			name: "",
+			price: "0.00",
+			describe: "",
+			delivery: "",
+			saleVolume: 0
 		},
 		imgurls: [],
 		userappraise: [
@@ -65,7 +65,7 @@ var productPage = new Vue({
     		this.productMessage.name = data.product.name;
     		this.productMessage.price = data.product.price;
     		this.productMessage.describe = data.product.describe;
-    		this.productMessage.delivery = "免运费";
+    		this.productMessage.delivery = "满88包邮";
     		this.productMessage.saleVolume = data.saleVolum.saleVolum;
     		
     		var images = data.images;
@@ -304,7 +304,21 @@ function buyNow(){
 }
 
 function addBrowseHistory(data){
-	var data = {"uId": 1,"pId": data.product.pId};
+	var images = data.images;
+	var imgname;
+    for(var i=0;i < images.length;++i){
+    	if(images[i].image.startsWith("sImg")){
+    		imgname = images[i].image;
+    	}
+    }
+	var data = {
+		"uId": 1,
+		"pId": data.product.id,
+		"pno": data.product.pId,
+		"price": data.product.price,
+		"pname": data.product.name,
+		"imgurl": imgname
+	};
 	
 	$.ajax({
 		type: "post",
@@ -314,6 +328,7 @@ function addBrowseHistory(data){
 		url: "http://localhost:8080/WXOfServer/product/browse",
 		async: true,
 		success: function(data){
+			//alert(data.message);
 		},
 		error: function(){
 			alert("服务器无响应");

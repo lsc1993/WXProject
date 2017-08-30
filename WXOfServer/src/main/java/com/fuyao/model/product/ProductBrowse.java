@@ -16,6 +16,10 @@ public class ProductBrowse {
 	private long id;
 	private long uid;
 	private long pid;
+	private String pno;
+	private String pname;
+	private float price;
+	private String imgurl;
 	private Date browseTime;
 	
 	@Id
@@ -42,6 +46,38 @@ public class ProductBrowse {
 	}
 	public void setPid(long pid) {
 		this.pid = pid;
+	}
+	            
+	@Column(name="pno",nullable=false,length=32)
+	public String getPno() {
+		return pno;
+	}
+	public void setPno(String pno) {
+		this.pno = pno;
+	}
+	
+	@Column(name="pname",nullable=false,length=48)
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	
+	@Column(name="price",nullable=false)
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float price) {
+		this.price = price;
+	}
+	
+	@Column(name="imgurl",nullable=false,length=128)
+	public String getImgurl() {
+		return imgurl;
+	}
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
 	
 	@Column(name="browse_time",nullable=false)

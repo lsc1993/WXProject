@@ -24,15 +24,18 @@
 		</header>
 		<div class="space"></div>
 		<div class="my-trade-container" id="my-watch-order">
-			<div class="my-trade-content">
+			<div class="my-trade-tip" v-show="isShowTip">
+				<h4>空空如也<a href="index.html">去逛逛~</a></h4>
+			</div>
+			<div class="my-trade-content container">
 				<ul>
-					<li v-for="(watchOrder, index) in watchOrderList" :key="watchOrder"
+					<li v-for="(watchOrder, index) in watchOrderList" :key="watchOrder.id"
 						@click="itemClick(index)">
 						<div class="my-trade-list-img">
 							<img :src="watchOrder.imgurl"/>
 						</div>
 						<div class="my-trade-list-message">
-							<p>{{watchOrder.describe}}</p>
+							<p>{{watchOrder.name}}</p>
 							<p>￥{{watchOrder.price}}</p>
 						</div>
 					</li>

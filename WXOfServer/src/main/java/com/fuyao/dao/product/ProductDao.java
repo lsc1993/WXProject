@@ -21,6 +21,7 @@ import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
 import com.fuyao.model.product.ShopCart;
 import com.fuyao.page.CommonPage;
+import com.fuyao.util.Log;
 
 @Repository("productDao")
 public class ProductDao implements IProductDao {
@@ -154,8 +155,11 @@ public class ProductDao implements IProductDao {
 	public void browseHistory(ProductBrowse browse) {
 		// TODO Auto-generated method stub
 		Session session = this.getCurrentSession();
-		String hql = "form ProductBrowse where uid=:uid and pid=:pid";
+		String hql = "from ProductBrowse where uid=:uid and pid=:pid";
+		Log.log(browse.getUid() + " " + browse.getPid());
 		Query<ProductBrowse> query = session.createQuery(hql, ProductBrowse.class);
+		query.setParameter("uid", browse.getUid());
+		query.setParameter("pid", browse.getPid());
 		if (query.getResultList().size() >= 1) {
 			query.getResultList().get(0).setBrowseTime(new Date());
 		} else {
@@ -192,7 +196,7 @@ public class ProductDao implements IProductDao {
 	public List<ProductBrowse> getProductBrowse(long uId) {
 		// TODO Auto-generated method stub
 		Session session = this.getCurrentSession();
-		String hql = "form ProductBrowse where uid=:uid order by browse_time ASC";
+		String hql = "from ProductBrowse where uid=:uid order by browse_time ASC";
 		Query<ProductBrowse> query = session.createQuery(hql,ProductBrowse.class);
 		query.setParameter("uid", uId);
 		return query.getResultList();

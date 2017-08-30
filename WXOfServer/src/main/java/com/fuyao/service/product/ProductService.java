@@ -121,12 +121,34 @@ public class ProductService {
 			e.printStackTrace();
 			return result;
 		}
-		ProductBrowse brwose = new ProductBrowse();
-		brwose.setUid(uid);
-		brwose.setPid(pid);
-		brwose.setBrowseTime(new Date());
-		productDao.browseHistory(brwose);
+		ProductBrowse browse = new ProductBrowse();
+		browse.setUid(uid);
+		browse.setPid(pid);
+		browse.setPno(data.get("pno"));
+		browse.setPname(data.get("pname"));
+		browse.setPrice(Float.parseFloat(data.get("price")));
+		browse.setImgurl(data.get("imgurl"));
+		browse.setBrowseTime(new Date());
+		productDao.browseHistory(browse);
 		return result;
+	}
+	
+	public JSON getBrowseHistory(HashMap<String,String> data) {
+		long uid;
+		try {
+			uid = Long.parseLong(data.get("uId"));
+		} catch (NumberFormatException e) {
+			uid = 0;
+			e.printStackTrace();
+			return (JSON) JSON.parse("{\"result\":\"fault\",\"message\":,\"无此用户记录\"}");
+		}
+		
+		List<ProductBrowse> browses = productDao.getProductBrowse(uid);
+		StringBuilder builder = new StringBuilder();
+		builder.append("{").append("\"rows\":").append(JSON.toJSONString(browses))
+			   .append(",").append("\"size\":").append(browses.size()).append("}");
+		Log.log(builder.toString());
+		return (JSON) JSON.parse(builder.toString());
 	}
 	
 	public HashMap<String,String> addShopCart(HashMap<String,String> data) {

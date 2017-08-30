@@ -16,8 +16,7 @@ function initPage() {
 function tabClick(index){
 	changeTabStyle(index);
 	times = 0;
-	drop.reset();
-	drop.resetload();
+	drop.resettabload();
 }
 
 function changeTabStyle(index){
@@ -52,20 +51,20 @@ var orderList = new Vue({
 			var len = data.result;
 			var orders = data.rows;
 			for(var i=0;i < len;++i){
-				var o = orders[i];
+				var item = orders[i];
 				var order = 
 				{
-					"id": o.id,
-					"no": o.orderId,
-					"uid": o.uid,
-					"pid": o.pid,
-					"pName": o.name,
-					"imgurl": imgPath+o.imgurl,
-					"standard": o.standard,
-					"count": o.pCount,
-					"pTotal":o.pTotal,
-					"total": o.total,
-					"status": o.status
+					"id": item.id,
+					"no": item.orderId,
+					"uid": item.uid,
+					"pid": item.pid,
+					"pName": item.name,
+					"imgurl": imgPath + item.imgurl,
+					"standard": item.standard,
+					"count": item.pCount,
+					"pTotal": item.pTotal,
+					"total": item.total,
+					"status": item.status
 				};
 				var index1 = this.index;
 				if(index1 == 0){

@@ -209,7 +209,7 @@
     // 如果文档高度不大于窗口高度，数据较少，自动加载下方数据
     function fnAutoLoad(me){
         if(me.opts.loadDownFn != '' && me.opts.autoLoad){
-            if((me._scrollContentHeight - me._threshold) <= me._scrollWindowHeight){
+        	if((me._scrollContentHeight - me._threshold) <= me._scrollWindowHeight){
                 loadDown(me);
             }
         }
@@ -303,8 +303,8 @@
         }
     };
     
-    //重置参数信息
-    MyDropLoad.prototype.reset = function(){
+     // 多页面切换重置
+    MyDropLoad.prototype.resettabload = function(){
     	var me = this;
     	// 上方是否插入DOM
         me.upInsertDOM = false;
@@ -315,8 +315,30 @@
         me.isLockDown = false;
         // 是否有数据
         me.isData = true;
-        me._scrollTop = 0;
-        me._threshold = 0;
+        me._scrollContentHeight = doc.documentElement.clientHeight;
+        // 获取win可见区高度  —— 这里有坑
+        me._scrollWindowHeight = doc.documentElement.clientHeight;
+        var me = this;
+        if(me.direction == 'down' && me.upInsertDOM){
+            me.$domUp.css({'height':'0'}).on('webkitTransitionEnd mozTransitionEnd transitionend',function(){
+                me.loading = false;
+                me.upInsertDOM = false;
+                $(this).remove();
+                //fnRecoverContentHeight(me);
+            });
+        }else if(me.direction == 'up'){
+            me.loading = false;
+            // 如果有数据
+            if(me.isData){
+                // 加载区修改样式
+                me.$domDown.html(me.opts.domDown.domRefresh);
+                //fnRecoverContentHeight(me);
+                fnAutoLoad(me);
+            }else{
+                // 如果没数据
+                me.$domDown.html(me.opts.domDown.domNoData);
+            }
+        }
     };
 
     // css过渡

@@ -130,8 +130,9 @@ public class OrderService {
 			limit = 10;
 			e.printStackTrace();
 		}
+		long uId = Long.parseLong(data.get("uId"));
 		OrderStatus s = OrderStatus.valueOf(data.get("status"));
-		List<Order> orderList = orderDao.getOrderList(s, start, limit);
+		List<Order> orderList = orderDao.getOrderList(s, start, limit, uId);
 		int length = orderList.size();
 		StringBuilder builder = new StringBuilder();
 		builder.append("{").append("\"rows\":").
