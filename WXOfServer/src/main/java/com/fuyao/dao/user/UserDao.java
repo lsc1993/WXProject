@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.fuyao.model.user.User;
 import com.fuyao.model.user.UserAddress;
 
 @Repository("userDao")
@@ -91,6 +92,33 @@ public class UserDao implements IUserDao {
 		Query<Long> query = this.getCurrentSession().createQuery(hql,Long.class);
 		query.setParameter("uid", uId);
 		return query.getSingleResult();
+	}
+
+	public String getUserToken(long uId) {
+		// TODO Auto-generated method stub
+		String hql = "select user_token form User where uid=:uid";
+		Query<String> query = this.getCurrentSession().createQuery(hql,String.class);
+		if (query.getResultList().size() == 1) {
+			return query.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public void addUser(User user) {
+		// TODO Auto-generated method stub
+		this.getCurrentSession().save(user);
+	}
+
+	public User getUser(String userToken) {
+		// TODO Auto-generated method stub
+		String hql = "from User where user_token=:user_token";
+		Query<User> query = this.getCurrentSession().createQuery(hql,User.class);
+		query.setParameter("user_token", userToken);
+		if (query.getResultList().size() == 1) {
+			return query.getResultList().get(0);
+		}
+		return null;
 	}
 
 }

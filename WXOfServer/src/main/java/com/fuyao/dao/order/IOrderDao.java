@@ -8,6 +8,6 @@ import com.fuyao.service.order.OrderService.OrderStatus;
 
 public interface IOrderDao {
 	HashMap<String,String> submitOrder(Order order);
-	long getOrderCount();
+	long getOrderCount(long uid);
 	List<Order> getOrderList(OrderStatus status, int start, int limit, long uid);
 }

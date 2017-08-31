@@ -30,7 +30,7 @@ public class OrderService {
 	
 	public HashMap<String,String> submitOrder(HashMap<String,String> data) {
 		Order order = new Order();
-		long orderCount = orderDao.getOrderCount();
+		long orderCount = orderDao.getOrderCount(Long.parseLong(data.get("uid")));
 		String orderId = new StringBuilder().append("E").
 							append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
 							.append(String.format("%06d", orderCount+1)).toString();
@@ -82,7 +82,7 @@ public class OrderService {
 		int len = array.size();
 		for (int i = 0;i < len; ++i) {
 			JSONObject obj = array.getJSONObject(i);
-			long orderCount = orderDao.getOrderCount();
+			long orderCount = orderDao.getOrderCount(uId);
 			String orderId = new StringBuilder().append("E").
 								append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
 								.append(String.format("%06d", orderCount+1)).toString();

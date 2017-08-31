@@ -1,4 +1,4 @@
-package com.fuyao.model.product;
+package com.fuyao.weixin.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="product_images")
-public class ProductImages {
+@Table(name="wx_auth")
+public class WXAuthority {
+	
 	private long id;
-	private String image;
-	private long pId;
+	private long uid;
+	private String openid;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -24,19 +25,19 @@ public class ProductImages {
 		this.id = id;
 	}
 	
-	@Column(name="image",nullable=false,length=128)
-	public String getImage() {
-		return image;
+	@Column(name="uid",nullable=false,length=11)
+	public long getUid() {
+		return uid;
 	}
-	public void setImage(String image) {
-		this.image = image;
+	public void setUid(long uid) {
+		this.uid = uid;
 	}
 	
-	@Column(name="pid",nullable=false,length=11)
-	public long getpId() {
-		return pId;
+	@Column(name="openid",nullable=false,length=128)
+	public String getOpenid() {
+		return openid;
 	}
-	public void setpId(long pId) {
-		this.pId = pId;
-	}
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}	
 }

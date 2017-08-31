@@ -12,8 +12,9 @@ import javax.persistence.Table;
 public class User {
 	
 	private long id;
-	private String account;
-	private String password;
+	private String name;
+	private int age;
+	private String userToken;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,19 +26,28 @@ public class User {
 		this.id = id;
 	}
 	
-	@Column(name="account",nullable=false,length=20)
-	public String getAccount() {
-		return account;
+	@Column(name="name",nullable=true,length=20)
+	public String getName() {
+		return name;
 	}
-	public void setAccount(String account) {
-		this.account = account;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	@Column(name="password",nullable=false,length=25)
-	public String getPassword() {
-		return password;
+	@Column(name="age",nullable=true)
+	public int getAge() {
+		return age;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setAge(int age) {
+		this.age = age;
 	}
+	
+	@Column(name="user_token",nullable=false,length=128)
+	public String getUserToken() {
+		return userToken;
+	}
+	public void setUserToken(String userToken) {
+		this.userToken = userToken;
+	}
+	
 }

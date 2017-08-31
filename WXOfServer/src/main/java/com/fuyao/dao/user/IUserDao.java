@@ -3,6 +3,7 @@ package com.fuyao.dao.user;
 import java.util.HashMap;
 import java.util.List;
 
+import com.fuyao.model.user.User;
 import com.fuyao.model.user.UserAddress;
 
 public interface IUserDao {
@@ -10,4 +11,7 @@ public interface IUserDao {
 	HashMap<String,String> updateAddress(UserAddress address);
 	HashMap<String,String> deleteAddress(UserAddress address);
 	HashMap<String,String> addAddress(UserAddress address);
+	String getUserToken(long uId);
+	void addUser(User user);
+	User getUser(String userToken);
 }

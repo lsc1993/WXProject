@@ -44,10 +44,11 @@ public class OrderDao implements IOrderDao {
 		return result;
 	}
 
-	public long getOrderCount() {
+	public long getOrderCount(long uid) {
 		// TODO Auto-generated method stub
-		String hql = "select count(id) from Order";
+		String hql = "select count(id) from Order where uid=:uid";
 		Query<Long> query = this.getCurrentSession().createQuery(hql,Long.class);
+		query.setParameter("uid", uid);
 		return query.getSingleResult();
 	}
 

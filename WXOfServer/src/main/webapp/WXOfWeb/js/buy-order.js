@@ -13,7 +13,7 @@ var buyOrder = new Vue({
 	},
 	methods: {
 		itemClick: function(index){
-			window.location.href = "product.html?pid=" + this.buyOrderList[index].productId;
+			window.location.href = "product.html?pId=" + this.buyOrderList[index].pId;
 		},
 		initOrderList: function(data){
 			var list = data.rows;
@@ -26,7 +26,7 @@ var buyOrder = new Vue({
 				var order = list[i];
 				var item = {
 					"pId": order.pid,
-					"name": order.pname,
+					"name": order.name,
 					"price": order.pTotal,
 					"imgurl": imgPath + order.imgurl
 				}
