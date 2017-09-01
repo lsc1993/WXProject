@@ -14,7 +14,7 @@ public class FuyaoUtil {
 	}
 	
 	public static String generateUserToken() {
-		String s = UUID.randomUUID().toString().toLowerCase();
+		String s = UUID.randomUUID().toString().toUpperCase().replace("-", "");
 		return s;
 	}
 }

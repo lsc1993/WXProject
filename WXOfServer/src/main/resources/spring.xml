@@ -18,5 +18,7 @@
 			com.fuyao.service.user,
 			com.fuyao.dao.user,
 			com.fuyao.service.order,
-			com.fuyao.dao.order" />
+			com.fuyao.dao.order,
+			com.fuyao.weixin.service,
+			com.fuyao.weixin.dao" />
 </beans>

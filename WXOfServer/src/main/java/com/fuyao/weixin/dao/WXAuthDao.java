@@ -25,7 +25,7 @@ public class WXAuthDao {
 	}
 
 	public WXAuthority getWXUserAuth(String openid) {
-		String hql = "form WXAuthority where openid=:openid";
+		String hql = "from WXAuthority where openid=:openid";
 		Query<WXAuthority> query = this.getCurrentSession().createQuery(hql,WXAuthority.class);
 		query.setParameter("openid", openid);
 		if (query.getResultList().size() == 1) {
@@ -36,7 +36,7 @@ public class WXAuthDao {
 	}
 	
 	public WXUserInfo getWXUserInfo(long uid) {
-		String hql = "form wx_user where uid=:uid";
+		String hql = "from WXUserInfo where uid=:uid";
 		Query<WXUserInfo> query = this.getCurrentSession().createQuery(hql,WXUserInfo.class);
 		query.setParameter("uid", uid);
 		if (query.getResultList().size() == 1) {
@@ -47,10 +47,10 @@ public class WXAuthDao {
 	}
 
 	public void addWXAuthMessage(WXAuthority wAuth) {
-		this.getCurrentSession().save(wAuth);
+		this.getCurrentSession().saveOrUpdate(wAuth);
 	}
 	
 	public void addWXUserInfo(WXUserInfo wUser) {
-		this.getCurrentSession().save(wUser);
+		this.getCurrentSession().saveOrUpdate(wUser);
 	}
 }

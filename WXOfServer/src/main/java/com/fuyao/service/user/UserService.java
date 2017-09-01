@@ -25,16 +25,12 @@ public class UserService {
 	}
 	
 	public JSON getAddressList(HashMap<String,String> data) {
-		long uId = 0;
-		try {
-			uId = Long.parseLong(data.get("uId"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			uId = -1;
-		}
+		String userToken = data.get("userToken");
+		
 		StringBuilder builder = new StringBuilder();
 		builder.append("{");
-		if (uId != -1) {
+		if (userToken != null) {
+			long uId = userDao.getUserId(userToken);
 			List<UserAddress> address = userDao.getAddressList(uId);
 			builder.append("\"address\":").append(JSON.toJSONString(address)).append(",");
 			builder.append("\"result\":").append("\"success\"");
@@ -46,15 +42,32 @@ public class UserService {
 		return (JSON) JSON.parse(builder.toString());
 	}
 	
-	public HashMap<String,String> addAddress(UserAddress address) {
-		return userDao.addAddress(address);
+	public HashMap<String,String> addAddress(HashMap<String,String> data) {
+		return userDao.addAddress(this.setAddressProperty(data));
 	}
 	
-	public HashMap<String,String> updateAddress(UserAddress address) {
-		return userDao.updateAddress(address);
+	public HashMap<String,String> updateAddress(HashMap<String,String> data) {
+		return userDao.updateAddress(this.setAddressProperty(data));
 	}
 	
-	public HashMap<String,String> deleteAddress(UserAddress address) {
-		return userDao.deleteAddress(address);
+	public HashMap<String,String> deleteAddress(HashMap<String,String> data) {
+		return userDao.deleteAddress(this.setAddressProperty(data));
+	}
+	
+	private UserAddress setAddressProperty(HashMap<String,String> data) {
+		UserAddress address = new UserAddress();
+		if (null != data.get("id") && !"".equals(data.get("id"))) {
+			address.setId(Long.parseLong(data.get("id")));
+		}
+		long uId = userDao.getUserId(data.get("userToken"));
+		address.setUId(uId);
+		address.setReceiver(data.get("receiver"));
+		address.setPhone(data.get("phone"));
+		address.setProvince(data.get("province"));
+		address.setCity(data.get("city"));
+		address.setRegion(data.get("region"));
+		address.setDetailAddress(data.get("detailAddress"));
+		address.setPostcode(data.get("postcode"));
+		return address;
 	}
 }

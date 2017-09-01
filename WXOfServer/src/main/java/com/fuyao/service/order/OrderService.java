@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fuyao.dao.order.IOrderDao;
+import com.fuyao.dao.user.IUserDao;
 import com.fuyao.model.order.Order;
 import com.fuyao.util.FuyaoUtil;
 import com.fuyao.util.Log;
@@ -28,15 +29,31 @@ public class OrderService {
 		this.orderDao = orderDao;
 	}
 	
+	@Resource
+	private IUserDao userDao;
+	
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
+	}
+
 	public HashMap<String,String> submitOrder(HashMap<String,String> data) {
+		HashMap<String,String> result = new HashMap<String,String>();
+		long uId = -1;
+		String token = data.get("userToken");
+		uId = userDao.getUserId(token);
+		if (uId == -1) {
+			result.put("result", "fault");
+			result.put("message", "用户认证失败，请重新登录");
+			return result;
+		}
 		Order order = new Order();
-		long orderCount = orderDao.getOrderCount(Long.parseLong(data.get("uid")));
+		long orderCount = orderDao.getOrderCount(uId);
 		String orderId = new StringBuilder().append("E").
 							append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
 							.append(String.format("%06d", orderCount+1)).toString();
 		order.setOrderId(orderId);
 		order.setDate(new Date());
-		order.setUid(Long.parseLong(data.get("uid")));
+		order.setUid(uId);
 		order.setPid(data.get("pid"));
 		order.setSid(Long.parseLong(data.get("sid")));
 		order.setName(data.get("pName"));
@@ -63,7 +80,14 @@ public class OrderService {
 		JSONObject object = JSON.parseObject(data);
 		JSONArray array = (JSONArray) object.get("orders");
 		JSONObject common = object.getJSONObject("common");
-		Long uId = common.getLongValue("uid");
+		long uId = -1;
+		String token = common.getString("userToken");
+		uId = userDao.getUserId(token);
+		if (uId == -1) {
+			result.put("result", "fault");
+			result.put("message", "用户认证失败，请重新登录");
+			return result;
+		}
 		String discount = common.getString("discount");
 		long aId = common.getLongValue("aid");
 		String receiver = common.getString("receiver");
@@ -130,7 +154,9 @@ public class OrderService {
 			limit = 10;
 			e.printStackTrace();
 		}
-		long uId = Long.parseLong(data.get("uId"));
+		long uId = -1;
+		String token = data.get("userToken");
+		uId = userDao.getUserId(token);
 		OrderStatus s = OrderStatus.valueOf(data.get("status"));
 		List<Order> orderList = orderDao.getOrderList(s, start, limit, uId);
 		int length = orderList.size();

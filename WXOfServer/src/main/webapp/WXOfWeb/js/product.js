@@ -105,7 +105,8 @@ var productPage = new Vue({
     		var url = window.location.href;
 			var index = url.indexOf("pId=");
 			var param = url.substring(index+4,url.length);
-			var data = {"uId": 1, "pId": param};
+			var userToken = $.cookie("user_token");
+			var data = {"userToken": userToken, "pId": param};
 			$.ajax({
 				type: "post",
 				dataType: "json",
@@ -256,7 +257,8 @@ function addShopCart(){
     count = popup.productMessage.count;
     imgurl = popup.productMessage.imgname;
     pname = popup.productMessage.name;
-    var data = {"uId":1,"pId": pid,"pNo": pno,"sId": sid,"standard": standard,
+    var userToken = $.cookie("user_token");
+    var data = {"userToken": userToken,"pId": pid,"pNo": pno,"sId": sid,"standard": standard,
     			"price": price,"count": count,"imgurl": imgurl,"pName": pname};
     $.ajax({
     	type: "post",
@@ -311,8 +313,9 @@ function addBrowseHistory(data){
     		imgname = images[i].image;
     	}
     }
+    var userToken = $.cookie("user_token");
 	var data = {
-		"uId": 1,
+		"userToken": userToken,
 		"pId": data.product.id,
 		"pno": data.product.pId,
 		"price": data.product.price,

@@ -66,6 +66,7 @@
 				<value>com.fuyao.model.product</value>
 				<value>com.fuyao.model.user</value>
 				<value>com.fuyao.model.order</value>
+				<value>com.fuyao.weixin.model</value>
 			</list>
 		</property>
 	</bean>

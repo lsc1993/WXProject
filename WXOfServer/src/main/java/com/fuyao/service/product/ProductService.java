@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.fuyao.dao.product.IProductDao;
+import com.fuyao.dao.user.IUserDao;
 import com.fuyao.model.product.Product;
 import com.fuyao.model.product.ProductBrowse;
 import com.fuyao.model.product.ProductCollection;
@@ -29,6 +30,13 @@ public class ProductService {
 
 	public void setProductDao(IProductDao productDao) {
 		this.productDao = productDao;
+	}
+	
+	@Resource
+	private IUserDao userDao;
+	
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
 	}
 	
 	public JSON getProductDetail(HashMap<String,String> data) {
@@ -73,16 +81,16 @@ public class ProductService {
 	
 	public HashMap<String,String> collectProduct(HashMap<String,String> data) {
 		HashMap<String,String> result = new HashMap<String,String>();
-		long uid,pid;
-		try {
-			uid = Long.parseLong(data.get("uId"));
-		} catch (NumberFormatException e) {
-			uid = 0;
+		long pid;
+		long uid = -1;
+		String token = data.get("userToken");
+		uid = userDao.getUserId(token);
+		if (uid == -1) {
 			result.put("result", "fault");
-			result.put("message", "该用户不存在，请先登录！");
-			e.printStackTrace();
+			result.put("message", "用户认证失败，请重新登录");
 			return result;
 		}
+		
 		try {
 			pid = Long.parseLong(data.get("pId"));
 		} catch (NumberFormatException e) {
@@ -102,16 +110,16 @@ public class ProductService {
 	
 	public HashMap<String,String> browseHistory(HashMap<String,String> data) {
 		HashMap<String,String> result = new HashMap<String,String>();
-		long uid,pid;
-		try {
-			uid = Long.parseLong(data.get("uId"));
-		} catch (NumberFormatException e) {
-			uid = 0;
+		long pid;
+		long uid = -1;
+		String token = data.get("userToken");
+		uid = userDao.getUserId(token);
+		if (uid == -1) {
 			result.put("result", "fault");
-			result.put("message", "该用户不存在，请先登录！");
-			e.printStackTrace();
+			result.put("message", "用户认证失败，请重新登录");
 			return result;
 		}
+		
 		try {
 			pid = Long.parseLong(data.get("pId"));
 		} catch (NumberFormatException e) {
@@ -134,12 +142,10 @@ public class ProductService {
 	}
 	
 	public JSON getBrowseHistory(HashMap<String,String> data) {
-		long uid;
-		try {
-			uid = Long.parseLong(data.get("uId"));
-		} catch (NumberFormatException e) {
-			uid = 0;
-			e.printStackTrace();
+		long uid = -1;
+		String token = data.get("userToken");
+		uid = userDao.getUserId(token);
+		if (uid == -1) {
 			return (JSON) JSON.parse("{\"result\":\"fault\",\"message\":,\"无此用户记录\"}");
 		}
 		
@@ -152,8 +158,17 @@ public class ProductService {
 	}
 	
 	public HashMap<String,String> addShopCart(HashMap<String,String> data) {
+		long uid = -1;
+		HashMap<String,String> result = new HashMap<String,String>();
+		String token = data.get("userToken");
+		uid = userDao.getUserId(token);
+		if (uid == -1) {
+			result.put("result", "fault");
+			result.put("message", "用户认证失败，请重新登录");
+			return result;
+		}
 		ShopCart shopCart = new ShopCart();
-		shopCart.setUid(Long.parseLong(data.get("uId")));
+		shopCart.setUid(uid);
 		shopCart.setPid(Long.parseLong(data.get("pId")));
 		shopCart.setPno(data.get("pNo"));
 		shopCart.setSid(Long.parseLong(data.get("sId")));
@@ -167,14 +182,14 @@ public class ProductService {
 	}
 	
 	public JSON getShopItems(HashMap<String,String> data) {
-		long uId;
-		try {
-			uId = Long.parseLong(data.get("uId"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
+		long uid = -1;
+		String token = data.get("userToken");
+		uid = userDao.getUserId(token);
+		if (uid == -1) {
 			return (JSON) JSON.parse("{\"result\":\"fault\",\"message\":,\"无此用户\"}");
 		}
-		List<ShopCart> shopItems = productDao.getShopCartList(uId);
+		
+		List<ShopCart> shopItems = productDao.getShopCartList(uid);
 		StringBuilder builder = new StringBuilder();
 		builder.append("{").append("\"rows\":").append(JSON.toJSONString(shopItems)).
 				append(",").append("\"size\":").append(shopItems.size()).append("}");

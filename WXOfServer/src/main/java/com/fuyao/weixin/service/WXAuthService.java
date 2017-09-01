@@ -1,9 +1,12 @@
 package com.fuyao.weixin.service;
 
+import java.util.Date;
 import java.util.HashMap;
-import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fuyao.dao.user.IUserDao;
 import com.fuyao.model.user.User;
 import com.fuyao.util.FuyaoUtil;
+import com.fuyao.util.Log;
 import com.fuyao.weixin.WXAuthConnect;
 import com.fuyao.weixin.WXAuthMessage;
 import com.fuyao.weixin.dao.WXAuthDao;
@@ -36,17 +40,22 @@ public class WXAuthService {
 		this.userDao = userDao;
 	}
 
+	/*
+	 * 获取微信用户的openid
+	 */
 	private String getAuthOpenid(String code) {
 		String openid = null;
 		String url = String.format(WXAuthMessage.getInstance().getRequestUrl(), WXAuthMessage.getInstance().getAPPID(), WXAuthMessage.getInstance().getSECRT(), code);
 		JSONObject json = (JSONObject) WXAuthConnect.getAuthResult(url, "GET");
 		if (null != json) {
 			openid = json.getString("openid");
-			WXAuthMessage.getInstance().setOpenid(openid);
 		}
 		return openid;
 	}
 	
+	/*
+	 * 获取微信用户信息
+	 */
 	private WXUserInfo getWXUserInfo(long uId, String code) {
 		WXUserInfo wUser = new WXUserInfo();
 		String url = String.format(WXAuthMessage.getInstance().getRequestUrl(), WXAuthMessage.getInstance().getAPPID(), WXAuthMessage.getInstance().getSECRT(), code);
@@ -57,23 +66,46 @@ public class WXAuthService {
 		wUser.setCountry(json.getString("country"));
 		wUser.setProvince(json.getString("province"));
 		wUser.setCity(json.getString("city"));
+		wUser.setAuthTime(new Date());
 		return wUser;
 	}
 	
-	private HashMap<String,String> authWXUser(String code) {
+	/*
+	 * 认证用户，生成cookie
+	 */
+	public HashMap<String,String> authWXUser(HttpServletRequest request, HttpServletResponse response) {
+		HashMap<String,String> result = new HashMap<String,String>();
 		String userToken = null;
-		String openid = this.getAuthOpenid(code);
-		WXAuthority  wAuth = wxDao.getWXUserAuth(openid);
+		String openid = null;
+		String code = request.getParameter("code");
+		Log.log("code:" + code);
+		if ("weixin".equals(code)) {
+			openid = "lsc";
+		}
+		//openid = this.getAuthOpenid(code);
+		WXAuthority  wAuth = null;
+		
+		if (null != openid) {
+			wAuth = wxDao.getWXUserAuth(openid);
+		} else {
+			result.put("result", "fault");
+			result.put("message", "微信认证失败，请重试");
+			return result;
+		}
+		
 		if (null != wAuth) {
 			userToken = userDao.getUserToken(wAuth.getUid());
+			Log.log("token:" + userToken);
+			/*WXUserInfo wUser = this.getWXUserInfo(wAuth.getUid(), code);
+			wxDao.addWXUserInfo(wUser);*/
 		} else {
 			User user = new User();
-			String token = FuyaoUtil.generateUserToken();
-			user.setUserToken(token);
+			userToken = FuyaoUtil.generateUserToken();
+			user.setUserToken(userToken);
 			userDao.addUser(user);
 			
 			WXAuthority auth = new WXAuthority();
-			long uId = userDao.getUser(token).getId();
+			long uId = userDao.getUser(userToken).getId();
 			auth.setUid(uId);
 			auth.setOpenid(openid);
 			wxDao.addWXAuthMessage(auth);
@@ -81,7 +113,15 @@ public class WXAuthService {
 			WXUserInfo wUser = this.getWXUserInfo(uId, code);
 			wxDao.addWXUserInfo(wUser);
 		}
-		
-		return null;
+		generateCookie(userToken, response);
+		result.put("result", "success");
+		result.put("message", "欢迎");
+		return result;
+	}
+	
+	private void generateCookie(String userToken, HttpServletResponse response) {
+		Cookie authCookie = new Cookie("user_token", userToken);
+		authCookie.setPath("/");
+		response.addCookie(authCookie);
 	}
 }

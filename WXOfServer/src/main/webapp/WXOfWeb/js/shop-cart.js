@@ -187,7 +187,6 @@ var shopCart = new Vue({
 				var encodeParam = encodeURIComponent("flag=multi");
     			window.location.href = url + encodeParam;
 			}
-			
 		}
 	}
 })
@@ -232,7 +231,8 @@ var dialog = new Vue({
 })
 
 function initShopItems(){
-	var data = {"uId": 1};
+	var userToken = $.cookie("user_token");
+	var data = {"userToken": userToken};
 	$.ajax({
 		type: "post",
 		dataType: "json",

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.fuyao.model.user.UserAddress;
 import com.fuyao.service.user.UserService;
 import com.fuyao.util.Log;
 
@@ -35,22 +34,22 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping("/add-addr")
-	private HashMap<String,String> addAddress(@RequestBody UserAddress address) {
-		Log.log(address.toString());
-		return userService.addAddress(address);
+	private HashMap<String,String> addAddress(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return userService.addAddress(data);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/update-addr")
-	private HashMap<String,String> updateAddress(@RequestBody UserAddress address) {
-		Log.log(address.toString());
-		return userService.updateAddress(address);
+	private HashMap<String,String> updateAddress(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return userService.updateAddress(data);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/del-addr")
-	private HashMap<String,String> deleteAddress(@RequestBody UserAddress address) {
-		Log.log(address.toString());
-		return userService.deleteAddress(address);
+	private HashMap<String,String> deleteAddress(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return userService.deleteAddress(data);
 	}
 }

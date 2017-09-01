@@ -1,5 +1,7 @@
 package com.fuyao.weixin.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ public class WXUserInfo {
 	private String province;
 	private String city;
 	private String headImg;
+	private Date authTime;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -84,5 +87,13 @@ public class WXUserInfo {
 	}
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
+	}
+	
+	@Column(name="auth_time",nullable=false)
+	public Date getAuthTime() {
+		return authTime;
+	}
+	public void setAuthTime(Date authTime) {
+		this.authTime = authTime;
 	}
 }

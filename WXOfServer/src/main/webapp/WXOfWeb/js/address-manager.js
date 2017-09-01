@@ -1,5 +1,5 @@
 $(function(){
-	initAddress(1);
+	initAddress();
 })
 
 var addressManager = new Vue({
@@ -19,7 +19,6 @@ var addressManager = new Vue({
 				var address = data.address[i];
 				var addr = {
 					"id": address.id,
-					"uid": address.uid,
 					"name": address.receiver,
 					"tel": address.phone,
 					"province": address.province,
@@ -63,7 +62,6 @@ var chooseAddress = new Vue({
 		editTitle: "编辑收货地址",
 		addressRegion: {
 			id: "",
-			uid: "",
 			name: "",
 			tel: "",
 			province: "选择省份",
@@ -76,11 +74,13 @@ var chooseAddress = new Vue({
 	},
 	methods: {
 		saveAddress: function(){
+			$("#address-save-btn").attr("disabled", true);
 			if(!this.checkAddress()){
 				return;
 			}
+			var userToken = $.cookie("user_token");
 			var data = {"id": this.addressRegion.id,
-						"uid": 1,
+						"userToken": userToken,
 						"receiver": this.addressRegion.name,
 						"phone": this.addressRegion.tel,
 			            "province": this.addressRegion.province,
@@ -102,20 +102,24 @@ var chooseAddress = new Vue({
 				url: posturl,
 				async: true,
 				success: function(data){
+					$("#address-save-btn").attr("disabled", false);
 					tip.showDialog(data.message);
 					if(data.result == "success"){
-						initAddress(1);
+						initAddress();
 						chooseAddress.removeEditWindow();
 					}
 				},
 				error: function(){
+					$("#address-save-btn").attr("disabled", false);
 					alert("服务器无响应");
 				}
 			});
 		},
 		deleteAddress: function(){  //更新地址信息
+			$("#address-del-btn").attr("disabled", true);
+			var userToken = $.cookie("user_token");
 			var data = {"id": this.addressRegion.id,
-						"uid": 1,
+						"userToken": userToken,
 						"receiver": this.addressRegion.name,
 						"phone": this.addressRegion.tel,
 			            "province": this.addressRegion.province,
@@ -131,13 +135,15 @@ var chooseAddress = new Vue({
 				url: "http://localhost:8080/WXOfServer/user/del-addr",
 				async: true,
 				success: function(data){
+					$("#address-save-btn").attr("disabled", false);
 					tip.showDialog(data.message);
 					if(data.result == "success"){
-						initAddress(1);
+						initAddress();
 						chooseAddress.removeEditWindow();
 					}
 				},
 				error: function(){
+					$("#address-del-btn").attr("disabled", false);
 					alert("服务器无响应");
 				}
 			});
@@ -171,6 +177,7 @@ var chooseAddress = new Vue({
 			dialog.chooseRegion(); 
 		},
 		checkAddress: function(){
+			$("#address-save-btn").attr("disabled", false);
 			if(this.addressRegion.province == "选择省份"){
 				tip.showDialog("请选择所在省份"); 
 				return false;
@@ -199,7 +206,6 @@ var chooseAddress = new Vue({
 		},
 		resetAddressCache: function(){
 			this.addressRegion.id = "";
-			this.addressRegion.uid = "";
 			this.addressRegion.name = "";
 			this.addressRegion.tel = "";
 			this.addressRegion.province = "选择省份";
@@ -212,7 +218,6 @@ var chooseAddress = new Vue({
 		setAddressCache: function(index){
 			var addr = addressManager.addressList[index];
 			this.addressRegion.id = addr.id;
-			this.addressRegion.uid = addr.uid;
 			this.addressRegion.name = addr.name;
 			this.addressRegion.tel = addr.tel;
 			this.addressRegion.province = addr.province;
@@ -228,8 +233,8 @@ var chooseAddress = new Vue({
 	}
 })
 
-function initAddress(uid){
-	var data = {"uId": uid};
+function initAddress(){
+	var data = {"userToken": $.cookie("user_token")};
 	$.ajax({
 		type: "post",
 		dataType: "json",

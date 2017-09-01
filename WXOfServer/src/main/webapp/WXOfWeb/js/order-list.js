@@ -56,7 +56,6 @@ var orderList = new Vue({
 				{
 					"id": item.id,
 					"no": item.orderId,
-					"uid": item.uid,
 					"pid": item.pid,
 					"pName": item.name,
 					"imgurl": imgPath + item.imgurl,
@@ -107,7 +106,8 @@ function dropUpLoad(){
         	var status = ["WAITPAY", "WAITSEND", "WAITRECEIVE", "COMPLETE", "CANCEL"];
 			var limit = 1;
 			var url;
-			var data = {"uId": 1,"status": status[index1], "start": start[index1], "limit": limit};
+			var userToken = $.cookie("user_token");
+			var data = {"userToken": userToken,"status": status[index1], "start": start[index1], "limit": limit};
         	$.ajax({
         		type: "post",
 				dataType: "json",

@@ -36,7 +36,8 @@ var browse = new Vue({
 })
 
 function initBrowseHistory(){
-	var data = {"uId": 1};
+	var userToken = $.cookie("user_token");
+	var data = {"userToken": userToken};
 	$.ajax({
 		type:"post",
 		dataType: "json",

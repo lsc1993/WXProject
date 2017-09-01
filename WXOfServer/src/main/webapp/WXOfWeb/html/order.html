@@ -126,7 +126,7 @@
 			</div>
 			<footer>
 				<div class="order-footer">
-					<div class="order-submit" @click="submitOrder()">
+					<div id="submit-order-btn" class="order-submit" @click="submitOrder()">
 						<p>提交订单</p>
 					</div>
 					<div class="order-total-cost">
@@ -177,8 +177,8 @@
 				 		{{editTitle}}
 				 	</p>
 				 	<div slot="popup-btn-container">
-				 		<button class="btn btn-success" @click="saveAddress()">保存</button> 
-						<button class="btn btn-danger" v-show="isOneButton" @click="deleteAddress()">删除</button>
+				 		<button id="address-save-btn" class="btn btn-success" @click="saveAddress()">保存</button> 
+						<button id="address-del-btn" class="btn btn-danger" v-show="isOneButton" @click="deleteAddress()">删除</button>
 				 	</div>
 				 </new-address-window>
 			</div>

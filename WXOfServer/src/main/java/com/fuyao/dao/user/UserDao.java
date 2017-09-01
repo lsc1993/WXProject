@@ -77,11 +77,11 @@ public class UserDao implements IUserDao {
 			try {
 				this.getCurrentSession().save(address);
 				result.put("result", "success");
-				result.put("message", "删除成功");
+				result.put("message", "添加地址成功");
 			} catch (HibernateException e) {
 				e.printStackTrace();
 				result.put("result", "falut");
-				result.put("message", "删除失败，请稍后重试");
+				result.put("message", "添加地址失败，请稍后重试");
 			}
 		}
 		return result;
@@ -96,12 +96,25 @@ public class UserDao implements IUserDao {
 
 	public String getUserToken(long uId) {
 		// TODO Auto-generated method stub
-		String hql = "select user_token form User where uid=:uid";
+		String hql = "select userToken from User where id=:id";
 		Query<String> query = this.getCurrentSession().createQuery(hql,String.class);
+		query.setParameter("id", uId);
 		if (query.getResultList().size() == 1) {
 			return query.getResultList().get(0);
 		} else {
 			return null;
+		}
+	}
+	
+	public long getUserId(String token) {
+		// TODO Auto-generated method stub
+		String hql = "select id from User where userToken=:userToken";
+		Query<Long> query = this.getCurrentSession().createQuery(hql,Long.class);
+		query.setParameter("userToken", token);
+		if (query.getResultList().size() == 1) {
+			return query.getResultList().get(0);
+		} else {
+			return -1;
 		}
 	}
 
@@ -120,5 +133,4 @@ public class UserDao implements IUserDao {
 		}
 		return null;
 	}
-
 }

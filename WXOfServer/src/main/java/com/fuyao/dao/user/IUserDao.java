@@ -12,6 +12,7 @@ public interface IUserDao {
 	HashMap<String,String> deleteAddress(UserAddress address);
 	HashMap<String,String> addAddress(UserAddress address);
 	String getUserToken(long uId);
+	long getUserId(String token);
 	void addUser(User user);
 	User getUser(String userToken);
 }

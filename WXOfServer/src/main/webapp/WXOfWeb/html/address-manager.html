@@ -64,8 +64,8 @@
 				 	{{editTitle}}
 				</p>
 				<div slot="popup-btn-container">
-				 	<button class="btn btn-success" @click="saveAddress()">保存</button> 
-					<button class="btn btn-danger" v-show="isOneButton" @click="deleteAddress()">删除</button>
+				 	<button id="address-save-btn" class="btn btn-success" @click="saveAddress()">保存</button> 
+					<button id="address-del-btn" class="btn btn-danger" v-show="isOneButton" @click="deleteAddress()">删除</button>
 				</div>
 			</edit-address-window>
 		</div>
@@ -170,6 +170,7 @@
 			</transition>
 		</script>
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery.cookie-1.4.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/address-choose-dialog.js" ></script>

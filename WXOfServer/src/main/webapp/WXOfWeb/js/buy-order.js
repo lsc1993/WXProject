@@ -46,7 +46,8 @@ function dropUpLoad(){
             domNoData  : '<div class="dropload-noData">没有更多了</div>'
         },
         loadDownFn : function(me){
-        	var data = {"uId": 1,"status": "COMPLETE", "start": start, "limit": 10};
+        	var userToken = $.cookie("user_token");
+        	var data = {"uId": userToken,"status": "COMPLETE", "start": start, "limit": 10};
         	$.ajax({
         		type:"post",
 				dataType: "json",

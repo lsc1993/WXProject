@@ -108,13 +108,14 @@ var orderPage = new Vue({
 			}
 			var data;
 			var url;
+			var userToken = $.cookie("user_token");
 			if(this.orderType == 0){
 				url = "http://localhost:8080/WXOfServer/order/submit";
 				var jsonData= {
-					"uid":1,
-					"pid":this.productMessage.pId,
-					"sid":this.productMessage.sId,
-					"pName":this.productMessage.name,
+					"userToken": userToken,
+					"pid": this.productMessage.pId,
+					"sid": this.productMessage.sId,
+					"pName": this.productMessage.name,
 					"imgurl": this.productMessage.imgname,
 					"pTotal": this.productMessage.price,
 					"count": this.productMessage.count,
@@ -166,7 +167,7 @@ var orderPage = new Vue({
 					jsonStr += "],";
 				}
 				var common = '"common"' + ":" + "{";
-				common += toJSONString("uid",1)
+				common += toJSONString("userToken",userToken)
 					+ toJSONString("discount","1")
 					+ toJSONString("sendWay", "快递发货")
 					+ toJSONString("buyMsg", $("#buy-message").val())
@@ -181,7 +182,7 @@ var orderPage = new Vue({
 				jsonStr += "}";
 				data = jsonStr;
 			}
-			
+			$("#submit-order-btn").attr("disabled", true);
 			$.ajax({
 				type: "post",
 				dataType: "json",
@@ -191,10 +192,12 @@ var orderPage = new Vue({
 				async: true,
 				success: function(data){
 					//tip.showDialog(data.message);
+					$("#submit-order-btn").attr("disabled", false);
 					clearCookies();
 					window.location.href = "success.html";
 				},
 				error: function(){
+					$("#submit-order-btn").attr("disabled", false);
 					alert("服务器无响应");
 				}
 			});
@@ -243,7 +246,6 @@ var chooseAddress = new Vue({
 		isOneButton: false,
 		editTitle: "新建收货地址",
 		addressRegion: {
-			uid: "",
 			name: "",
 			tel: "",
 			province: "选择省份",
@@ -262,7 +264,6 @@ var chooseAddress = new Vue({
 				var addr = 
 				{
 					"id"      : address.id,
-					"uid"     : address.uid,
 					"name"    : address.receiver,
 					"tel"     : address.phone,
 					"province": address.province,
@@ -280,10 +281,11 @@ var chooseAddress = new Vue({
 			if(!this.checkAddress()){
 				return;
 			}
+			var userToken = $.cookie("user_token");
 			var data = 
 			{
 				"id": this.addressRegion.id,
-				"uid": 1,
+				"userToken": userToken,
 				"receiver": this.addressRegion.name,
 				"phone": this.addressRegion.tel,
 			    "province": this.addressRegion.province,
@@ -298,6 +300,7 @@ var chooseAddress = new Vue({
 			}else{
 				posturl = "http://localhost:8080/WXOfServer/user/update-addr";
 			}
+			$("#address-save-btn").attr("disabled", true);
 			$.ajax({
 				type: "post",
 				dataType: "json",
@@ -308,17 +311,21 @@ var chooseAddress = new Vue({
 				success: function(data){
 					alert(data.message);
 					if(data.result == "success"){
-						initAddress(1);
+						$("#address-save-btn").attr("disabled", false);
+						initAddress();
 						this.removeEditWindow();
 					}
 				},
 				error: function(){
+					$("#address-save-btn").attr("disabled", false);
 					alert("服务器无响应");
 				}
 			});
 		},
 		deleteAddress: function(){  //更新地址信息
-			var data = {"id": this.addressRegion.id, "uid": this.addressRegion.uid};
+			var userToken = $.cookie("user_token");
+			var data = {"id": this.addressRegion.id, "userToken": userToken};
+			$("#address-del-btn").attr("disabled", true);
 			$.ajax({
 				type: "post",
 				dataType: "json",
@@ -327,13 +334,15 @@ var chooseAddress = new Vue({
 				url: "http://localhost:8080/WXOfServer/user/del-addr",
 				async: true,
 				success: function(data){
+					$("#address-del-btn").attr("disabled", false);
 					alert(data.message);
 					if(data.result == "success"){
-						initAddress(1);
+						initAddress();
 						this.removeEditWindow();
 					}
 				},
 				error: function(){
+					$("#address-del-btn").attr("disabled", false);
 					alert("服务器无响应");
 				}
 			});
@@ -370,7 +379,6 @@ var chooseAddress = new Vue({
 		},
 		addressReset: function(){  //重置关联地址数据
 			this.addressRegion.id = "";
-			this.addressRegion.uid = "";
 			this.addressRegion.name = "";
 			this.addressRegion.tel = "";
 			this.addressRegion.province = "选择省份";
@@ -382,7 +390,6 @@ var chooseAddress = new Vue({
 		},
 		addressTemp: function(addr){  //设置关联地址数据
 			this.addressRegion.id = addr.id;
-			this.addressRegion.uid = addr.uid;
 			this.addressRegion.name = addr.name;
 			this.addressRegion.tel = addr.tel;
 			this.addressRegion.province = addr.province;
@@ -457,7 +464,7 @@ function initOrder(paramUrl){
 		}
 	}
 	initProduct(pId,sId,standard,count,price);
-	initAddress(1);
+	initAddress();
 }
 
 //初始化产品订单信息
@@ -480,8 +487,9 @@ function initProduct(pId,sId,standard,count,price){
 }
 
 //初始化用户地址
-function initAddress(uId){
-	var data =  {"uId": uId};
+function initAddress(){
+	var userToken = $.cookie("user_token");
+	var data =  {"userToken": userToken};
 	$.ajax({
 		type: "post",
 		dataType: "json",
@@ -523,7 +531,7 @@ function initShopCartOrder(){
 		};
 		orderPage.productsMessage.push(item);
 	}
-	initAddress(1);
+	initAddress();
 }
 
 function initOrderType(){
@@ -561,7 +569,7 @@ function clearCookies(){
 	var count = $.cookie("orderCount");
 	for(var i=0;i < count;++i){
 		var key = "order" + i;
-		$.cookie(key,null);
+		$.cookie(key, null, {path:"/"});
 	}
-	$.cookie("orderCount", null);
+	$.cookie("orderCount", null, {path:"/"});
 }
