@@ -3,6 +3,16 @@ $(function(){
 	start = 0;
 	times = 0;
 	dropUpLoad();
+	var url = window.location.href;
+	var str = url.split("?");
+	var code = "";
+	if(str.length > 1){
+		var params = str[1].split("&");
+		var p = params[0].split("=");
+		code = p[1]; 
+	}
+	alert(code);
+	authWXUser(code);
 })
 
 /*
@@ -71,4 +81,25 @@ function dropUpLoad(){
         	getIndexProduct(me);
         }
     });
+}
+
+function authWXUser(code){
+	var data = new FormData();
+	data.append("code", code);
+	$.ajax({
+		type: "post",
+		data: data,
+		processData: false,
+		url: "http://localhost:8080/WXOfServer/wxauth/auth",
+		contentType: false,
+		cache: false,
+		async: true,
+		success: function(data){
+			//alert($.cookie("user_token") + data.message);
+			window.location.href = "index.html";
+		},
+		error: function(){
+			alert("服务器无响应");
+		}
+	});
 }

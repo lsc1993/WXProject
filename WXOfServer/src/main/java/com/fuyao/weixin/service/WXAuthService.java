@@ -79,10 +79,10 @@ public class WXAuthService {
 		String openid = null;
 		String code = request.getParameter("code");
 		Log.log("code:" + code);
-		if ("weixin".equals(code)) {
+		/*if ("weixin".equals(code)) {
 			openid = "lsc";
-		}
-		//openid = this.getAuthOpenid(code);
+		}*/
+		openid = this.getAuthOpenid(code);
 		WXAuthority  wAuth = null;
 		
 		if (null != openid) {
@@ -115,7 +115,7 @@ public class WXAuthService {
 		}
 		generateCookie(userToken, response);
 		result.put("result", "success");
-		result.put("message", "欢迎");
+		result.put("message", openid);
 		return result;
 	}
 	
