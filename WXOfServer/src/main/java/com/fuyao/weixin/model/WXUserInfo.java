@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ex_userinfo")
+@Table(name="wx_userinfo")
 public class WXUserInfo {
 	
 	private long id;

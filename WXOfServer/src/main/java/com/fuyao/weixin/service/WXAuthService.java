@@ -43,22 +43,23 @@ public class WXAuthService {
 	/*
 	 * 获取微信用户的openid
 	 */
-	private String getAuthOpenid(String code) {
-		String openid = null;
-		String url = String.format(WXAuthMessage.getInstance().getRequestUrl(), WXAuthMessage.getInstance().getAPPID(), WXAuthMessage.getInstance().getSECRT(), code);
+	private HashMap<String,String> getAuthOpenid(String code) {
+		HashMap<String,String> result = new HashMap<String,String>();
+		String url = String.format(WXAuthMessage.getInstance().getTokenUrl(), WXAuthMessage.getInstance().getAPPID(), WXAuthMessage.getInstance().getSECRT(), code);
 		JSONObject json = (JSONObject) WXAuthConnect.getAuthResult(url, "GET");
 		if (null != json) {
-			openid = json.getString("openid");
+			result.put("openid", json.getString("openid"));
+			result.put("accessToken", json.getString("access_token"));
 		}
-		return openid;
+		return result;
 	}
 	
 	/*
 	 * 获取微信用户信息
 	 */
-	private WXUserInfo getWXUserInfo(long uId, String code) {
+	private WXUserInfo getWXUserInfo(long uId, String openid, String accessToken) {
 		WXUserInfo wUser = new WXUserInfo();
-		String url = String.format(WXAuthMessage.getInstance().getRequestUrl(), WXAuthMessage.getInstance().getAPPID(), WXAuthMessage.getInstance().getSECRT(), code);
+		String url = String.format(WXAuthMessage.getInstance().getUserinfoUrl(), accessToken, openid);
 		JSONObject json = (JSONObject) WXAuthConnect.getAuthResult(url, "GET");
 		wUser.setUid(uId);
 		wUser.setName(json.getString("nickname"));
@@ -66,6 +67,7 @@ public class WXAuthService {
 		wUser.setCountry(json.getString("country"));
 		wUser.setProvince(json.getString("province"));
 		wUser.setCity(json.getString("city"));
+		wUser.setHeadImg(json.getString("headimgurl"));
 		wUser.setAuthTime(new Date());
 		return wUser;
 	}
@@ -77,15 +79,18 @@ public class WXAuthService {
 		HashMap<String,String> result = new HashMap<String,String>();
 		String userToken = null;
 		String openid = null;
+		String accessToken = null;
 		String code = request.getParameter("code");
-		Log.log("code:" + code);
+		//Log.log("code:" + code);
 		/*if ("weixin".equals(code)) {
 			openid = "lsc";
 		}*/
-		openid = this.getAuthOpenid(code);
+		HashMap<String,String> data = this.getAuthOpenid(code);
+		openid = data.get("openid");
+		accessToken = data.get("accessToken");
 		WXAuthority  wAuth = null;
 		
-		if (null != openid) {
+		if (null != openid && null != accessToken) {
 			wAuth = wxDao.getWXUserAuth(openid);
 		} else {
 			result.put("result", "fault");
@@ -110,7 +115,7 @@ public class WXAuthService {
 			auth.setOpenid(openid);
 			wxDao.addWXAuthMessage(auth);
 			
-			WXUserInfo wUser = this.getWXUserInfo(uId, code);
+			WXUserInfo wUser = this.getWXUserInfo(uId, openid, accessToken);
 			wxDao.addWXUserInfo(wUser);
 		}
 		generateCookie(userToken, response);
