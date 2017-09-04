@@ -10,9 +10,10 @@ $(function(){
 		var params = str[1].split("&");
 		var p = params[0].split("=");
 		code = p[1]; 
+		if(code != "" && code != undefined){
+			authWXUser(code);
+		}
 	}
-	alert(code);
-	authWXUser(code);
 })
 
 /*
@@ -96,7 +97,7 @@ function authWXUser(code){
 		async: true,
 		success: function(data){
 			//alert($.cookie("user_token") + data.message);
-			window.location.href = "index.html";
+			//window.location.href = "index.html";
 		},
 		error: function(){
 			alert("服务器无响应");

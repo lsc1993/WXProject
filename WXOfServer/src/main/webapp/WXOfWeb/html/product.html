@@ -18,7 +18,7 @@
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="menu-wrapper">
 							<a href="index.html"><i class="icon-angle-left icon-2x"></i></a>
-							<p>产品</p>
+							<p class="title-center">产品</p>
 						</div>	
 					</div>
 				</div>
@@ -57,10 +57,11 @@
 						</div>
 						<div class="product-detail-appraise">
 							<div class="product-detail-appraise-title">
-								<p :class="{'product-tab-title-bottom-line' : isDetail}"
-								   @click="showProductDetail()">商品详情</p>
-								<p :class="{'product-tab-title-bottom-line' : isAppraise}"
-								   @click="showProductAppraise()">销量和评价</p>
+								<p>商品详情</p>
+								<!--<p :class="{'product-tab-title-bottom-line' : isDetail}"
+								   @click="showProductDetail()">商品详情</p>-->
+								<!--<p :class="{'product-tab-title-bottom-line' : isAppraise}"
+								   @click="showProductAppraise()">销量和评价</p>-->
 							</div>
 							<div class="product-detail-appraise-container">
 								<div class="product-detail-container" v-show="isShowDetail">
@@ -70,7 +71,7 @@
 										</li>
 									</ul>
 								</div>
-								<div class="product-appraise-container" v-show="isShowAppraise">
+								<!--<div class="product-appraise-container" v-show="isShowAppraise">
 									<div class="product-appraise-content">
 										<div class="product-appraise-user container">
 											<ul>
@@ -94,7 +95,7 @@
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div>-->
 							</div>
 						</div>
 					</div>

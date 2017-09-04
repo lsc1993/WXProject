@@ -4,6 +4,7 @@
 	left: 0;
 	right: 0;
 	min-height: 50px;
+	border-top: 1px solid #CCCCCC;
 	background: #FFFFFF;
 	z-index: 99;
 }
@@ -13,9 +14,9 @@
 }
 
 .bottom-tab-button {
-	width: inherit;
+	width: auth;
 	line-height: auto;
-	margin: 0 auto;
+	margin: 10px auto;
 	text-align: center;
 }
 

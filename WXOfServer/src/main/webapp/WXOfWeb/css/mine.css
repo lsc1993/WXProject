@@ -1,32 +1,41 @@
 /*
  * 用户信息样式，包括用户头像和用户昵称
  **/
+body {
+	background-color: #FAFAFA;
+}
+
 .user-message {
 	width: 100%;
-	height: auto;
+	height: 90px;
 	padding: 1%;
-	background-color: #FFF8DC;
+	background-color: #FC5050;
 }
 
 .user-img {
-	width: 100%;
-	text-align: center;
+	width: auto;
+	display: inline-block;
+	margin-top: 10px;
 }
 
 .user-img img {
-	width: 50px;
-	height: 50px;
+	width: 70px;
+	height: 70px;
 	margin: 0 auto;
-	border-radius: 25px;
+	border-radius: 35px;
+}
+
+.user-name {
+	display: inline-block;
+	margin-left: 10px;
 }
 
 .user-name p {
 	width: auto;
-	height: 20px;
-	margin-top: 1%;
 	text-align: center;
 	font-size: 18px;
 	font-weight: 400;
+	color: #FFFFFF;
 }
 /*
  * 订单操作与查询样式
@@ -35,6 +44,7 @@
 	width: 100%;
 	height: auto;
 	border-bottom: 1px solid #CCCCCC;
+	background-color: #FFFFFF;
 }
 
 .my-order-state-container ul {
@@ -52,11 +62,18 @@
 
 .my-order-state-container a {
 	color: #000000;
+	text-decoration: none;
+}
+
+.my-order-state-container p {
+	color: #515151;
 }
 
 .my-order-list {
 	width: 100%;
-	height: auto;
+	height: 55px;
+	display: table;
+	background-color: #FFFFFF;
 	border-bottom: 1px solid #CCCCCC;
 }
 
@@ -67,20 +84,24 @@
 
 .my-order-list p {
 	width: auto;
-	height: auto;
-	display: inline-block;
-	font-size: 18px;
-	font-weight: 400;
-	margin-left: 5%;
+	line-height: 55px;
+	display: table-cell;
+	font-size: 16px;
+	font-weight: 300;
+	padding-left: 25px;
+	vertical-align: middle;
+	color: #515151;
 }
 
 .my-order-list i {
 	width: 5%;
-	line-height: 50px;
-	text-align: center;
+	line-height: 55px;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .angle-to-left {
+	height: auto;
 	float: right;
 }
 

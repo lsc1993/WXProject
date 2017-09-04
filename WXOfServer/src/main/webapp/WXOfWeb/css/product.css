@@ -1,6 +1,10 @@
 /*
  * 产品页header样式
  * */
+body {
+	background-color: #FAFAFA;
+}
+
 .fixed-header {
 	position: fixed;
 	top: 0;
@@ -22,6 +26,7 @@
 }
 
 .fixed-header i {
+	width: 10%;
 	line-height: 50px;
 }
 
@@ -29,7 +34,8 @@
 	line-height: 50px;
 	text-align: center;
 	font-weight: 400;
-	font-size: 20px;
+	font-size: 18px;
+	padding-right: 5%;
 }
 
 .space {
@@ -109,6 +115,7 @@
 .product-img-turn {
 	width: 100%;
 	height: 45%;
+	background-color: #FFFFFF;
 }
 
 .product-img-turn img {
@@ -165,13 +172,14 @@
 	width: 100%;
 	height: 40px;
 	border-bottom: 1px solid #CCCCCC;
+	background-color: #FFFFFF;
 }
 
 .product-sales-volume p {
 	width: auto;
 	line-height: 40px;
 	display: inline-block;
-	color: #C0C0C0;
+	color: #515151;
 }
 
 .product-transport-fare {
@@ -191,11 +199,13 @@
 	width: 100%;
 	height: 40px;
 	border-bottom: 1px solid #CCCCCC;
+	background-color: #FFFFFF;
 }
 
 .product-standard p {
 	line-height: 40px;
 	margin-left: 3%;
+	color: #515151;
 	display: inline-block;
 }
 
@@ -211,16 +221,19 @@
 .product-detail-container {
 	width: 100%;
 	height: auto;
+	border-bottom: 1px solid #CCCCCC;
 }
 
 .product-detail-appraise-title {
 	width: 100%;
 	height: 45px;
 	margin-bottom: 10px;
+	text-align: center;
+	background-color: #FFFFFF;	
 }
 
 .product-detail-appraise-title p {
-	width: 49%;
+	width: auto;
 	line-height: 45px;
 	text-align: center;
 	display: inline-block;

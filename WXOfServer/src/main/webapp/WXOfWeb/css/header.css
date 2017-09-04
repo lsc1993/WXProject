@@ -25,6 +25,11 @@
 	display: block;
 }
 
+.menu-wrapper h4 {
+	line-height: 30px;
+	text-align: center;
+}
+
 .navbar-title {
 	font-weight: bold;
 	font-family: "times new roman";

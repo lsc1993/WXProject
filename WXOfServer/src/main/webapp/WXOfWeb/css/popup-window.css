@@ -23,7 +23,7 @@
 	bottom: 0;
 	width: 100%;
 	height: auto;
-	max-height: 60%;
+	max-height: 80%;
 	overflow-y: scroll;
 	margin: 0px auto;
 	background-color: #fff;
@@ -55,7 +55,7 @@
 }
 
 .product-price-name p {
-	font-size: 20px;
+	font-size: 16px;
 }
 
 .product-pop-remove {
@@ -105,7 +105,7 @@
 .product-sale-count p {
 	width: auto;
 	line-height: 30px;
-	font-size: 20px;
+	font-size: 16px;
 	display: inline-block;
 }
 
@@ -117,7 +117,7 @@
 	width: 30px;
 	height: 30px;
 	line-height: 30px;
-	font-size: 20px;
+	font-size: 18px;
 	font-family: "times new roman";
 	font-weight: bold;
 	border: 1px solid #CCCCCC;
@@ -173,7 +173,7 @@
 .address-choose-title p {
 	width: auto;
 	line-height: 50px;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 500;
 }
 
