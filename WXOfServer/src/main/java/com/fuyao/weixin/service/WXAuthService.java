@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fuyao.dao.user.IUserDao;
 import com.fuyao.model.user.User;
@@ -47,6 +48,7 @@ public class WXAuthService {
 		HashMap<String,String> result = new HashMap<String,String>();
 		String url = String.format(WXAuthMessage.getInstance().getTokenUrl(), WXAuthMessage.getInstance().getAPPID(), WXAuthMessage.getInstance().getSECRT(), code);
 		JSONObject json = (JSONObject) WXAuthConnect.getAuthResult(url, "GET");
+		Log.log("json:" + json);
 		if (null != json) {
 			result.put("openid", json.getString("openid"));
 			result.put("accessToken", json.getString("access_token"));
@@ -75,19 +77,17 @@ public class WXAuthService {
 	/*
 	 * 认证用户，生成cookie
 	 */
+	@SuppressWarnings("deprecation")
 	public HashMap<String,String> authWXUser(HttpServletRequest request, HttpServletResponse response) {
 		HashMap<String,String> result = new HashMap<String,String>();
 		String userToken = null;
 		String openid = null;
 		String accessToken = null;
 		String code = request.getParameter("code");
-		//Log.log("code:" + code);
-		/*if ("weixin".equals(code)) {
-			openid = "lsc";
-		}*/
+		
 		HashMap<String,String> data = this.getAuthOpenid(code);
 		openid = data.get("openid");
-		accessToken = data.get("accessToken");
+		accessToken = data.get("accessToken"); 
 		WXAuthority  wAuth = null;
 		
 		if (null != openid && null != accessToken) {
@@ -100,9 +100,19 @@ public class WXAuthService {
 		
 		if (null != wAuth) {
 			userToken = userDao.getUserToken(wAuth.getUid());
-			Log.log("token:" + userToken);
-			/*WXUserInfo wUser = this.getWXUserInfo(wAuth.getUid(), code);
-			wxDao.addWXUserInfo(wUser);*/
+			Date current = new Date();
+			if (current.getDay() % 10 == 0) {
+				WXUserInfo user = wxDao.getWXUserInfo(wAuth.getUid());
+				WXUserInfo wUser = this.getWXUserInfo(wAuth.getUid(),openid, accessToken);
+				user.setAuthTime(wUser.getAuthTime());
+				user.setName(wUser.getName());
+				user.setCountry(wUser.getCountry());
+				user.setProvince(wUser.getProvince());
+				user.setCity(wUser.getCity());
+				user.setHeadImg(wUser.getHeadImg());
+				user.setSex(wUser.getSex());
+				wxDao.addWXUserInfo(wUser);
+			}
 		} else {
 			User user = new User();
 			userToken = FuyaoUtil.generateUserToken();
@@ -117,10 +127,10 @@ public class WXAuthService {
 			
 			WXUserInfo wUser = this.getWXUserInfo(uId, openid, accessToken);
 			wxDao.addWXUserInfo(wUser);
+			result.put("message", "欢迎光临"+wUser.getName());
 		}
 		generateCookie(userToken, response);
 		result.put("result", "success");
-		result.put("message", openid);
 		return result;
 	}
 	
@@ -128,5 +138,15 @@ public class WXAuthService {
 		Cookie authCookie = new Cookie("user_token", userToken);
 		authCookie.setPath("/");
 		response.addCookie(authCookie);
+	}
+	
+	public JSON getWXUserinfo(HashMap<String,String> data) {
+		if (null == data.get("userToken")) {
+			String result = "{\"result\": \"fault\"}";
+			return (JSON) JSON.parse(result);
+		}
+		long uId = userDao.getUserId(data.get("userToken"));
+		WXUserInfo wUser = wxDao.getWXUserInfo(uId);
+		return (JSON) JSON.toJSON(wUser);
 	}
 }

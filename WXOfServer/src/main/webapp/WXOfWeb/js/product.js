@@ -1,5 +1,7 @@
 $(function(){
-	imgPath = "http://localhost/imageResource/";
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
 	getProductDetail();
 })
 
@@ -13,7 +15,7 @@ function getProductDetail() {
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/WXOfServer/product/detail",
+		url: requestIP + "/WXOfServer/product/detail",
 		async: true,
 		success: function(data){
 			productPage.initProductMessage(data);
@@ -35,9 +37,9 @@ var productPage = new Vue({
 		isAppraise: false,  //显示评论详情title
 		productMessage: {
 			productId: "",
-			name: "",
+			name: "红茶二",
 			price: "0.00",
-			describe: "",
+			describe: "红茶二",
 			delivery: "",
 			saleVolume: 0
 		},
@@ -112,7 +114,7 @@ var productPage = new Vue({
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/product/collection",
+				url: requestIP + "/WXOfServer/product/collection",
 				async: true,
 				success: function(data){
 				},
@@ -265,9 +267,10 @@ function addShopCart(){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/WXOfServer/product/shopcart",
+		url: requestIP + "/WXOfServer/product/shopcart",
 		async: true,
 		success: function(data){
+			popup.dismiss();
 			alert(data.message);
 		},
 		error: function(){
@@ -328,7 +331,7 @@ function addBrowseHistory(data){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/WXOfServer/product/browse",
+		url: requestIP + "/WXOfServer/product/browse",
 		async: true,
 		success: function(data){
 			//alert(data.message);

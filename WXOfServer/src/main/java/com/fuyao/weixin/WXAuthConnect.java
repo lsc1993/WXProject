@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.alibaba.fastjson.JSON;
+import com.fuyao.util.Log;
 
 public class WXAuthConnect {
 	
@@ -24,7 +25,8 @@ public class WXAuthConnect {
 			conn.setRequestMethod(method);
 			conn.setConnectTimeout(15000);
 			conn.setReadTimeout(15000);
-			
+			conn.connect();
+			Log.log("resCode:" + conn.getResponseCode());
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				InputStream in = conn.getInputStream();
 				InputStreamReader reader = new InputStreamReader(in, "UTF-8");

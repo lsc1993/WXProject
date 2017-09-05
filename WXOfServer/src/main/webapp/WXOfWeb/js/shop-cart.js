@@ -1,5 +1,7 @@
 $(function(){
-	imgPath = "http://localhost/imageResource/";
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
 	initShopItems();
 })
 
@@ -216,7 +218,7 @@ var dialog = new Vue({
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/product/del-shop",
+				url: requestIP + "/WXOfServer/product/del-shop",
 				async: true,
 				success: function(data){
 					initShopItems();
@@ -238,7 +240,7 @@ function initShopItems(){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/WXOfServer/product/shopitem",
+		url: requestIP + "/WXOfServer/product/shopitem",
 		async: true,
 		success: function(data){
 			shopCart.initShopCart(data);

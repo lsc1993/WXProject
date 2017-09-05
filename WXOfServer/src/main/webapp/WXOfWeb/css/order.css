@@ -6,13 +6,13 @@
 
 .address-choose-container {
 	width: auto;
-	height: 60px;
+	height: auto;
 }
 
 .address-choose-container p {
 	width: auto;
-	line-height: 60px;
-	font-size: 20px;
+	line-height: 50px;
+	font-size: 18px;
 	font-weight: 400;
 }
 
@@ -24,6 +24,7 @@
 	width: 40px;
 	height: 40px;
 	margin-top: 10px;
+	border-radius: 20px;
 }
 
 .address-content {
@@ -84,8 +85,8 @@
 }
 
 .order-message img {
-	width: 100px;
-	height: 100px;
+	width: 80px;
+	height: 80px;
 }
 
 .order-message p {
@@ -125,20 +126,16 @@
 }
 
 .order-multi-container img {
-	width: 80px;
-	height: 80px;
+	width: 75px;
+	height: 75px;
 }
 
 .order-multi-angle {
-	width: auto;
-	height: auto;
-	display: table-cell;
-	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	margin-top: 40px;
 	float: right;
-}
-
-.order-multi-angle i {
-	vertical-align: middle;
 }
 
 .product-count p {
@@ -213,6 +210,7 @@
 
 .order-total {
 	margin-top: 5%;
+	margin-bottom: 60px;
 }
 
 .product-price-content p {

@@ -34,7 +34,7 @@ body {
 	line-height: 50px;
 	text-align: center;
 	font-weight: 400;
-	font-size: 20px;
+	font-size: 18px;
 	padding-right: 5%;
 }
 
@@ -75,6 +75,8 @@ body {
 	width: 100%;
 	height: auto;
 	padding: 2%;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #515151;
 }
 
 .shop-order-type {
@@ -110,8 +112,8 @@ body {
 }
 
 .shop-order-message img {
-	width: 80px;
-	height: 80px;
+	width: 75px;
+	height: 75px;
 	max-width: 28%;
 	float: left;
 }
@@ -124,7 +126,8 @@ body {
 }
 
 .shop-order-product-name p {
-	font-size: 14px;
+	font-size: 15px;
+	padding: 5px;
 }
 
 .shop-order-cost {
@@ -148,9 +151,9 @@ body {
 }
 
 .shop-order-product-count button {
-	width: 25%;
+	width: 22%;
 	max-width: 30%;
-	height: 25px;
+	height: 22px;
 	background-color: rgba(255,255,255,.5);
 	border: 1px solid #CCCCCC;
 }
@@ -161,7 +164,7 @@ body {
 
 .shop-order-product-price p {
 	max-width: 90%;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 /*

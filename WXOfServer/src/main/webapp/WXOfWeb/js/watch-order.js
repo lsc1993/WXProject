@@ -1,5 +1,7 @@
 $(function(){
-	imgPath = "http://localhost/imageResource/";
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
 	initBrowseHistory();
 })
 
@@ -43,7 +45,7 @@ function initBrowseHistory(){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url:"http://localhost:8080/WXOfServer/product/browse-history",
+		url: requestIP + "/WXOfServer/product/browse-history",
 		async:true,
 		success: function(data){
 			browse.initOrderList(data);

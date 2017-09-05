@@ -1,19 +1,3 @@
-$(function(){
-	imgPath = "http://localhost/imageResource/";
-	autoHeightTextaera();
-	initOrderType();
-})
-
-//买家留言输入框高度伸展
-function autoHeightTextaera() {
-	$("#buy-message").focus(function(){
-		$("#buy-message").animate({height:"80px"},300);
-	});
-	$("#buy-message").blur(function(){
-		$("#buy-message").animate({height:"30px"},300);	
-	});
-}
-
 /*
  * 订单页面Vue实例
  * */
@@ -110,7 +94,8 @@ var orderPage = new Vue({
 			var url;
 			var userToken = $.cookie("user_token");
 			if(this.orderType == 0){
-				url = "http://localhost:8080/WXOfServer/order/submit";
+				//url = "http://localhost:8080/WXOfServer/order/submit";
+				url = requestIP + "/WXOfServer/order/submit";
 				var jsonData= {
 					"userToken": userToken,
 					"pid": this.productMessage.pId,
@@ -134,7 +119,8 @@ var orderPage = new Vue({
 				
 				data = JSON.stringify(jsonData);
 			}else if(this.orderType == 1){
-				url = "http://localhost:8080/WXOfServer/order/submit-multi";
+				//url = "http://localhost:8080/WXOfServer/order/submit-multi";
+				url = requestIP + "/WXOfServer/order/submit-multi";
 				var len = this.productsMessage.length;
 				var jsonStr = "{";
 				if(len != 0){
@@ -205,6 +191,24 @@ var orderPage = new Vue({
 	}
 })
 
+$(function(){
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
+	autoHeightTextaera();
+	initOrderType();
+})
+
+//买家留言输入框高度伸展
+function autoHeightTextaera() {
+	$("#buy-message").focus(function(){
+		$("#buy-message").animate({height:"80px"},300);
+	});
+	$("#buy-message").blur(function(){
+		$("#buy-message").animate({height:"30px"},300);	
+	});
+}
+
 /*
  * 选择地址Vue组件popupwindow
  * */
@@ -259,7 +263,12 @@ var chooseAddress = new Vue({
 	},
 	methods: {
 		initAddress: function(data){
-			for(var i=0;i < data.address.length;++i){//初始化地址列表
+			var len = data.address.length;
+			if(len == 0){
+				return;
+			}
+			this.addressItems.splice(0,this.addressItems.length);
+			for(var i=0;i < len;++i){//初始化地址列表
 				var address = data.address[i];
 				var addr = 
 				{
@@ -296,9 +305,9 @@ var chooseAddress = new Vue({
 			};
 			var posturl;
 			if(this.addressRegion.id == ""){
-				posturl = "http://localhost:8080/WXOfServer/user/add-addr";
+				posturl = requestIP + "/WXOfServer/user/add-addr";
 			}else{
-				posturl = "http://localhost:8080/WXOfServer/user/update-addr";
+				posturl = requestIP + "/WXOfServer/user/update-addr";
 			}
 			$("#address-save-btn").attr("disabled", true);
 			$.ajax({
@@ -309,12 +318,10 @@ var chooseAddress = new Vue({
 				url: posturl,
 				async: true,
 				success: function(data){
+					$("#address-save-btn").attr("disabled", false);
+					initAddress();
+					this.removeEditWindow();
 					alert(data.message);
-					if(data.result == "success"){
-						$("#address-save-btn").attr("disabled", false);
-						initAddress();
-						this.removeEditWindow();
-					}
 				},
 				error: function(){
 					$("#address-save-btn").attr("disabled", false);
@@ -324,22 +331,29 @@ var chooseAddress = new Vue({
 		},
 		deleteAddress: function(){  //更新地址信息
 			var userToken = $.cookie("user_token");
-			var data = {"id": this.addressRegion.id, "userToken": userToken};
+			var data = {"id": this.addressRegion.id,
+						"userToken": userToken,
+						"receiver": this.addressRegion.name,
+						"phone": this.addressRegion.tel,
+			            "province": this.addressRegion.province,
+			 			"city": this.addressRegion.city,
+			 			"region": this.addressRegion.region,
+						"detailAddress": this.addressRegion.road,
+						"postcode": this.addressRegion.postcode};
 			$("#address-del-btn").attr("disabled", true);
 			$.ajax({
 				type: "post",
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/user/del-addr",
+				url: requestIP + "/WXOfServer/user/del-addr",
 				async: true,
 				success: function(data){
 					$("#address-del-btn").attr("disabled", false);
+					initAddress();
+					this.removeEditWindow();
 					alert(data.message);
-					if(data.result == "success"){
-						initAddress();
-						this.removeEditWindow();
-					}
+					
 				},
 				error: function(){
 					$("#address-del-btn").attr("disabled", false);
@@ -425,10 +439,7 @@ var chooseAddress = new Vue({
 				return false;
 			}
 			return true;
-		}/*,
-		choose: function(index){
-			alert(index);
-		}*/
+		}
 	},
 	components: {
 		'choose-address-window':chooseAddressWindow,
@@ -475,7 +486,7 @@ function initProduct(pId,sId,standard,count,price){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/WXOfServer/product/detail",
+		url: requestIP + "/WXOfServer/product/detail",
 		async: true,
 		success: function(data){
 			orderPage.initOrderMessage(data,pId,sId,standard,count,price);
@@ -495,7 +506,7 @@ function initAddress(){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/WXOfServer/user/address",
+		url: requestIP + "/WXOfServer/user/address",
 		async: true,
 		success: function(data){
 			chooseAddress.initAddress(data);

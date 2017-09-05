@@ -1,5 +1,7 @@
 $(function(){
-	imgUrl = "http://localhost/imageResource/";
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
 	start = 0;
 	times = 0;
 	dropUpLoad();
@@ -38,7 +40,8 @@ function getIndexProduct(me){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url:"http://localhost:8080/WXOfServer/product/list",
+		//url:"http://localhost:8080/WXOfServer/product/list",
+		url: requestIP + "/WXOfServer/product/list",
 		async:true,
 		success: function(data){
 			start++;
@@ -47,7 +50,7 @@ function getIndexProduct(me){
 				var p = data.rows;
 				for(var i = 0;i < length;++i){
 					var pp = new Array();
-					pp["img"] = imgUrl + p[i].image.image;
+					pp["img"] = imgPath + p[i].image.image;
 					pp["productId"] = p[i].product.pId;
 					productWrapper.products.push(pp);
 				}
@@ -74,9 +77,9 @@ function dropUpLoad(){
 		scrollArea : window,
         domDown : {
             domClass   : 'dropload-down',
-            domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+            domRefresh : '<div class="dropload-refresh">上拉加载更多</div>',
             domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
-            domNoData  : '<div class="dropload-noData">暂无数据</div>'
+            domNoData  : '<div class="dropload-noData">没有更多了</div>'
         },
         loadDownFn : function(me){
         	getIndexProduct(me);
@@ -91,7 +94,7 @@ function authWXUser(code){
 		type: "post",
 		data: data,
 		processData: false,
-		url: "http://localhost:8080/WXOfServer/wxauth/auth",
+		url: requestIP + "/WXOfServer/wxauth/auth",
 		contentType: false,
 		cache: false,
 		async: true,
@@ -100,7 +103,7 @@ function authWXUser(code){
 			//window.location.href = "index.html";
 		},
 		error: function(){
-			alert("服务器无响应");
+			//alert("服务器无响应");
 		}
 	});
 }

@@ -1,5 +1,7 @@
 $(function(){
-	imgPath = "http://localhost/imageResource/";
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
 	start = 0;
 	times = 0;
 	dropUpLoad();
@@ -53,7 +55,8 @@ function dropUpLoad(){
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				url:"http://localhost:8080/WXOfServer/order/list",
+				//url:"http://localhost:8080/WXOfServer/order/list",
+				url: requestIP + "/WXOfServer/order/list",
 				async:true,
 				success: function(data){
 					start++;

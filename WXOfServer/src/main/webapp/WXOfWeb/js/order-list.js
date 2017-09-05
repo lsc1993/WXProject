@@ -1,5 +1,7 @@
 $(function(){
-	imgPath = "http://localhost/imageResource/";
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
 	start = new Array(0,0,0,0,0);
 	times = 0;
 	initPage();
@@ -57,7 +59,7 @@ var orderList = new Vue({
 					"id": item.id,
 					"no": item.orderId,
 					"pid": item.pid,
-					"pName": item.name,
+					"name": item.name,
 					"imgurl": imgPath + item.imgurl,
 					"standard": item.standard,
 					"count": item.pCount,
@@ -97,9 +99,9 @@ function dropUpLoad(){
 		scrollArea : window,
         domDown : {
             domClass   : 'dropload-down',
-            domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+            domRefresh : '<div class="dropload-refresh">上拉加载更多</div>',
             domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
-            domNoData  : '<div class="dropload-noData">暂无数据</div>'
+            domNoData  : '<div class="dropload-noData">没有更多了</div>'
         },
         loadDownFn : function(me){
         	var index1 = orderList.index;
@@ -113,7 +115,7 @@ function dropUpLoad(){
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/order/list",
+				url: requestIP + "/WXOfServer/order/list",
 				async: true,
 				success: function(data){
 					start[index1]++;

@@ -22,7 +22,7 @@
 	height: auto;
 	display: block; 
 	margin-top: 15px;
-	box-shadow: 2px 2px #CCCCCC; 
+	box-shadow: 2px 1px #F2F2F2; 
 }
 
 .order-no p {
@@ -32,6 +32,7 @@
 
 .order-status p {
 	color: #FF0000;
+	text-align: right;
 	font-size: 15px;
 	font-weight: 500;
 }
@@ -41,8 +42,8 @@
 }
 
 .order-message img {
-	width: 80px;
-	height: 80px;
+	width: 65px;
+	height: 65px;
 }
 
 .order-message p {
@@ -60,7 +61,7 @@
 }
 
 .border-bottom-divider {
-	border-bottom: 1px solid #CCCCCC;
+	border-bottom: 1px solid #F2F2F2;
 }
 
 .order-operator button {

@@ -1,4 +1,7 @@
 $(function(){
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
 	initAddress();
 })
 
@@ -90,9 +93,9 @@ var chooseAddress = new Vue({
 						"postcode": this.addressRegion.postcode};
 			var posturl;
 			if(this.addressRegion.id != ""){
-				posturl = "http://localhost:8080/WXOfServer/user/update-addr";
+				posturl = requestIP + "/WXOfServer/user/update-addr";
 			}else{
-				posturl = "http://localhost:8080/WXOfServer/user/add-addr";
+				posturl = requestIP + "/WXOfServer/user/add-addr";
 			}
 			$.ajax({
 				type: "post",
@@ -103,11 +106,10 @@ var chooseAddress = new Vue({
 				async: true,
 				success: function(data){
 					$("#address-save-btn").attr("disabled", false);
+					initAddress();
+					chooseAddress.removeEditWindow();
 					tip.showDialog(data.message);
-					if(data.result == "success"){
-						initAddress();
-						chooseAddress.removeEditWindow();
-					}
+					
 				},
 				error: function(){
 					$("#address-save-btn").attr("disabled", false);
@@ -132,7 +134,7 @@ var chooseAddress = new Vue({
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				url: "http://localhost:8080/WXOfServer/user/del-addr",
+				url: requestIP + "/WXOfServer/user/del-addr",
 				async: true,
 				success: function(data){
 					$("#address-save-btn").attr("disabled", false);
@@ -240,7 +242,7 @@ function initAddress(){
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/WXOfServer/user/address",
+		url: requestIP + "/WXOfServer/user/address",
 		async: true,
 		success: function(data){
 			addressManager.initAddressList(data);

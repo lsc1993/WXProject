@@ -39,7 +39,7 @@
 							</div>
 						</div>
 						<div class="address-choose-icon">
-							<i class="icon-angle-right"></i>
+							<i class="icon-angle-right icon-large"></i>
 						</div>
 					</div>
 				</div>
@@ -73,14 +73,14 @@
 				<div class="container" v-show="singleOrmulti">
 					<div class="order-multi-container">
 						<div class="order-multi-list">
+							<div class="order-multi-angle">
+								<li class="icon-angle-right icon-2x"></li>
+							</div>
 							<ul>
 								<li v-for="item in productsMessage" :key="item.id">
 									<img :src="item.imgurl" />
 								</li>
 							</ul>
-						</div>
-						<div class="order-multi-angle">
-							<li class="icon-angle-right icon-3x"></li>
 						</div>
 					</div>
 				</div>
