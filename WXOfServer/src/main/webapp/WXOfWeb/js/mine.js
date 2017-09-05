@@ -16,7 +16,6 @@ var mine = new Vue({
 
 function initUserMessage(){
 	var userToken = $.cookie("user_token");
-	alert(userToken);
 	var data = {"userToken": userToken};
 	$.ajax({
 		type: "post",

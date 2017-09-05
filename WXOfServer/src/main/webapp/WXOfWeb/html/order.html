@@ -155,7 +155,9 @@
 						<p @click="selectAddress($event)">{{addressList[1]}}</p>
 					</li>
 				</ul>
-				<p slot="dialog-footer"></p>
+				<div slot="dialog-footer">
+					<p class="dialog-button-middle" @click="dismiss()">取消</p>
+				</div>
 			</address-dialog>
 		</div>
 		<div id="address-choose">

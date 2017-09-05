@@ -28,6 +28,7 @@
 }
 
 .dialog-header {
+	height: 40px;
 	margin-top: 0;
 	color: #42b983;
 	text-align: center;

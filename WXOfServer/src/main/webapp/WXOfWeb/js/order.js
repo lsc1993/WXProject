@@ -319,8 +319,8 @@ var chooseAddress = new Vue({
 				async: true,
 				success: function(data){
 					$("#address-save-btn").attr("disabled", false);
+					chooseAddress.removeEditWindow();
 					initAddress();
-					this.removeEditWindow();
 					alert(data.message);
 				},
 				error: function(){
@@ -350,8 +350,8 @@ var chooseAddress = new Vue({
 				async: true,
 				success: function(data){
 					$("#address-del-btn").attr("disabled", false);
+					chooseAddress.removeEditWindow();
 					initAddress();
-					this.removeEditWindow();
 					alert(data.message);
 					
 				},
