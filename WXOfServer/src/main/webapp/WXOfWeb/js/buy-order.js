@@ -49,13 +49,12 @@ function dropUpLoad(){
         },
         loadDownFn : function(me){
         	var userToken = $.cookie("user_token");
-        	var data = {"uId": userToken,"status": "COMPLETE", "start": start, "limit": 10};
+        	var data = {"userToken": userToken,"status": "COMPLETE", "start": start, "limit":8};
         	$.ajax({
         		type:"post",
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				//url:"http://localhost:8080/WXOfServer/order/list",
 				url: requestIP + "/WXOfServer/order/list",
 				async:true,
 				success: function(data){

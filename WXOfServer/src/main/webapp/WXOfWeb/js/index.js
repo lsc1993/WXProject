@@ -34,13 +34,12 @@ var productWrapper = new Vue({
 })
 
 function getIndexProduct(me){
-	var data = {"start": start,"limit": 1};
+	var data = {"start": start,"limit": 8};
 	$.ajax({
 		type:"post",
 		dataType: "json",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
-		//url:"http://localhost:8080/WXOfServer/product/list",
 		url: requestIP + "/WXOfServer/product/list",
 		async:true,
 		success: function(data){

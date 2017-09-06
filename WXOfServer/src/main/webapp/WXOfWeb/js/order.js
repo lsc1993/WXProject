@@ -38,7 +38,8 @@ var orderPage = new Vue({
 				var len = this.productsMessage.length;
 				for(var i=0;i < len;++i){
 					var item = this.productsMessage[i];
-					price += parseFloat(item.price);
+					var count = item.count;
+ +					price += (parseFloat(item.price) * parseInt(count));
 				}
 			}
 			price += this.deliveCost;
@@ -52,7 +53,8 @@ var orderPage = new Vue({
 				var len = this.productsMessage.length;
 				for(var i=0;i < len;++i){
 					var item = this.productsMessage[i];
-					price += parseFloat(item.price);
+					var count = item.count;
+ +					price += (parseFloat(item.price) * parseInt(count));
 				}
 			}
 			return price.toFixed(2);
@@ -94,7 +96,6 @@ var orderPage = new Vue({
 			var url;
 			var userToken = $.cookie("user_token");
 			if(this.orderType == 0){
-				//url = "http://localhost:8080/WXOfServer/order/submit";
 				url = requestIP + "/WXOfServer/order/submit";
 				var jsonData= {
 					"userToken": userToken,
@@ -119,7 +120,6 @@ var orderPage = new Vue({
 				
 				data = JSON.stringify(jsonData);
 			}else if(this.orderType == 1){
-				//url = "http://localhost:8080/WXOfServer/order/submit-multi";
 				url = requestIP + "/WXOfServer/order/submit-multi";
 				var len = this.productsMessage.length;
 				var jsonStr = "{";
@@ -177,7 +177,6 @@ var orderPage = new Vue({
 				url: url,
 				async: true,
 				success: function(data){
-					//tip.showDialog(data.message);
 					$("#submit-order-btn").attr("disabled", false);
 					clearCookies();
 					window.location.href = "success.html";
@@ -564,6 +563,10 @@ function initOrderType(){
 	}else{
 		alert("订单信息有误");
 	}
+}
+
+function gotoShopCart(){
+	window.location.href = "shop-cart.html";
 }
 
 function toJSONString(key,value){
