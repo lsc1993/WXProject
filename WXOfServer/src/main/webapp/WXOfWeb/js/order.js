@@ -38,7 +38,8 @@ var orderPage = new Vue({
 				var len = this.productsMessage.length;
 				for(var i=0;i < len;++i){
 					var item = this.productsMessage[i];
-					price += parseFloat(item.price);
+					var count = item.count;
+					price += (parseFloat(item.price) * parseInt(count));
 				}
 			}
 			price += this.deliveCost;
@@ -52,7 +53,8 @@ var orderPage = new Vue({
 				var len = this.productsMessage.length;
 				for(var i=0;i < len;++i){
 					var item = this.productsMessage[i];
-					price += parseFloat(item.price);
+					var count = item.count;
+					price += (parseFloat(item.price) * parseInt(count));
 				}
 			}
 			return price.toFixed(2);
@@ -192,7 +194,7 @@ var orderPage = new Vue({
 })
 
 $(function(){
-	domain = "http://www.hzfuyao.com";
+	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	autoHeightTextaera();
@@ -583,4 +585,8 @@ function clearCookies(){
 		$.cookie(key, null, {path:"/"});
 	}
 	$.cookie("orderCount", null, {path:"/"});
+}
+
+function gotoShopCart(){
+	window.location.href ="shop-cart.html";
 }

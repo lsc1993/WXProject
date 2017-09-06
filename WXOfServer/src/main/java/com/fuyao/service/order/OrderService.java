@@ -158,6 +158,7 @@ public class OrderService {
 		String token = data.get("userToken");
 		uId = userDao.getUserId(token);
 		OrderStatus s = OrderStatus.valueOf(data.get("status"));
+		Log.log(s.getStatus());
 		List<Order> orderList = orderDao.getOrderList(s, start, limit, uId);
 		int length = orderList.size();
 		StringBuilder builder = new StringBuilder();

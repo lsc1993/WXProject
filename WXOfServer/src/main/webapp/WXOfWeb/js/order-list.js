@@ -1,5 +1,5 @@
 $(function(){
-	domain = "http://www.hzfuyao.com";
+	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	start = new Array(0,0,0,0,0);
@@ -106,7 +106,7 @@ function dropUpLoad(){
         loadDownFn : function(me){
         	var index1 = orderList.index;
         	var status = ["WAITPAY", "WAITSEND", "WAITRECEIVE", "COMPLETE", "CANCEL"];
-			var limit = 1;
+			var limit = 5;
 			var url;
 			var userToken = $.cookie("user_token");
 			var data = {"userToken": userToken,"status": status[index1], "start": start[index1], "limit": limit};

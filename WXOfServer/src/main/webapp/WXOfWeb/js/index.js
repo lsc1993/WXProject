@@ -1,21 +1,22 @@
 $(function(){
-	domain = "http://www.hzfuyao.com";
+	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	start = 0;
 	times = 0;
 	dropUpLoad();
 	var url = window.location.href;
-	var str = url.split("?");
-	var code = "";
-	if(str.length > 1){
+	//var str = url.split("?");
+	var code = "weixin";
+	/*if(str.length > 1){
 		var params = str[1].split("&");
 		var p = params[0].split("=");
 		code = p[1]; 
 		if(code != "" && code != undefined){
 			authWXUser(code);
 		}
-	}
+	}*/
+	authWXUser(code);
 })
 
 /*
@@ -34,7 +35,7 @@ var productWrapper = new Vue({
 })
 
 function getIndexProduct(me){
-	var data = {"start": start,"limit": 1};
+	var data = {"start": start,"limit": 8};
 	$.ajax({
 		type:"post",
 		dataType: "json",

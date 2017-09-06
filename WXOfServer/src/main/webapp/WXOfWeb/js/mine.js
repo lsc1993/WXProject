@@ -1,5 +1,5 @@
 $(function(){
-	domain = "http://www.hzfuyao.com";
+	domain = "http://localhost";
 	requestIP = domain;
 	initUserMessage();
 })

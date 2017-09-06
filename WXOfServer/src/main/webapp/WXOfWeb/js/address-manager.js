@@ -1,5 +1,5 @@
 $(function(){
-	domain = "http://www.hzfuyao.com";
+	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	initAddress();
@@ -137,12 +137,10 @@ var chooseAddress = new Vue({
 				url: requestIP + "/WXOfServer/user/del-addr",
 				async: true,
 				success: function(data){
-					$("#address-save-btn").attr("disabled", false);
+					$("#address-del-btn").attr("disabled", false);
 					tip.showDialog(data.message);
-					if(data.result == "success"){
-						initAddress();
-						chooseAddress.removeEditWindow();
-					}
+					initAddress();
+					chooseAddress.removeEditWindow();				
 				},
 				error: function(){
 					$("#address-del-btn").attr("disabled", false);

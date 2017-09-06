@@ -58,6 +58,7 @@
 .my-trade-content ul li {
 	width: 100%;
 	height: auto;
+	margin-top: 5px;
 	display: block;
 }
 

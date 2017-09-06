@@ -1,5 +1,5 @@
 $(function(){
-	domain = "http://www.hzfuyao.com";
+	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	initShopItems();

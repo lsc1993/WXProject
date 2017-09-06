@@ -1,5 +1,5 @@
 $(function(){
-	domain = "http://www.hzfuyao.com";
+	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	start = 0;
@@ -49,7 +49,7 @@ function dropUpLoad(){
         },
         loadDownFn : function(me){
         	var userToken = $.cookie("user_token");
-        	var data = {"uId": userToken,"status": "COMPLETE", "start": start, "limit": 10};
+        	var data = {"userToken": userToken,"status": "COMPLETE", "start": start, "limit": 5};
         	$.ajax({
         		type:"post",
 				dataType: "json",

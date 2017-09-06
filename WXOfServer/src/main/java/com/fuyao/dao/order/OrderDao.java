@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.fuyao.model.order.Order;
 import com.fuyao.page.CommonPage;
 import com.fuyao.service.order.OrderService.OrderStatus;
+import com.fuyao.util.Log;
 
 @Repository("orderDao")
 public class OrderDao implements IOrderDao {
