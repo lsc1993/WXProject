@@ -3,6 +3,7 @@ $(function(){
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	getProductDetail();
+	initImageTurn();
 })
 
 function getProductDetail() {
@@ -44,6 +45,7 @@ var productPage = new Vue({
 			saleVolume: 0
 		},
 		imgurls: [],
+		imgturn: [],
 		userappraise: [
 		    {
 		    	img: "../img/20172001.jpg",
@@ -73,8 +75,11 @@ var productPage = new Vue({
     		var images = data.images;
     		for(var i=0;i < images.length;++i){
     			if(images[i].image.startsWith("dImg")){
-    				var imageurl = {img: imgPath + images[i].image};
+    				var imageurl = {"img": imgPath + images[i].image};
     				this.imgurls.push(imageurl);
+    			}else if(images[i].image.startsWith("pImg")){
+    				var imageurl = {"img": imgPath + images[i].image};
+    				this.imgturn.push(imageurl);
     			}
     		}
     	},
@@ -220,7 +225,7 @@ function addCount(){
 	if(popup.productMessage.count < 100){
 		popup.productMessage.count++;
 	} else {
-		alert();
+		alert("已达到购买上限");
 	}
 	
 }
@@ -340,4 +345,8 @@ function addBrowseHistory(data){
 			alert("服务器无响应");
 		}
 	});
+}
+
+function initImageTurn(){
+	$("#product-image-turn").swipeSlide();
 }
