@@ -39,7 +39,7 @@ var orderPage = new Vue({
 				for(var i=0;i < len;++i){
 					var item = this.productsMessage[i];
 					var count = item.count;
- +					price += (parseFloat(item.price) * parseInt(count));
+ 					price += (parseFloat(item.price) * parseInt(count));
 				}
 			}
 			price += this.deliveCost;
@@ -54,7 +54,7 @@ var orderPage = new Vue({
 				for(var i=0;i < len;++i){
 					var item = this.productsMessage[i];
 					var count = item.count;
- +					price += (parseFloat(item.price) * parseInt(count));
+ 					price += (parseFloat(item.price) * parseInt(count));
 				}
 			}
 			return price.toFixed(2);

@@ -1,5 +1,6 @@
 package com.fuyao.weixin.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -77,7 +78,6 @@ public class WXAuthService {
 	/*
 	 * 认证用户，生成cookie
 	 */
-	@SuppressWarnings("deprecation")
 	public HashMap<String,String> authWXUser(HttpServletRequest request, HttpServletResponse response) {
 		HashMap<String,String> result = new HashMap<String,String>();
 		String userToken = null;
@@ -100,8 +100,7 @@ public class WXAuthService {
 		
 		if (null != wAuth) {
 			userToken = userDao.getUserToken(wAuth.getUid());
-			Date current = new Date();
-			if (current.getDay() % 10 == 0) {
+			if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) % 5 == 0) {
 				WXUserInfo user = wxDao.getWXUserInfo(wAuth.getUid());
 				WXUserInfo wUser = this.getWXUserInfo(wAuth.getUid(),openid, accessToken);
 				user.setAuthTime(wUser.getAuthTime());
