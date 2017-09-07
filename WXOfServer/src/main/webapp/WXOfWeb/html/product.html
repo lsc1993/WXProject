@@ -6,6 +6,7 @@
 		<title></title>
 		<link rel="stylesheet" href="../css/bootstrap.css" />
 		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/swipe.css" />
 		<link rel="stylesheet" href="../css/product.css" />
 		<link rel="stylesheet" href="../css/dialog.css" />
 		<link rel="stylesheet" href="../css/popup-window.css" />
@@ -31,8 +32,12 @@
 			<div class="container-all-width">
 				<div class="">
 					<div class="">
-						<div class="product-img-turn">
-							<img src="../img/20172001.jpg" />
+						<div class="slide" id="product-img-turn">
+							<ul>
+								<li v-for="img in imgturn" :key="img.id">
+									<img :src="img.img" />
+								</li>
+							</ul>
 						</div>
 						<div class="product-price-label">
 							<p class="price-text-small">￥</p>
@@ -42,10 +47,10 @@
 							<p>{{productMessage.describe}}</p>
 						</div>
 						<div class="product-sales-volume">
-							<div class="product-transport-fare">
+							<div class="product-transport-fare" @click="addImage()">
 								<p>运费：</p><p>{{productMessage.delivery}}</p>
 							</div>
-							<div class="product-sales-fare">
+							<div class="product-sales-fare" @click="registerTurn()">
 								<p>销量：</p><p>{{productMessage.saleVolume}}</p>
 							</div>
 						</div>
@@ -221,6 +226,8 @@
 		<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
 		<script type="text/javascript" src="../js/jquery.cookie-1.4.1.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
+		<script type="text/javascript" src="../js/swipeSlide.min.js" ></script>
+		<script type="text/javascript" src="../js/zepto.min.js" ></script>
 		<script type="text/javascript" src="../js/vue.js" ></script>
 		<script type="text/javascript" src="../js/product.js" ></script>
 	</body>

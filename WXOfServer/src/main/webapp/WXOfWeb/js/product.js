@@ -44,6 +44,7 @@ var productPage = new Vue({
 			saleVolume: 0
 		},
 		imgurls: [],
+		imgturn: [],
 		userappraise: [
 		    {
 		    	img: "../img/20172001.jpg",
@@ -62,6 +63,19 @@ var productPage = new Vue({
 		]
 	},
     methods:{
+    	addImage: function(){
+    		this.imgturn.push({"img": "../img/20172001.jpg"});
+    		this.imgturn.push({"img": "../img/20172001.jpg"});
+    		this.imgturn.push({"img": "../img/20172001.jpg"});
+    		setTimeout(function(){
+    			$("#product-img-turn").swipeSlide();
+    			alert("qqq");
+    		}, 2000);
+    		
+    	},
+    	registerTurn: function(){
+    		//$("#product-img-turn").swipeSlide();
+    	},
     	initProductMessage: function(data){
     		this.productMessage.productId = data.product.pId;
     		this.productMessage.name = data.product.name;
