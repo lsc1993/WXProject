@@ -110,7 +110,7 @@ public class WXAuthService {
 				user.setCity(wUser.getCity());
 				user.setHeadImg(wUser.getHeadImg());
 				user.setSex(wUser.getSex());
-				wxDao.addWXUserInfo(wUser);
+				wxDao.addWXUserInfo(user);
 			}
 		} else {
 			User user = new User();

@@ -98,7 +98,9 @@ function authWXUser(code){
 		cache: false,
 		async: true,
 		success: function(data){
-			//alert($.cookie("user_token") + data.message);
+			if(data.result == "fault"){
+				alert(data.message);
+			}
 			//window.location.href = "index.html";
 		},
 		error: function(){

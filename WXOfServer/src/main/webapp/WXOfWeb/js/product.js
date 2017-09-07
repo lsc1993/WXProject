@@ -51,6 +51,9 @@ var productPage = new Vue({
     				this.imgturn.push(imageurl);
     			}
     		}
+    		setTimeout(function(){
+    			$("#product-image-turn").swipeSlide();
+    		},3000);
     	},
     	showSellerReturn: function(index){
     		if (this.userappraise[index].feedback == "" || this.userappraise[index].feedback.length == 0) {
@@ -105,7 +108,6 @@ $(function(){
 	imgPath = domain + ":1993/ImageResource/";
 	requestIP = domain;
 	getProductDetail();
-	initImageTurn();
 })
 
 function getProductDetail() {
@@ -161,7 +163,6 @@ var popup = new Vue({
     		
     		var standard = data.standard;
     		if(standard.length > 0){
-    			//this.productMessage.price = standard[0].price;
     			for(var i=0;i < standard.length;++i){
     				var s = {id: standard[i].id,label: standard[i].standard,price: standard[i].price, isChoosed: false};
     				this.productMessage.labels.push(s);
@@ -279,7 +280,7 @@ function addShopCart(){
 			alert(data.message);
 		},
 		error: function(){
-			alert("服务器无响应");
+			alert("服务器无响应，请稍后重试");
 		}
     });
 }
@@ -342,11 +343,6 @@ function addBrowseHistory(data){
 			//alert(data.message);
 		},
 		error: function(){
-			alert("服务器无响应");
 		}
 	});
-}
-
-function initImageTurn(){
-	$("#product-image-turn").swipeSlide();
 }

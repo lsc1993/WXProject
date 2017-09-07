@@ -1,42 +1,3 @@
-$(function(){
-	domain = "http://www.hzfuyao.com";
-	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
-	start = new Array(0,0,0,0,0);
-	times = 0;
-	initPage();
-	dropUpLoad();
-})
-
-function initPage() { 
-	var url = window.location.href;
-	var pIndex = url.indexOf("tab=");
-	var param = url.substring(pIndex+4,url.length);
-	changeTabStyle(param);
-}
-
-function tabClick(index){
-	changeTabStyle(index);
-	times = 0;
-	drop.resettabload();
-}
-
-function changeTabStyle(index){
-	if (index == 0) {
-		$("#tab-1").addClass("tab-choosed").siblings().removeClass("tab-choosed");
-	} else if(index == 1) {
-		$("#tab-2").addClass("tab-choosed").siblings().removeClass("tab-choosed");
-	} else if(index == 2) {
-		$("#tab-3").addClass("tab-choosed").siblings().removeClass("tab-choosed");
-	} else if(index == 3) {
-		$("#tab-4").addClass("tab-choosed").siblings().removeClass("tab-choosed");
-	} else if(index == 4) {
-		$("#tab-5").addClass("tab-choosed").siblings().removeClass("tab-choosed");
-	} 
-	orderList.showTab(index);
-	orderList.index = index;
-}
-
 var orderList = new Vue({
 	el: "#order-list",
 	data: {
@@ -93,6 +54,45 @@ var orderList = new Vue({
 		}
 	}
 })
+
+$(function(){
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
+	start = new Array(0,0,0,0,0);
+	times = 0;
+	initPage();
+	dropUpLoad();
+})
+
+function initPage() { 
+	var url = window.location.href;
+	var pIndex = url.indexOf("tab=");
+	var param = url.substring(pIndex+4,url.length);
+	changeTabStyle(param);
+}
+
+function tabClick(index){
+	changeTabStyle(index);
+	times = 0;
+	drop.resettabload();
+}
+
+function changeTabStyle(index){
+	if (index == 0) {
+		$("#tab-1").addClass("tab-choosed").siblings().removeClass("tab-choosed");
+	} else if(index == 1) {
+		$("#tab-2").addClass("tab-choosed").siblings().removeClass("tab-choosed");
+	} else if(index == 2) {
+		$("#tab-3").addClass("tab-choosed").siblings().removeClass("tab-choosed");
+	} else if(index == 3) {
+		$("#tab-4").addClass("tab-choosed").siblings().removeClass("tab-choosed");
+	} else if(index == 4) {
+		$("#tab-5").addClass("tab-choosed").siblings().removeClass("tab-choosed");
+	} 
+	orderList.showTab(index);
+	orderList.index = index;
+}
 
 function dropUpLoad(){
 	drop = $("#order-list").dropload({
