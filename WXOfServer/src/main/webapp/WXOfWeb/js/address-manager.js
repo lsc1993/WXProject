@@ -1,10 +1,3 @@
-$(function(){
-	domain = "http://www.hzfuyao.com";
-	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
-	initAddress();
-})
-
 var addressManager = new Vue({
 	el: "#address-manager",
 	data: {
@@ -43,6 +36,13 @@ var addressManager = new Vue({
 			chooseAddress.showOneBtnWindow();
 		}
 	}
+})
+
+$(function(){
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
+	initAddress();
 })
 
 /*

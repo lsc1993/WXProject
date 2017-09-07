@@ -57,6 +57,10 @@ body {
 	text-decoration: none;
 }
 
+.shop-order-tip h4 {
+	font-size: 16px;
+}
+
 /*
  * 购物车产品列表
  * */
@@ -151,9 +155,9 @@ body {
 }
 
 .shop-order-product-count button {
-	width: 22%;
+	width: 25px;
 	max-width: 30%;
-	height: 22px;
+	height: 25px;
 	background-color: rgba(255,255,255,.5);
 	border: 1px solid #CCCCCC;
 }

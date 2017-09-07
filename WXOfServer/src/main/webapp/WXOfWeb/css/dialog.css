@@ -28,17 +28,18 @@
 }
 
 .dialog-header {
-	height: 40px;
+	height: 45px;
 	margin-top: 0;
 	color: #42b983;
 	text-align: center;
 	font-size: medium;
 	font-weight: 400;
+	padding: 15px;
 	border-bottom: 1px solid #CCCCCC;
 }
 
 .dialog-content {
-	min-height: 75px;
+	min-height: 80px;
 	max-height: 220px;
     margin: 0 0 10px 0;
     padding: 10px;
@@ -51,9 +52,8 @@
 }
 
 .dialog-footer {
-	width: 80%;
-	height: 40px;
-	margin:0 0 0 10%;
+	width: 100%;
+	height: 30px;
     display: inline-block;	
 }
 
@@ -63,6 +63,7 @@
 	text-align: center;
 	color: #46B8DA;
     float: right;
+    padding-left: 12%;
 }
 
 .dialog-button-left {
@@ -71,15 +72,15 @@
 	text-align: center;
 	color: #ADADAD;
     float: left;
+    padding-right: 12%;
     border-right: 1px solid #CCCCCC;
 }
 
 .dialog-button-middle {
 	width: 100%;
-	line-height: 40px;
+	line-height: 25px;
 	text-align: center;
 	color: #46B8DA;
-	margin: 0 auto;
 }
 
 /*
