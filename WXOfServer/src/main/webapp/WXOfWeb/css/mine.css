@@ -88,20 +88,19 @@ body {
 	display: table-cell;
 	font-size: 16px;
 	font-weight: 300;
-	padding-left: 25px;
+	padding-left: 35px;
 	vertical-align: middle;
 	color: #515151;
 }
 
 .my-order-list i {
-	width: 10%;
+	width: 8%;
 	line-height: 55px;
 	display: table-cell;
 	vertical-align: middle;
 }
 
 .angle-to-left {
-	display: inline-block;
 	float: right;
 }
 

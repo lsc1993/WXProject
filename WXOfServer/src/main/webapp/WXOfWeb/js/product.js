@@ -1,34 +1,3 @@
-$(function(){
-	domain = "http://www.hzfuyao.com";
-	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
-	getProductDetail();
-	initImageTurn();
-})
-
-function getProductDetail() {
-	var url = window.location.href;
-	var index = url.indexOf("pId=");
-	var param = url.substring(index+4,url.length);
-	var data = {"pId": param};
-	$.ajax({
-		type: "post",
-		dataType: "json",
-		data: JSON.stringify(data),
-		contentType: "application/json; charset=utf-8",
-		url: requestIP + "/WXOfServer/product/detail",
-		async: true,
-		success: function(data){
-			productPage.initProductMessage(data);
-			popup.initProductStandard(data);
-			addBrowseHistory(data);
-		},
-		error: function(){
-			alert("服务器无响应");
-		}
-	});
-}
-
 var productPage = new Vue({
 	el: "#product-page",
 	data: {
@@ -130,6 +99,37 @@ var productPage = new Vue({
     	}
     }
 })
+
+$(function(){
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
+	getProductDetail();
+	initImageTurn();
+})
+
+function getProductDetail() {
+	var url = window.location.href;
+	var index = url.indexOf("pId=");
+	var param = url.substring(index+4,url.length);
+	var data = {"pId": param};
+	$.ajax({
+		type: "post",
+		dataType: "json",
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
+		url: requestIP + "/WXOfServer/product/detail",
+		async: true,
+		success: function(data){
+			productPage.initProductMessage(data);
+			popup.initProductStandard(data);
+			addBrowseHistory(data);
+		},
+		error: function(){
+			alert("服务器无响应");
+		}
+	});
+}
 
 var popupWindow = Vue.component("popup-window",{
 	props:['productitem','projectimg'],

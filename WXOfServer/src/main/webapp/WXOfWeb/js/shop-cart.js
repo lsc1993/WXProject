@@ -1,10 +1,3 @@
-$(function(){
-	domain = "http://www.hzfuyao.com";
-	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
-	initShopItems();
-})
-
 var shopCart = new Vue({
 	el: "#shop-cart",
 	data: {
@@ -114,14 +107,14 @@ var shopCart = new Vue({
 			dialog.showDialog(index);
 		},
 		initShopCart: function(data){
+			var length = this.shopOrderList.length;
+			this.shopOrderList.splice(0,length);
 			var len = data.size;
 			if (len == 0){
 				this.isShowTip = true;
 				return;
 			}
 			var items = data.rows;
-			var length = this.shopOrderList.length;
-			this.shopOrderList.splice(0,length);
 			for(var i=0;i < len;++i){
 				var item = {
 					"id": items[i].id,
@@ -191,6 +184,13 @@ var shopCart = new Vue({
 			}
 		}
 	}
+})
+
+$(function(){
+	domain = "http://www.hzfuyao.com";
+	imgPath = domain + ":1993/ImageResource/";
+	requestIP = domain;
+	initShopItems();
 })
 
 // 注册对话框组件
