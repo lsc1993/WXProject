@@ -59,20 +59,20 @@
 
 .dialog-button-right {
 	width: 50%;
-	line-height: 40px;
+	line-height: 30px;
 	text-align: center;
 	color: #46B8DA;
     float: right;
-    padding-left: 12%;
+    padding-left: 5%;
 }
 
 .dialog-button-left {
 	width: 50%;
-	line-height: 40px;
+	line-height: 30px;
 	text-align: center;
 	color: #ADADAD;
     float: left;
-    padding-right: 12%;
+    padding-right: 5%;
     border-right: 1px solid #CCCCCC;
 }
 

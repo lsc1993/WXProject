@@ -85,7 +85,7 @@
 			</footer>
 		</div>
 		<div id="dialog-tip">
-			<dialog-component v-if="isShow"
+			<dialog-component v-if="!isShow"
 				:message="message"
 				@close="isShow = false"
 				@confirm="confirm()"></dialog-component>

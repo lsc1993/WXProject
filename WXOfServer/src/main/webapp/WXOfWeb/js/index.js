@@ -100,8 +100,9 @@ function authWXUser(code){
 		success: function(data){
 			if(data.result == "fault"){
 				alert(data.message);
+			}else{
+				window.history.pushState(null, null, "index.html");
 			}
-			//window.location.href = "index.html";
 		},
 		error: function(){
 			//alert("服务器无响应");
