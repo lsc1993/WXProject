@@ -55,6 +55,20 @@ public class OrderController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/receive",method=RequestMethod.POST)
+	private HashMap<String,String> confirmReceive(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return orderService.confirmReceive(data);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/comment",method=RequestMethod.POST)
+	private HashMap<String,String> submitComment(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return orderService.submitComment(data);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/cookie",method=RequestMethod.POST)
 	private HashMap<String,String> testCookie(HttpServletRequest request,HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");

@@ -1,7 +1,7 @@
 $(function(){
 	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
+	requestIP = domain+":8080";
 	start = new Array(0,0,0,0,0);
 	times = 0;
 	initPage();
@@ -90,6 +90,40 @@ var orderList = new Vue({
 					this.ShowTabIndex.splice(i,1,false);
 				}
 			}
+		},
+		confirmReceive: function(index){
+			alert(index);
+			var order = this.orderReceive[index];
+			alert(order.id);
+			var userToken = $.cookie("user_token");
+			var data = {"userToken": userToken, "id": order.id, "status": "COMPLETE"};
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				url: requestIP + "/WXOfServer/order/receive",
+				async: true,
+				success: function(data){
+					if(data.result == "fault"){
+						alert(data.message);
+					} else {
+						window.location.href = "receive_success.html";
+					}
+				},
+				error: function(){
+					alert("服务器故障");
+				}
+			});
+		},
+		buyAgainCancel: function(index){
+			window.location.href = "product.html?pId="+this.orderCancel[index].pid;
+		},
+		buyAgainComplete: function(index){
+			window.location.href = "product.html?pId="+this.orderComplete[index].pid;
+		},
+		urgeOrder: function(index){
+			alert("已收到您的召唤哦~");
 		}
 	}
 })

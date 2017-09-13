@@ -1,7 +1,7 @@
 $(function(){
 	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
+	requestIP = domain+":8080";
 	getProductDetail();
 })
 
@@ -181,7 +181,7 @@ var popup = new Vue({
     			if(images[i].image.startsWith("sImg")){
     				var imageurl = imgPath + images[i].image;
     				this.productMessage.imgname = images[i].image;
-    				this.productMessage.imgurls = imageurl;
+    				this.productMessage.imgurl = imageurl;
     			}
     		}
 		},

@@ -196,7 +196,7 @@ var orderPage = new Vue({
 $(function(){
 	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
+	requestIP = domain+":8080";
 	autoHeightTextaera();
 	initOrderType();
 })

@@ -1,6 +1,6 @@
 $(function(){
 	domain = "http://localhost";
-	requestIP = domain;
+	requestIP = domain+":8080";
 	initUserMessage();
 })
 

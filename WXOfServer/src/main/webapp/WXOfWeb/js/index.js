@@ -1,7 +1,7 @@
 $(function(){
 	domain = "http://localhost";
 	imgPath = domain + ":1993/ImageResource/";
-	requestIP = domain;
+	requestIP = domain+":8080";
 	start = 0;
 	times = 0;
 	dropUpLoad();
@@ -100,8 +100,10 @@ function authWXUser(code){
 		cache: false,
 		async: true,
 		success: function(data){
-			//alert($.cookie("user_token") + data.message);
-			//window.location.href = "index.html";
+			window.history.pushState(null, null, "index.html");
+			if(data.result == "fault"){
+				alert(data.message);
+			}
 		},
 		error: function(){
 			//alert("服务器无响应");

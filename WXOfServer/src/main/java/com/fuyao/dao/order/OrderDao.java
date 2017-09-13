@@ -12,9 +12,9 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.fuyao.model.order.Order;
+import com.fuyao.model.order.OrderComment;
 import com.fuyao.page.CommonPage;
 import com.fuyao.service.order.OrderService.OrderStatus;
-import com.fuyao.util.Log;
 
 @Repository("orderDao")
 public class OrderDao implements IOrderDao {
@@ -81,5 +81,40 @@ public class OrderDao implements IOrderDao {
 				break;
 		}
 		return query.getResultList();
+	}
+
+	public HashMap<String, String> confirmReceive(long id, long uid, String status) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> result = new HashMap<String, String>();
+		String hql = "update Order set status=:status where id=:id and uid=:uid";
+		Query<?> query = this.getCurrentSession().createQuery(hql);
+		query.setParameter("status", status);
+		query.setParameter("id", id);
+		query.setParameter("uid", uid);
+		int updateCount = query.executeUpdate();
+		if (updateCount == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fault");
+			result.put("message", "确认收货失败，请稍后重试");
+		}
+		return result;
+	}
+
+	public HashMap<String, String> submitComment(long uid, String comment) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> result = new HashMap<String,String>();
+		OrderComment orderComment = new OrderComment();
+		orderComment.setUid(uid);
+		orderComment.setComment(comment);
+		try {
+			this.getCurrentSession().save(orderComment);
+			result.put("result", "success");
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			result.put("result", "falut");
+			result.put("message", "提交意见失败");
+		}
+		return result;
 	}
 }
