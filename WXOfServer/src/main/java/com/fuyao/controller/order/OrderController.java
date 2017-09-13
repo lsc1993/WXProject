@@ -55,21 +55,16 @@ public class OrderController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/cookie",method=RequestMethod.POST)
-	private HashMap<String,String> testCookie(HttpServletRequest request,HttpServletResponse response) {
-		response.setCharacterEncoding("UTF-8");
-		//设置浏览器以UTF-8编码进行接收,解决中文乱码问题
-		response.setContentType("text/html;charset=UTF-8");
-		Cookie[] cookies = request.getCookies();
-		Log.log("cookies length:" + cookies.length);
-		for (int i = 0;i < cookies.length;++i) {
-			try {
-				Log.log("name:" + cookies[i].getName() + "value:" + URLDecoder.decode(cookies[i].getValue(), "utf-8") + "path:" + cookies[i].getPath());
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return null;
+	@RequestMapping(value="/receive",method=RequestMethod.POST)
+	private HashMap<String,String> confirmReceive(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return orderService.confirmReceive(data);
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/comment",method=RequestMethod.POST)
+	private HashMap<String,String> submitComment(@RequestBody HashMap<String,String> data) {
+		Log.log(data.toString());
+		return orderService.submitComment(data);
 	}
 }

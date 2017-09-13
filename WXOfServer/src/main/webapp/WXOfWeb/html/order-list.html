@@ -32,7 +32,7 @@
 			<!--全部订单-->
 			<div class="order-list"  v-if="ShowTabIndex[0]" id="order-pay-list">
 				<ul>
-					<li v-for="order in orderPay" :key="order.id">
+					<li v-for="(order,index) in orderPay" :key="order.id">
 						<div class="container">
 							<div class="row">
 								<div class="col-md-5 col-sm-10 col-xs-9">
@@ -79,7 +79,7 @@
 			<!--待发货-->
 			<div class="order-list" v-if="ShowTabIndex[1]" id="order-send-list">
 				<ul>
-					<li v-for="order in orderSend" :key="order.id">
+					<li v-for="(order,index) in orderSend" :key="order.id">
 						<div class="container">
 							<div class="row">
 								<div class="col-md-5 col-sm-10 col-xs-9">
@@ -114,7 +114,7 @@
 								</div>
 								<div class="order-operator">
 									<div class="col-md-6 col-sm-12 col-xs-12">
-										<button>催单</button>
+										<button @click="urgeOrder(index)">催单</button>
 									</div>
 								</div>
 							</div>
@@ -125,7 +125,7 @@
 			<!--待收货-->
 			<div class="order-list" v-if="ShowTabIndex[2]" id="order-receive-list">
 				<ul>
-					<li v-for="order in orderReceive" :key="order.id">
+					<li v-for="(order,index) in orderReceive" :key="order.id">
 						<div class="container">
 							<div class="row">
 								<div class="col-md-5 col-sm-10 col-xs-9">
@@ -160,7 +160,7 @@
 								</div>
 								<div class="order-operator">
 									<div class="col-md-6 col-sm-12 col-xs-12">
-										<button>确认收货</button>
+										<button @click="confirmReceive(index)">确认收货</button>
 									</div>
 								</div>
 							</div>
@@ -171,7 +171,7 @@
 			<!--已完成订单-->
 			<div class="order-list" v-if="ShowTabIndex[3]" id="order-complete-list">
 				<ul>
-					<li v-for="order in orderComplete" :key="order.id">
+					<li v-for="(order,index) in orderComplete" :key="order.id">
 						<div class="container">
 							<div class="row">
 								<div class="col-md-5 col-sm-10 col-xs-9">
@@ -206,8 +206,8 @@
 								</div>
 								<div class="order-operator">
 									<div class="col-md-6 col-sm-12 col-xs-12">
-										<button>再次购买</button>
-										<button>评价</button>
+										<button @click="buyAgainComplete(index)">再次购买</button>
+										<!--<button>评价</button>-->
 									</div>
 								</div>
 							</div>
@@ -218,7 +218,7 @@
 			<!--已取消订单-->
 			<div class="order-list" v-if="ShowTabIndex[4]" id="order-cancel-list">
 				<ul>
-					<li v-for="order in orderCancel" :key="order.id">
+					<li v-for="(order,index) in orderCancel" :key="order.id">
 						<div class="container">
 							<div class="row">
 								<div class="col-md-5 col-sm-10 col-xs-9">
@@ -253,7 +253,7 @@
 								</div>
 								<div class="order-operator">
 									<div class="col-md-6 col-sm-12 col-xs-12">
-										<button>再次购买</button>
+										<button @click="buyAgainCancel(index)">再次购买</button>
 									</div>
 								</div>
 							</div>

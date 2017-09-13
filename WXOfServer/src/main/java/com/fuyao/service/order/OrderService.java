@@ -169,6 +169,37 @@ public class OrderService {
 		return (JSON) JSON.parse(builder.toString());
 	}
 	
+	public HashMap<String,String> confirmReceive(HashMap<String,String> data) {
+		HashMap<String,String> result = new HashMap<String,String>();
+		long uId = -1;
+		String token = data.get("userToken");
+		uId = userDao.getUserId(token);
+		if (uId == -1) {
+			result.put("result", "fault");
+			result.put("message", "用户认证失败，请重新登录");
+			return result;
+		}
+		
+		long id = Long.parseLong(data.get("id"));
+		String status = data.get("status");
+		OrderStatus s = OrderStatus.valueOf(status);
+		return orderDao.confirmReceive(id, uId, s.getStatus());
+	}
+
+	public HashMap<String,String> submitComment(HashMap<String,String> data) {
+		HashMap<String,String> result = new HashMap<String,String>();
+		long uId = -1;
+		String token = data.get("userToken");
+		uId = userDao.getUserId(token);
+		if (uId == -1) {
+			result.put("result", "fault");
+			result.put("message", "用户认证失败，请重新登录");
+			return result;
+		}
+		String comment = data.get("comment");
+		return orderDao.submitComment(uId, comment);
+	}
+	
 	public enum OrderStatus{
 		WAITPAY("待付款"),CANCEL("已取消"),WAITSEND("待发货"),WAITRECEIVE("待收货"),COMPLETE("交易完成"),ALL("全部订单");
 		

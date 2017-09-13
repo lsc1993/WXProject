@@ -1,0 +1,23 @@
+.receive-container {
+	padding: 15px;
+}
+
+.receive-container p {
+	font: "微软雅黑";
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.receive-container textarea {
+	width: 100%;
+	height: 90px;
+	margin-top: 5px;
+	border: 1px solid #67B168;
+	overflow-y: auto;
+}
+
+.receive-container button {
+	width: 60px;
+	font-size: 14px;
+	margin-top: 5px;
+}
