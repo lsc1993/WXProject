@@ -21,6 +21,9 @@ function submitComment(){
 		success: function(data){
 			if(data.result == "success"){
 				alert("已收到您的宝贵意见~");
+				window.location.href = "mine.html";
+			}else{
+				alert(data.message);
 			}
 		},
 		error: function(){

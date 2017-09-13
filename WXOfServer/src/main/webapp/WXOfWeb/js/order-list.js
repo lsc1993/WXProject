@@ -13,6 +13,18 @@ var orderList = new Vue({
 		initOrderList: function(data){
 			var len = data.result;
 			var orders = data.rows;
+			var index1 = this.index;
+			if(index1 == 0){
+				this.orderPay.splice(0,this.orderPay.length);
+			}else if(index1 == 1){
+				this.orderSend.splice(0,this.orderSend.length);
+			}else if(index1 == 2){
+				this.orderReceive.splice(0,this.orderReceive.length);
+			}else if(index1 == 3){
+				this.orderComplete.splice(0,this.orderComplete.length);
+			}else if(index1 == 4){
+				this.orderCancel.splice(0,this.orderCancel.length);
+			}
 			for(var i=0;i < len;++i){
 				var item = orders[i];
 				var order = 
@@ -28,7 +40,7 @@ var orderList = new Vue({
 					"total": item.total,
 					"status": item.status
 				};
-				var index1 = this.index;
+				
 				if(index1 == 0){
 					this.orderPay.push(order);
 				}else if(index1 == 1){
@@ -53,9 +65,7 @@ var orderList = new Vue({
 			}
 		},
 		confirmReceive: function(index){
-			alert(index);
 			var order = this.orderReceive[index];
-			alert(order.id);
 			var userToken = $.cookie("user_token");
 			var data = {"userToken": userToken, "id": order.id, "status": "COMPLETE"};
 			$.ajax({
@@ -126,6 +136,9 @@ function changeTabStyle(index){
 	} 
 	orderList.showTab(index);
 	orderList.index = index;
+	for(var i=0;i<5;++i){
+		start[i] = 0;
+	}
 }
 
 function dropUpLoad(){
