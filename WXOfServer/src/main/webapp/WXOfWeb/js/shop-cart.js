@@ -49,9 +49,11 @@ var shopCart = new Vue({
 				this.isCheckAll = true;
 				var aTotal = 0;
 				for(var i = 0;i < this.shopOrderList.length;++i){
-					this.shopOrderList[i].isChecked = true;
-					var pTotal = parseFloat(this.shopOrderList[i].total);
-					aTotal += pTotal;
+					if(this.shopOrderList[i].status != "下架"){
+						this.shopOrderList[i].isChecked = true;
+						var pTotal = parseFloat(this.shopOrderList[i].total);
+						aTotal += pTotal;
+					}
 				}
 				
 				this.total = aTotal.toFixed(2);
@@ -64,6 +66,10 @@ var shopCart = new Vue({
 			}
 		},
 		checkItem: function(index){  //选中某个购物车中的产品
+			if(this.shopOrderList[index].status == "下架"){
+				alert("该商品已下架~૧(●´৺`●)૭~");
+				return;
+			}
 			if(!this.shopOrderList[index].isChecked){
 				this.shopOrderList[index].isChecked = true;
 			} else {
@@ -125,6 +131,7 @@ var shopCart = new Vue({
 					"imgname": items[i].imgurl,
 					"imgurl": imgPath + items[i].imgurl,
 					"standard": items[i].standard,
+					"status": items[i].status,
 					"count": items[i].count,
 					"price": items[i].price,
 					"total": (parseFloat(items[i].price) * parseInt(items[i].count)).toFixed(2),

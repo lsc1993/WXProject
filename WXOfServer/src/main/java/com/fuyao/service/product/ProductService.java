@@ -1,5 +1,6 @@
 package com.fuyao.service.product;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.fuyao.dao.product.IProductDao;
 import com.fuyao.dao.user.IUserDao;
+import com.fuyao.model.product.BrowseItem;
 import com.fuyao.model.product.Product;
 import com.fuyao.model.product.ProductBrowse;
 import com.fuyao.model.product.ProductCollection;
@@ -19,6 +21,7 @@ import com.fuyao.model.product.ProductImages;
 import com.fuyao.model.product.ProductSaleVolum;
 import com.fuyao.model.product.ProductStandard;
 import com.fuyao.model.product.ShopCart;
+import com.fuyao.model.product.ShopCartItem;
 import com.fuyao.util.Log;
 
 @Transactional
@@ -150,9 +153,16 @@ public class ProductService {
 		}
 		
 		List<ProductBrowse> browses = productDao.getProductBrowse(uid);
+		List<BrowseItem> items = new ArrayList<BrowseItem>(browses.size());
+		for (ProductBrowse browse : browses) {
+			String status = productDao.getProductStatus(browse.getPno());
+			BrowseItem item = new BrowseItem(browse);
+			item.setStatus(status);
+			items.add(item);
+		}
 		StringBuilder builder = new StringBuilder();
-		builder.append("{").append("\"rows\":").append(JSON.toJSONString(browses))
-			   .append(",").append("\"size\":").append(browses.size()).append("}");
+		builder.append("{").append("\"rows\":").append(JSON.toJSONString(items))
+			   .append(",").append("\"size\":").append(items.size()).append("}");
 		Log.log(builder.toString());
 		return (JSON) JSON.parse(builder.toString());
 	}
@@ -190,9 +200,16 @@ public class ProductService {
 		}
 		
 		List<ShopCart> shopItems = productDao.getShopCartList(uid);
+		List<ShopCartItem> items = new ArrayList<ShopCartItem>(shopItems.size());
+		for (ShopCart item : shopItems) {
+			String status = productDao.getProductStatus(item.getPno());
+			ShopCartItem s = new ShopCartItem(item);	
+			s.setStatus(status);
+			items.add(s);
+		}
 		StringBuilder builder = new StringBuilder();
-		builder.append("{").append("\"rows\":").append(JSON.toJSONString(shopItems)).
-				append(",").append("\"size\":").append(shopItems.size()).append("}");
+		builder.append("{").append("\"rows\":").append(JSON.toJSONString(items)).
+				append(",").append("\"size\":").append(items.size()).append("}");
 		Log.log(builder.toString());
 		return (JSON) JSON.parse(builder.toString());
 	}

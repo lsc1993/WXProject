@@ -58,9 +58,10 @@ public class ProductDao implements IProductDao {
 			limit = 15;
 			e.printStackTrace();
 		}
-		String hql = "select p from Product p";
+		String hql = "select p from Product p where status=:status";
 		CommonPage page = new CommonPage();
 		Query<Product> query = page.createQuery(this.getCurrentSession(), hql, start, limit);
+		query.setParameter("status", "上架");
 		return query.getResultList();
 	}
 
@@ -210,11 +211,20 @@ public class ProductDao implements IProductDao {
 		Query<ShopCart> query = session.createQuery(hql,ShopCart.class);
 		query.setParameter("uid", shopCart.getUid());
 		query.setParameter("pid", shopCart.getPid());
-		if (query.getResultList().size() >= 1) {
-			int count = query.getResultList().get(0).getCount();
-			count++;
-			query.getResultList().get(0).setCount(count);
-		} else {
+		List<ShopCart> shopItems = query.getResultList();
+		boolean haveSameStandard = false;
+		for (int i = 0;i < shopItems.size();++i) {
+			ShopCart item = shopItems.get(i);
+			if (item.getStandard().equals(shopCart.getStandard())) {
+				int count = query.getResultList().get(i).getCount();
+				count++;
+				query.getResultList().get(i).setCount(count);
+				haveSameStandard = true;
+				break;
+			}
+		}
+		
+		if (!haveSameStandard) {
 			session.save(shopCart);
 		}
 		result.put("result", "success");
@@ -247,5 +257,13 @@ public class ProductDao implements IProductDao {
 			result.put("message", "删除失败，请稍后重试");
 		}
 		return result;
+	}
+	
+	public String getProductStatus(String pid) {
+		// TODO Auto-generated method stub
+		String hql = "select p.status from Product p where pid=:pid";
+		Query<String> query = this.getCurrentSession().createQuery(hql, String.class);
+		query.setParameter("pid", pid);
+		return query.getSingleResult();
 	}
 }
