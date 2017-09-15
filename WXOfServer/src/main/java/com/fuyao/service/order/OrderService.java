@@ -1,5 +1,6 @@
 package com.fuyao.service.order;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +14,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fuyao.dao.order.IOrderDao;
+import com.fuyao.dao.product.IProductDao;
 import com.fuyao.dao.user.IUserDao;
 import com.fuyao.model.order.Order;
+import com.fuyao.model.order.OrderItem;
 import com.fuyao.util.FuyaoUtil;
 import com.fuyao.util.Log;
 
@@ -34,6 +37,13 @@ public class OrderService {
 	
 	public void setUserDao(IUserDao userDao) {
 		this.userDao = userDao;
+	}
+	
+	@Resource
+	private IProductDao productDao;
+
+	public void setProductDao(IProductDao productDao) {
+		this.productDao = productDao;
 	}
 
 	public HashMap<String,String> submitOrder(HashMap<String,String> data) {
@@ -161,9 +171,17 @@ public class OrderService {
 		Log.log(s.getStatus());
 		List<Order> orderList = orderDao.getOrderList(s, start, limit, uId);
 		int length = orderList.size();
+		List<OrderItem> orderItems = new ArrayList<OrderItem>(length); 
+		
+		for (Order order : orderList) {
+			String status = productDao.getProductStatus(order.getPid());
+			OrderItem item = new OrderItem(order);
+			item.setPstatus(status);
+			orderItems.add(item);
+		}
 		StringBuilder builder = new StringBuilder();
 		builder.append("{").append("\"rows\":").
-				append(JSON.toJSONString(orderList)).
+				append(JSON.toJSONString(orderItems)).
 				append(",").append("\"result\":").append(length).
 				append("}");
 		Log.log("orderList:" + builder.toString());

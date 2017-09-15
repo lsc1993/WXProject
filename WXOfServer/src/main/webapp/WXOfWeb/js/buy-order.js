@@ -15,6 +15,10 @@ var buyOrder = new Vue({
 	},
 	methods: {
 		itemClick: function(index){
+			if(this.buyOrderList[index].pstatus = "下架"){
+				alert("该商品已下架~૧(●´৺`●)૭~");
+				return;
+			}
 			window.location.href = "product.html?pId=" + this.buyOrderList[index].pId;
 		},
 		initOrderList: function(data){
@@ -30,7 +34,8 @@ var buyOrder = new Vue({
 					"pId": order.pid,
 					"name": order.name,
 					"price": order.pTotal,
-					"imgurl": imgPath + order.imgurl
+					"imgurl": imgPath + order.imgurl,
+					"pstatus": order.pstatus
 				}
 				this.buyOrderList.push(item);
 			}
@@ -55,7 +60,6 @@ function dropUpLoad(){
 				dataType: "json",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
-				//url:"http://localhost:8080/WXOfServer/order/list",
 				url: requestIP + "/WXOfServer/order/list",
 				async:true,
 				success: function(data){

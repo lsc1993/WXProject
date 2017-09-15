@@ -25,4 +25,6 @@ public interface IProductDao {
 	HashMap<String,String> addShopCart(ShopCart shopCart);
 	List<ShopCart> getShopCartList(long uId);
 	HashMap<String,String> deleteShopItem(long id);
+	
+	String getProductStatus(String pid);
 }

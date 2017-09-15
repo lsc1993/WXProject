@@ -13,6 +13,10 @@ var browse = new Vue({
 	},
 	methods: {
 		itemClick: function(index){
+			if(this.watchOrderList[index].status == "下架"){
+				alert("该商品已下架~૧(●´৺`●)૭~");
+				return;
+			}
 			window.location.href = "product.html?pId=" + this.watchOrderList[index].pId;
 		},
 		initOrderList: function(data){
@@ -29,7 +33,8 @@ var browse = new Vue({
 					"pId": order.pno,
 					"name": order.pname,
 					"price": order.price,
-					"imgurl": imgPath + order.imgurl
+					"imgurl": imgPath + order.imgurl,
+					"status": order.status
 				}
 				this.watchOrderList.push(item);
 			}

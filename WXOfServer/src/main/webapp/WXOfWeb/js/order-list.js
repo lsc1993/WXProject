@@ -65,7 +65,8 @@ var orderList = new Vue({
 					"count": item.pCount,
 					"pTotal": item.pTotal,
 					"total": item.total,
-					"status": item.status
+					"status": item.status,
+					"pstatus": item.pstatus
 				};
 				var index1 = this.index;
 				if(index1 == 0){
@@ -117,9 +118,17 @@ var orderList = new Vue({
 			});
 		},
 		buyAgainCancel: function(index){
+			if(this.orderCancel[index].pstatus == "下架"){
+				alert("该商品已下架~૧(●´৺`●)૭~");
+				return;
+			}
 			window.location.href = "product.html?pId="+this.orderCancel[index].pid;
 		},
 		buyAgainComplete: function(index){
+			if(this.orderComplete[index].pstatus == "下架"){
+				alert("该商品已下架~૧(●´৺`●)૭~");
+				return;
+			}
 			window.location.href = "product.html?pId="+this.orderComplete[index].pid;
 		},
 		urgeOrder: function(index){
