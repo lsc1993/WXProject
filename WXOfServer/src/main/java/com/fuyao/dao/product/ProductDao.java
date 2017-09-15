@@ -85,7 +85,7 @@ public class ProductDao implements IProductDao {
 	 */
 	public List<ProductStandard> getProductStandard(long pId) {
 		// TODO Auto-generated method stub
-		String hql = "from ProductStandard where pid=:pid";
+		String hql = "from ProductStandard where pid=:pid order by price";
 		Query<ProductStandard> query = this.getCurrentSession().createQuery(hql, ProductStandard.class);
 		query.setParameter("pid", pId);
 		return query.getResultList();
