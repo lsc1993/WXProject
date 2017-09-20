@@ -1,7 +1,34 @@
 .message-container {
-	position: fixed;
-	top: 20%;
-	left: 0;
-	right: 0;
+	width: 100%;
+	background-color: #FFFFFF;
 	text-align: center;
+}
+
+.message-container img {
+	width: 180px;
+}
+
+.message-container p {
+	color: #a6a6a6;
+}
+
+.message-button {
+	width: 265px;
+	margin: 0 auto;
+	margin-top: 15%;
+	padding-left: 20px;
+}
+
+.message-button a {
+	text-decoration: none;
+}
+
+.message-button button {
+	width: 100px;
+	height: 35px;
+	background: rgba(255,255,255,0.1);
+	border: 1px solid #EEA236;
+	font-size: 14px;
+	color: #EEA236;
+	margin-right: 20px;
 }
