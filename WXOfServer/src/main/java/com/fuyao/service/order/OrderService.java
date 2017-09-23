@@ -1,12 +1,11 @@
 package com.fuyao.service.order;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.Resource;
 
+import com.fuyao.util.FuyaoConstants;
+import com.fuyao.weixinpay.WXPay;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,11 +55,24 @@ public class OrderService {
 			result.put("message", "用户认证失败，请重新登录");
 			return result;
 		}
-		Order order = new Order();
+
 		long orderCount = orderDao.getOrderCount(uId);
+
 		String orderId = new StringBuilder().append("E").
-							append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
-							.append(String.format("%06d", orderCount+1)).toString();
+				append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
+				.append(String.format("%06d", orderCount+1)).toString();
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("out_trade_no", orderId);
+		param.put("body", FuyaoConstants.DETAIL + data.get("pName"));
+		param.put("total_fee", data.get("total"));
+		if (!wxpayProcess(param)) {
+			result.put("result", "fault");
+			result.put("message", "支付失败！请联系客服");
+			return result;
+		}
+
+		Order order = new Order();
+
 		order.setOrderId(orderId);
 		order.setDate(new Date());
 		order.setUid(uId);
@@ -149,7 +161,19 @@ public class OrderService {
 		}
 		return result;
 	}
-	
+
+	private boolean wxpayProcess(Map<String, String> data) {
+		WXPay pay = new WXPay();
+		try {
+			data = pay.fillRequestData(data);
+			pay.request(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	public JSON getOrderList(HashMap<String,String> data) {
 		int start,limit;
 		try {
