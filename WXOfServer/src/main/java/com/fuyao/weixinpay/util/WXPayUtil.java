@@ -130,10 +130,10 @@ public class WXPayUtil {
             if (data.get(k).trim().length() > 0) {
                 sb.append(k).append("=").append(data.get(k).trim()).append("&");
             }
-            sb.append("key=").append(key);
-            if (WXPayConstants.SignType.MD5 == signType) {
-                return MD5(sb.toString().toUpperCase());
-            }
+        }
+        sb.append("key=").append(key);
+        if (WXPayConstants.SignType.MD5 == signType) {
+            return MD5(sb.toString()).toUpperCase();
         }
         throw new Exception(String.format("Invalid sign_type: %s", signType));
     }

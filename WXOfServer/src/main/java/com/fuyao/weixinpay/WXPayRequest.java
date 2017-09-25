@@ -11,7 +11,7 @@ public class WXPayRequest {
 
     }
 
-    public String requestOnce(final String requestUrl, final String method, String param, boolean useCert) {
+    public String requestOnce(final String requestUrl, final String method, String param, boolean useCert, int connectTimeOut, int readTimeOut) {
         HttpURLConnection conn = null;
         StringBuilder builder = new StringBuilder();
         try {
@@ -21,8 +21,8 @@ public class WXPayRequest {
             conn.setDoInput(true);
             conn.setUseCaches(false);
             conn.setRequestMethod(method);
-            conn.setConnectTimeout(15000);
-            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(connectTimeOut);
+            conn.setReadTimeout(readTimeOut);
             OutputStream out = conn.getOutputStream();
             out.write(param.getBytes());
             out.flush();
@@ -46,7 +46,7 @@ public class WXPayRequest {
         return builder.toString();
     }
 
-    public String request(final String requestUrl, final String method, String param, boolean useCert) {
-        return requestOnce(requestUrl, method, param, useCert);
+    public String request(final String requestUrl, final String method, String param, boolean useCert, int connectTimeOut, int readTimeOut) {
+        return requestOnce(requestUrl, method, param, useCert, connectTimeOut, readTimeOut);
     }
 }

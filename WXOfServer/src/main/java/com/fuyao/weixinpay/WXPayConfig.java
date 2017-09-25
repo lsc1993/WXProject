@@ -5,7 +5,7 @@ public class WXPayConfig {
     public WXPayConfig() {}
 
     private final String APPID = "wx29ffb7f4b6c0a1bb";
-    private final String KEY = "c5d24a32b5e23b11ceee1b87212eb97a";
+    private final String KEY = "liushuang19930123fuyaoINTNETBXFW";
     private final String MCHID = "1480515542";
     private final String ORDERURL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 

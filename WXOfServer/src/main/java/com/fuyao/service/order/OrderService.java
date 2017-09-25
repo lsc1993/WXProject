@@ -61,7 +61,7 @@ public class OrderService {
 		String orderId = new StringBuilder().append("E").
 				append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
 				.append(String.format("%06d", orderCount+1)).toString();
-		Map<String, String> param = new HashMap<String, String>();
+		/*Map<String, String> param = new HashMap<String, String>();
 		param.put("out_trade_no", orderId);
 		param.put("body", FuyaoConstants.DETAIL + data.get("pName"));
 		param.put("total_fee", data.get("total"));
@@ -69,7 +69,7 @@ public class OrderService {
 			result.put("result", "fault");
 			result.put("message", "支付失败！请联系客服");
 			return result;
-		}
+		}*/
 
 		Order order = new Order();
 

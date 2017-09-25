@@ -20,5 +20,6 @@
 			com.fuyao.service.order,
 			com.fuyao.dao.order,
 			com.fuyao.weixin.service,
-			com.fuyao.weixin.dao" />
+			com.fuyao.weixin.dao,
+			com.fuyao.weixinpay.service"/>
 </beans>

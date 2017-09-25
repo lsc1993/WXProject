@@ -27,7 +27,7 @@ public class WXPay {
     }
 
     public HashMap<String, String> request(final String requestUrl, final String method, String param, boolean useCert) {
-        String strXml = wxPayRequest.request(requestUrl, method, param, useCert);
+        String strXml = wxPayRequest.request(requestUrl, method, param, useCert, config.getHttpConnectTimeoutMs(), config.getHttpReadTimeoutMs());
         HashMap<String, String> data;
         try {
             data = (HashMap<String, String>) WXPayUtil.xmlToMap(strXml);
@@ -44,6 +44,7 @@ public class WXPay {
         data.put("nonce_str", WXPayUtil.generateNonceStr());
         data.put("notify_url",WXPayConstants.NOTIFYURL);
         data.put("spbill_create_ip", WXPayConstants.SERVERIP);
+        data.put("trade_type", WXPayConstants.JSAPI);
         if (WXPayConstants.SignType.MD5.equals(this.signType)) {
             data.put("sign_type", WXPayConstants.MD5);
         }

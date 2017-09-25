@@ -17,7 +17,8 @@
 			com.fuyao.controller.product,
 			com.fuyao.controller.user,
 			com.fuyao.controller.order,
-			com.fuyao.weixin.controller" />
+			com.fuyao.weixin.controller,
+			com.fuyao.weixinpay.controller" />
 
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler/>
