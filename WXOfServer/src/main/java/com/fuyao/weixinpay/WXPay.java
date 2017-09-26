@@ -21,7 +21,11 @@ public class WXPay {
         this.signType = signType;
     }
 
-    public HashMap<String, String> request(Map<String, String> data) throws Exception {
+    public WXPayConfig getConfig() {
+		return config;
+	}
+
+	public HashMap<String, String> request(Map<String, String> data) throws Exception {
         String param = WXPayUtil.mapToXml(data);
         return request(this.config.getORDERURL(), "POST", param, false);
     }

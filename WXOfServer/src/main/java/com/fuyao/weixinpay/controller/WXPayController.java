@@ -1,7 +1,5 @@
 package com.fuyao.weixinpay.controller;
 
-import com.fuyao.weixinpay.WXPay;
-import com.fuyao.weixinpay.WXPayConstants;
 import com.fuyao.weixinpay.service.WXPayService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

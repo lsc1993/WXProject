@@ -194,7 +194,7 @@ var orderPage = new Vue({
 				url: requestIP + "/WXOfServer/wxpay/order-pay",
 				async: true,
 				success: function(data) {
-					/*if (typeof WeixinJSBridge == "undefined"){
+					if (typeof WeixinJSBridge == "undefined"){
 					   if( document.addEventListener ){
 					       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
 					   }else if (document.attachEvent){
@@ -203,8 +203,7 @@ var orderPage = new Vue({
 					   }
 					}else{
 					   onBridgeReady(data);
-					}*/
-					payOrder(data);
+					}
 				},
 				error: function(){
 					alert("服务器无响应");
@@ -614,24 +613,27 @@ function clearCookies(){
 
 function onBridgeReady(data){
 	var date = new Date();
-   WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', {
-        "appId": data.appid,     //公众号名称，由商户传入     	
-        "timeStamp": date.getMilliseconds(), //时间戳，自1970年以来的秒数
-        "nonceStr": data.nonce_str, //随机串     
-        "package": data.prepay_id,     
-        "signType":"MD5",         //微信签名方式：     
-        "paySign": data.sign //微信签名 
-       },
-       function(res){
-           if(res.err_msg == "get_brand_wcpay_request:ok" ){
-               alert("调用成功");
-           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-       }
-   ); 
+    WeixinJSBridge.invoke(
+    	'getBrandWCPayRequest', {
+        "appId": data.appId,     //公众号名称，由商户传入     	
+        "timeStamp": data.timeStamp, //时间戳，自1970年以来的秒数
+        "nonceStr": data.nonceStr, //随机串     
+        "package": data.package,     
+        "signType": data.signType,         //微信签名方式：     
+        "paySign": data.paySign //微信签名 
+    	},
+        function(res){
+       		alert(res.err_msg + " " + res.err_code + " " + res.err_desc);
+            if(res.err_msg == "get_brand_wcpay_request:ok"){
+            	alert("调用成功");
+            }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+            	alert("调用微信支付失败");
+            }
+        }
+    ); 
 }
 
-function payOrder(data){
+/*function payOrder(data){
 	var date = new Date();
 	wx.config({
 		debug: true,
@@ -659,3 +661,4 @@ function payOrder(data){
 		alert(res.errMsg);
 	});
 }
+*/
