@@ -5,6 +5,7 @@ import com.fuyao.weixin.dao.WXAuthDao;
 import com.fuyao.weixinpay.WXPay;
 import com.fuyao.weixinpay.WXPayConstants;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 
+@Transactional
 @Service("wxPayService")
 public class WXPayService {
 	

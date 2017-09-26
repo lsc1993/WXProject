@@ -61,8 +61,10 @@ public class WXAuthDao {
 		Query<String> query = session.createQuery(hql, String.class);
 		query.setParameter("uid", uId);
 		if (query.getResultList().size() == 1) {
+			session.close();
 			return query.getResultList().get(0);
 		} else {
+			session.close();
 			return null;
 		}
 	}
@@ -74,8 +76,10 @@ public class WXAuthDao {
 		Query<Long> query = session.createQuery(hql,Long.class);
 		query.setParameter("userToken", token);
 		if (query.getResultList().size() == 1) {
+			session.close();
 			return query.getResultList().get(0);
 		} else {
+			session.close();
 			return -1;
 		}
 	}

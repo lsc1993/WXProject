@@ -194,7 +194,7 @@ var orderPage = new Vue({
 				url: requestIP + "/WXOfServer/wxpay/order-pay",
 				async: true,
 				success: function(data) {
-					if (typeof WeixinJSBridge == "undefined"){
+					/*if (typeof WeixinJSBridge == "undefined"){
 					   if( document.addEventListener ){
 					       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
 					   }else if (document.attachEvent){
@@ -203,7 +203,8 @@ var orderPage = new Vue({
 					   }
 					}else{
 					   onBridgeReady(data);
-					}
+					}*/
+					payOrder(data);
 				},
 				error: function(){
 					alert("服务器无响应");
@@ -628,4 +629,33 @@ function onBridgeReady(data){
            }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
        }
    ); 
+}
+
+function payOrder(data){
+	var date = new Date();
+	wx.config({
+		debug: true,
+		appId: data.appid,
+		timestamp: parseInt(date.getTime()/1000),
+		nonceStr: data.nonce_str,
+		signature: data.sign,
+		jsApiList: ['chooseWXPay']
+	});
+	
+	wx.ready(function(){
+		wx.chooseWXPay({
+			timestamp: parseInt(date.getTime()/1000),
+			nonceStr: data.nonce_str,
+			package: data.prepay_id,     
+        	signType:"MD5",         //微信签名方式：     
+        	paySign: data.sign, //微信签名 
+        	success: function(res){
+        		alert(res.errMsg);
+        	}
+		});
+	});
+	
+	wx.error(function(res){
+		alert(res.errMsg);
+	});
 }
