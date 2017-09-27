@@ -32,7 +32,6 @@ public class WXPayController {
     @ResponseBody
     @RequestMapping(value="/notify", method = RequestMethod.POST)
     private Map<String, String> notifyPayResult(HttpServletRequest request) {
-        String orderId = request.getParameter("out_trade_no");
-        return wxPayService.notifyPay(orderId);
+        return wxPayService.notifyPay(request);
     }
 }

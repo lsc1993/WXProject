@@ -4,9 +4,7 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import com.fuyao.util.FuyaoConstants;
 import com.fuyao.weixinpay.WXPay;
-import com.fuyao.weixinpay.WXPayConstants;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +16,6 @@ import com.fuyao.dao.product.IProductDao;
 import com.fuyao.dao.user.IUserDao;
 import com.fuyao.model.order.Order;
 import com.fuyao.model.order.OrderItem;
-import com.fuyao.util.FuyaoUtil;
 import com.fuyao.util.Log;
 
 @Transactional
@@ -81,7 +78,7 @@ public class OrderService {
 		order.setPhone(data.get("phone"));
 		order.setAddress(data.get("address"));
 		order.setPostcode(data.get("postcode"));
-		order.setStatus(status);
+		order.setStatus(OrderStatus.valueOf(status).getStatus());
         orderDao.submitOrder(order);
 
 		return result;
@@ -92,7 +89,7 @@ public class OrderService {
 		JSONObject object = JSON.parseObject(data);
 		JSONArray array = (JSONArray) object.get("orders");
 		JSONObject common = object.getJSONObject("common");
-		long uId = -1;
+		long uId;
 		String token = common.getString("userToken");
 		uId = userDao.getUserId(token);
 		if (uId == -1) {
@@ -120,7 +117,7 @@ public class OrderService {
 		float sendCost = common.getFloatValue("sendCost");
 		
 		int len = array.size();
-        Order order = null;
+        Order order;
 		for (int i = 0;i < len; ++i) {
 			JSONObject obj = array.getJSONObject(i);
 
@@ -138,7 +135,7 @@ public class OrderService {
 			order.setSendWay(sendWay);
 			order.setBuyerMsg(buyMsg);
 			order.setSendCost(sendCost);
-			order.setStatus(status);
+			order.setStatus(OrderStatus.valueOf(status).getStatus());
 			//------------------order---------------------
 			order.setPid(obj.getString("pno"));
 			order.setName(obj.getString("pname"));
@@ -152,18 +149,6 @@ public class OrderService {
 			orderDao.submitOrder(order);
 		}
 		return result;
-	}
-
-	private boolean wxpayProcess(Map<String, String> data) {
-		WXPay pay = new WXPay();
-		try {
-			data = pay.fillRequestData(data);
-			pay.request(data);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
 	}
 
 	public JSON getOrderList(HashMap<String,String> data) {
@@ -180,7 +165,7 @@ public class OrderService {
 			limit = 10;
 			e.printStackTrace();
 		}
-		long uId = -1;
+		long uId;
 		String token = data.get("userToken");
 		uId = userDao.getUserId(token);
 		OrderStatus s = OrderStatus.valueOf(data.get("status"));
@@ -205,7 +190,7 @@ public class OrderService {
 	
 	public HashMap<String,String> confirmReceive(HashMap<String,String> data) {
 		HashMap<String,String> result = new HashMap<String,String>();
-		long uId = -1;
+		long uId;
 		String token = data.get("userToken");
 		uId = userDao.getUserId(token);
 		if (uId == -1) {
@@ -222,7 +207,7 @@ public class OrderService {
 
 	public HashMap<String,String> submitComment(HashMap<String,String> data) {
 		HashMap<String,String> result = new HashMap<String,String>();
-		long uId = -1;
+		long uId;
 		String token = data.get("userToken");
 		uId = userDao.getUserId(token);
 		if (uId == -1) {
@@ -239,7 +224,7 @@ public class OrderService {
 		
 		private String status;
 		
-		private OrderStatus(String status) {
+		OrderStatus(String status) {
 			this.status = status;
 		}
 		

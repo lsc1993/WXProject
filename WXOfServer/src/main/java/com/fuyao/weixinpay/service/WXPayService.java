@@ -7,13 +7,17 @@ import com.fuyao.util.FuyaoUtil;
 import com.fuyao.weixinpay.WXPay;
 import com.fuyao.weixinpay.WXPayConstants;
 
+import com.fuyao.weixinpay.util.WXPayUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @Transactional
 @Service("wxPayService")
@@ -55,7 +59,7 @@ public class WXPayService {
 
         WXPay pay = new WXPay(WXPayConstants.SignType.MD5);
         Map<String,String> payResult = pay.payOrder(param);
-        if (FuyaoConstants.SUCCESS.equals(payResult.get("return_code")) && FuyaoConstants.SUCCESS.equals(payResult.get("result_code"))) {
+        if ("SUCCESS".equals(payResult.get("return_code")) && "SUCCESS".equals(payResult.get("result_code"))) {
             result = payResult;
         } else {
             result.put("result", "fault");
@@ -64,7 +68,28 @@ public class WXPayService {
         return result;
     }
 
-    public Map<String, String> notifyPay(String orderId) {
-        return orderDao.notifyPayOrder(orderId);
+    public Map<String, String> notifyPay(HttpServletRequest request) {
+        BufferedReader reader = null;
+        String orderId = null;
+        try {
+            reader = request.getReader();
+            String line = null;
+            StringBuilder builder = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            Map<String, String> param = WXPayUtil.xmlToMap(builder.toString());
+            orderId = param.get("out_trade_no");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return orderDao.notifyPayOrder(orderId == null? "" : orderId);
     }
 }
