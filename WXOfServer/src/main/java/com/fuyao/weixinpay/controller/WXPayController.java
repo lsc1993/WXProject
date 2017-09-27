@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/wxpay")
@@ -23,7 +25,14 @@ public class WXPayController {
 
     @ResponseBody
     @RequestMapping(value="/order-pay", method = RequestMethod.POST)
-    private HashMap<String,String> payOrder(@RequestBody HashMap<String,String> data) {
+    private Map<String,String> payOrder(@RequestBody HashMap<String,String> data) {
         return wxPayService.payOrder(data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/notify", method = RequestMethod.POST)
+    private Map<String, String> notifyPayResult(HttpServletRequest request) {
+        String orderId = request.getParameter("out_trade_no");
+        return wxPayService.notifyPay(orderId);
     }
 }

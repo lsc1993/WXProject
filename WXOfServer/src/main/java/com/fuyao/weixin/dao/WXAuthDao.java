@@ -53,34 +53,4 @@ public class WXAuthDao {
 	public void addWXUserInfo(WXUserInfo wUser) {
 		this.getCurrentSession().saveOrUpdate(wUser);
 	}
-	
-	public String getOpenId(String userToken) {
-		Session session = sessionFactory.openSession();
-		long uId = getUserId(userToken);
-		String hql = "select openid from WXAuthority where uid=:uid";
-		Query<String> query = session.createQuery(hql, String.class);
-		query.setParameter("uid", uId);
-		if (query.getResultList().size() == 1) {
-			//session.close();
-			return query.getResultList().get(0);
-		} else {
-			//session.close();
-			return null;
-		}
-	}
-	
-	public long getUserId(String token) {
-		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
-		String hql = "select id from User where userToken=:userToken";
-		Query<Long> query = session.createQuery(hql,Long.class);
-		query.setParameter("userToken", token);
-		if (query.getResultList().size() == 1) {
-			//session.close();
-			return query.getResultList().get(0);
-		} else {
-			//session.close();
-			return -1;
-		}
-	}
 }

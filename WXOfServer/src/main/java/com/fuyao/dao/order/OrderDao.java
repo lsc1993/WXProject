@@ -2,6 +2,7 @@ package com.fuyao.dao.order;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -114,6 +115,23 @@ public class OrderDao implements IOrderDao {
 			e.printStackTrace();
 			result.put("result", "falut");
 			result.put("message", "提交意见失败");
+		}
+		return result;
+	}
+
+	public Map<String, String> notifyPayOrder(String orderId) {
+		HashMap<String, String> result = new HashMap<String, String>();
+		String hql = "update Order set buyerMsg=:buyerMsg where orderId=:orderId";
+		Query<?> query = this.getCurrentSession().createQuery(hql);
+		query.setParameter("buyerMsg", "微信回调测试");
+		query.setParameter("orderId", orderId);
+		int updateCount = -1;
+		updateCount = query.executeUpdate();
+		if (updateCount != -1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fault");
+			result.put("message", "确认收货失败，请稍后重试");
 		}
 		return result;
 	}

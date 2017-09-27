@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import com.fuyao.util.FuyaoConstants;
 import com.fuyao.weixinpay.WXPay;
+import com.fuyao.weixinpay.WXPayConstants;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,23 +57,10 @@ public class OrderService {
 			return result;
 		}
 
-		long orderCount = orderDao.getOrderCount(uId);
-
-		String orderId = new StringBuilder().append("E").
-				append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
-				.append(String.format("%06d", orderCount+1)).toString();
-		/*Map<String, String> param = new HashMap<String, String>();
-		param.put("out_trade_no", orderId);
-		param.put("body", FuyaoConstants.DETAIL + data.get("pName"));
-		param.put("total_fee", data.get("total"));
-		if (!wxpayProcess(param)) {
-			result.put("result", "fault");
-			result.put("message", "支付失败！请联系客服");
-			return result;
-		}*/
+		String orderId = data.get("orderId");
+		String status =data.get("status");
 
 		Order order = new Order();
-
 		order.setOrderId(orderId);
 		order.setDate(new Date());
 		order.setUid(uId);
@@ -93,8 +81,10 @@ public class OrderService {
 		order.setPhone(data.get("phone"));
 		order.setAddress(data.get("address"));
 		order.setPostcode(data.get("postcode"));
-		order.setStatus(OrderStatus.WAITSEND.getStatus());
-		return orderDao.submitOrder(order);
+		order.setStatus(status);
+        orderDao.submitOrder(order);
+
+		return result;
 	}
 	
 	public HashMap<String,String> submitMultiOrder(String data) {
@@ -110,6 +100,10 @@ public class OrderService {
 			result.put("message", "用户认证失败，请重新登录");
 			return result;
 		}
+
+        String orderId = common.getString("orderId");
+        String status = common.getString("status");
+
 		String discount = common.getString("discount");
 		long aId = common.getLongValue("aid");
 		String receiver = common.getString("receiver");
@@ -126,13 +120,11 @@ public class OrderService {
 		float sendCost = common.getFloatValue("sendCost");
 		
 		int len = array.size();
+        Order order = null;
 		for (int i = 0;i < len; ++i) {
 			JSONObject obj = array.getJSONObject(i);
-			long orderCount = orderDao.getOrderCount(uId);
-			String orderId = new StringBuilder().append("E").
-								append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
-								.append(String.format("%06d", orderCount+1)).toString();
-			Order order = new Order();
+
+			order = new Order();
 			order.setOrderId(orderId);
 			order.setDate(new Date());
 			//-----------------common---------------------
@@ -146,7 +138,7 @@ public class OrderService {
 			order.setSendWay(sendWay);
 			order.setBuyerMsg(buyMsg);
 			order.setSendCost(sendCost);
-			order.setStatus(OrderStatus.WAITSEND.getStatus());
+			order.setStatus(status);
 			//------------------order---------------------
 			order.setPid(obj.getString("pno"));
 			order.setName(obj.getString("pname"));
@@ -157,7 +149,7 @@ public class OrderService {
 			order.setPCount(obj.getIntValue("count"));
 			order.setTotal(obj.getFloatValue("total"));
 			
-			result = orderDao.submitOrder(order);
+			orderDao.submitOrder(order);
 		}
 		return result;
 	}

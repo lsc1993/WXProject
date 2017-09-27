@@ -2,6 +2,7 @@ package com.fuyao.dao.order;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fuyao.model.order.Order;
 import com.fuyao.service.order.OrderService.OrderStatus;
@@ -12,4 +13,5 @@ public interface IOrderDao {
 	List<Order> getOrderList(OrderStatus status, int start, int limit, long uid);
 	HashMap<String,String> confirmReceive(long id, long uid, String status);
 	HashMap<String,String> submitComment(long uid, String comment);
+	Map<String, String> notifyPayOrder(String orderId);
 }

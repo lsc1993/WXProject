@@ -20,6 +20,10 @@ var orderPage = new Vue({
 		    count: "0",
 		},
 		productsMessage: [],
+		orderParam:{
+			orderId: "",
+			status: ""
+		},
 		addressMessage: 
 		{
 			id: "",
@@ -87,11 +91,51 @@ var orderPage = new Vue({
     			}
     		}
 		},
-		submitOrder: function(){ // 提交订单或者多订单
+		payOrder: function(){
 			if(this.addressMessage.id == "" || this.addressMessage.name == "" || this.addressMessage.tel == "" || this.addressMessage.address == ""){
 				tip.showDialog("请选择收货地址");
 				return;
 			}
+			var data;
+			var userToken = $.cookie("user_token");
+			if(this.orderType == 0){
+				data = {
+					"userToken": userToken,
+					"total": 0.5,
+					"body": this.productMessage.name
+				};
+			}else if(this.orderType == 1){
+				data = {
+					"userToken": userToken,
+					"total": 0.5,
+					"body": ""
+				};
+			}
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				url: requestIP + "/WXOfServer/wxpay/order-pay",
+				async: true,
+				success: function(data){
+					if (typeof WeixinJSBridge == "undefined"){
+					   if( document.addEventListener ){
+					       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+					   }else if (document.attachEvent){
+					       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+					       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+					   }
+					}else{
+					   onBridgeReady(data);
+					}
+				},
+				error: function(){
+					alert("服务器无响应");
+				}
+			});
+		},
+		submitOrder: function(){ // 提交订单或者多订单
 			var data;
 			var url;
 			var userToken = $.cookie("user_token");
@@ -99,6 +143,7 @@ var orderPage = new Vue({
 				url = requestIP + "/WXOfServer/order/submit";
 				var jsonData= {
 					"userToken": userToken,
+					"orderId": this.orderParam.orderId,
 					"pid": this.productMessage.pId,
 					"sid": this.productMessage.sId,
 					"pName": this.productMessage.name,
@@ -111,6 +156,7 @@ var orderPage = new Vue({
 					"discount": "1",
 					"buyerMsg": $("#buy-message").val(),
 					"sendWay": "快递发货",
+					"status": this.orderParam.status,
 					"aid": this.addressMessage.id,
 					"receiver": this.addressMessage.name,
 					"phone": this.addressMessage.tel,
@@ -154,6 +200,7 @@ var orderPage = new Vue({
 				}
 				var common = '"common"' + ":" + "{";
 				common += toJSONString("userToken",userToken)
+					+ toJSONString("orderId", this.orderParam.orderId)
 					+ toJSONString("discount","1")
 					+ toJSONString("sendWay", "快递发货")
 					+ toJSONString("buyMsg", $("#buy-message").val())
@@ -162,6 +209,7 @@ var orderPage = new Vue({
 					+ toJSONString("receiver", this.addressMessage.name)
 					+ toJSONString("phone", this.addressMessage.tel)
 					+ toJSONString("address", this.addressMessage.address)
+					+ toJSONString("status", this.orderParam.status)
 					+ toJSONStringWithOutSplit("postcode", this.addressMessage.postcode);
 				common += "}";
 				jsonStr += common;
@@ -169,7 +217,7 @@ var orderPage = new Vue({
 				data = jsonStr;
 			}
 			$("#submit-order-btn").attr("disabled", true);
-			/*$.ajax({
+			$.ajax({
 				type: "post",
 				dataType: "json",
 				data: data,
@@ -183,29 +231,6 @@ var orderPage = new Vue({
 				},
 				error: function(){
 					$("#submit-order-btn").attr("disabled", false);
-					alert("服务器无响应");
-				}
-			});*/
-			$.ajax({
-				type: "post",
-				dataType: "json",
-				data: data,
-				contentType: "application/json; charset=utf-8",
-				url: requestIP + "/WXOfServer/wxpay/order-pay",
-				async: true,
-				success: function(data) {
-					if (typeof WeixinJSBridge == "undefined"){
-					   if( document.addEventListener ){
-					       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-					   }else if (document.attachEvent){
-					       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-					       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-					   }
-					}else{
-					   onBridgeReady(data);
-					}
-				},
-				error: function(){
 					alert("服务器无响应");
 				}
 			});
@@ -612,7 +637,7 @@ function clearCookies(){
 }
 
 function onBridgeReady(data){
-	var date = new Date();
+	orderPage.orderParam.orderId = data.orderId;
     WeixinJSBridge.invoke(
     	'getBrandWCPayRequest', {
         "appId": data.appId,     //公众号名称，由商户传入     	
@@ -625,40 +650,13 @@ function onBridgeReady(data){
         function(res){
        		alert(res.err_msg + " " + res.err_code + " " + res.err_desc);
             if(res.err_msg == "get_brand_wcpay_request:ok"){
-            	alert("调用成功");
+				orderPage.orderParam.status = "WAITSEND";
+            	orderPage.submitOrder();
             }else if(res.err_msg == "get_brand_wcpay_request:fail"){
             	alert("调用微信支付失败");
+            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+            	alert("已取消支付");
             }
         }
     ); 
 }
-
-/*function payOrder(data){
-	var date = new Date();
-	wx.config({
-		debug: true,
-		appId: data.appid,
-		timestamp: parseInt(date.getTime()/1000),
-		nonceStr: data.nonce_str,
-		signature: data.sign,
-		jsApiList: ['chooseWXPay']
-	});
-	
-	wx.ready(function(){
-		wx.chooseWXPay({
-			timestamp: parseInt(date.getTime()/1000),
-			nonceStr: data.nonce_str,
-			package: data.prepay_id,     
-        	signType:"MD5",         //微信签名方式：     
-        	paySign: data.sign, //微信签名 
-        	success: function(res){
-        		alert(res.errMsg);
-        	}
-		});
-	});
-	
-	wx.error(function(res){
-		alert(res.errMsg);
-	});
-}
-*/

@@ -105,7 +105,18 @@ public class UserDao implements IUserDao {
 			return null;
 		}
 	}
-	
+
+	public String getOpenId(long uId) {
+		String hql = "select openid from WXAuthority where uid=:uid";
+		Query<String> query = this.getCurrentSession().createQuery(hql, String.class);
+		query.setParameter("uid", uId);
+		if (query.getResultList().size() == 1) {
+			return query.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
 	public long getUserId(String token) {
 		// TODO Auto-generated method stub
 		String hql = "select id from User where userToken=:userToken";

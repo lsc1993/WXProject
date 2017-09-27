@@ -8,6 +8,9 @@ public class WXPayConfig {
     private final String KEY = "liushuang19930123fuyaoINTNETBXFW";
     private final String MCHID = "1480515542";
     private final String ORDERURL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+    private final String JSAPI = "JSAPI";
+    private final String SERVER_IP = "120.24.81.6";
+    private final String NOTIFY_URL = "http://www.hzfuyao.com:8080/WXOfServer/wxpay/notify";
 
     public String getAPPID() {
         return APPID;
@@ -23,6 +26,18 @@ public class WXPayConfig {
 
     public String getORDERURL() {
         return ORDERURL;
+    }
+
+    public String getJSAPI() {
+        return JSAPI;
+    }
+
+    public String getSERVER_IP() {
+        return SERVER_IP;
+    }
+
+    public String getNOTIFY_URL() {
+        return NOTIFY_URL;
     }
 
     /**
