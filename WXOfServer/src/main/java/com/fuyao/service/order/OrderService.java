@@ -61,6 +61,7 @@ public class OrderService {
 		String orderId = new StringBuilder().append("E").
 							append(FuyaoUtil.getCurrentTimeAtString("yyyyMMddHHmmss"))
 							.append(String.format("%06d", orderCount+1)).toString();
+		System.out.println(orderId);
 		order.setOrderId(orderId);
 		order.setDate(new Date());
 		order.setUid(uId);
@@ -141,7 +142,7 @@ public class OrderService {
 			order.setSid(obj.getLongValue("sId"));
 			order.setStandard(obj.getString("standard"));
 			order.setImgurl(obj.getString("imgname"));
-			order.setPTotal(obj.getFloatValue("price"));
+			order.setPTotal(obj.getFloatValue("pTotal"));
 			order.setPCount(obj.getIntValue("count"));
 			order.setTotal(obj.getFloatValue("total"));
 			
@@ -171,8 +172,8 @@ public class OrderService {
 		Log.log(s.getStatus());
 		List<Order> orderList = orderDao.getOrderList(s, start, limit, uId);
 		int length = orderList.size();
-		List<OrderItem> orderItems = new ArrayList<OrderItem>(length); 
-		
+		List<OrderItem> orderItems = new ArrayList<OrderItem>();
+		Log.log("length:" + length + orderList.size());
 		for (Order order : orderList) {
 			String status = productDao.getProductStatus(order.getPid());
 			OrderItem item = new OrderItem(order);

@@ -27,6 +27,7 @@ public class OrderItem extends Order {
 		this.setPhone(order.getPhone());
 		this.setAddress(order.getAddress());
 		this.setPostcode(order.getPostcode());
+		this.setStatus(order.getStatus());
 		this.setDate(order.getDate());
 	}
 
