@@ -11,6 +11,15 @@ public class WXPayRequest {
 
     }
 
+    /**
+     * 发起微信支付请求
+     * @param requestUrl  请求链接
+     * @param method  请求方式
+     * @param param  请求参数
+     * @param connectTimeOut  连接超时时间
+     * @param readTimeOut  读取超时时间
+     * @return 请求结果
+     */
     public String requestOnce(final String requestUrl, final String method, String param, boolean useCert, int connectTimeOut, int readTimeOut) {
         HttpURLConnection conn = null;
         StringBuilder builder = new StringBuilder();
