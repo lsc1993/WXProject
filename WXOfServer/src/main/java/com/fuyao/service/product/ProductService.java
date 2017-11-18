@@ -63,14 +63,19 @@ public class ProductService {
 		List<Product> pList = productDao.getProductList(data);
 		StringBuilder builder = new StringBuilder();
 		builder.append("{").append("\"rows\":").append("[");
+		int len = 0;
 		for (Product p : pList) {
 			long pId = p.getId();
 			List<ProductImages> images = productDao.getProductImages(pId);
 			builder.append("{").append("\"product\":").append(JSON.toJSONString(p)).append(",");
 			for (ProductImages image : images) {
 				if (image.getImage().startsWith("sImg")) {
-					builder.append("\"image\":").append(JSON.toJSONString(image)).append("}").append(",");
+					builder.append("\"image\":").append(JSON.toJSONString(image)).append("}");
 				}
+				if (len != (images.size() - 1)) {
+					builder.append(",");
+				}
+				len ++;
 			}
 		}
 		builder.append("]").append(",").append("\"size\":").append(pList.size()).append("}");
