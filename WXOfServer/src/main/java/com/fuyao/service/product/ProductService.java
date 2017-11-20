@@ -102,7 +102,6 @@ public class ProductService {
 		try {
 			pid = Long.parseLong(data.get("pId"));
 		} catch (NumberFormatException e) {
-			pid = 0;
 			result.put("result", "fault");
 			result.put("message", "产品记录表错误");
 			e.printStackTrace();
@@ -119,7 +118,7 @@ public class ProductService {
 	public HashMap<String,String> browseHistory(HashMap<String,String> data) {
 		HashMap<String,String> result = new HashMap<String,String>();
 		long pid;
-		long uid = -1;
+		long uid;
 		String token = data.get("userToken");
 		uid = userDao.getUserId(token);
 		if (uid == -1) {
@@ -131,7 +130,6 @@ public class ProductService {
 		try {
 			pid = Long.parseLong(data.get("pId"));
 		} catch (NumberFormatException e) {
-			pid = 0;
 			result.put("result", "fault");
 			result.put("message", "产品记录表错误");
 			e.printStackTrace();
@@ -150,7 +148,7 @@ public class ProductService {
 	}
 	
 	public JSON getBrowseHistory(HashMap<String,String> data) {
-		long uid = -1;
+		long uid;
 		String token = data.get("userToken");
 		uid = userDao.getUserId(token);
 		if (uid == -1) {
@@ -173,7 +171,7 @@ public class ProductService {
 	}
 	
 	public HashMap<String,String> addShopCart(HashMap<String,String> data) {
-		long uid = -1;
+		long uid;
 		HashMap<String,String> result = new HashMap<String,String>();
 		String token = data.get("userToken");
 		uid = userDao.getUserId(token);
@@ -197,7 +195,7 @@ public class ProductService {
 	}
 	
 	public JSON getShopItems(HashMap<String,String> data) {
-		long uid = -1;
+		long uid;
 		String token = data.get("userToken");
 		uid = userDao.getUserId(token);
 		if (uid == -1) {
